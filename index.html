@@ -2,174 +2,302 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alif Ayman Mahin</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a192f;
+      --fg: #ccd6f6;
+      --muted: #8892b0;
+      --accent: #64ffda;
+      --font-main: 'Inter', sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #7fffd4;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 3rem 0 1rem;
+    }
+
+    p {
+      max-width: 600px;
+      color: var(--muted);
+    }
+
+    .section {
+      margin-bottom: 4rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 50%;
+      left: 1.5rem;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 1000;
+    }
+
+    .sidebar a {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      color: var(--accent);
+    }
+
+    .project-card {
+      background-color: #112240;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+      text-align: center; /* Center all inline and inline-block content inside the card */
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Style for image inside project card */
+    .project-card img {
+        width: 100%;
+        height: auto; /* Ensures aspect ratio is maintained and fills width */
+        /* max-width: 300px; REMOVED to allow images to fill 100% of card width */
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        display: block; /* Make image a block element */
+        margin-left: auto; /* Center the block image */
+        margin-right: auto; /* Center the block image */
+    }
+
+    .project-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-description { /* Added a class for better targeting */
+        color: var(--muted);
+        margin-bottom: 1.2rem; /* This creates the gap between text and skills */
+        max-width: 600px; /* ADJUSTED: Increased to allow more text per line */
+        margin-left: auto; /* Centers the block-level paragraph if it has a max-width */
+        margin-right: auto; /* Centers the block-level paragraph if it has a max-width */
+    }
+
+    .skills-container { /* Added a class for the div wrapping skills */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Centers the skill tags horizontally */
+        gap: 0.5rem; /* Space between skill tags */
+    }
+
+    .skills-tag {
+      display: inline-block;
+      background-color: #0a192f;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      /* Removed margin-top/bottom/right from here as gap on container handles it */
+    }
+
+    .resume-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      transition: background 0.3s ease;
+    }
+
+    .resume-btn:hover {
+      background-color: rgba(100, 255, 218, 0.1);
+    }
+  </style>
 </head>
 <body>
+  <nav class="sidebar">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="container">
-      <h1 class="logo">Alif Ayman Mahin</h1>
-      <nav class="nav">
-        <a href="#home" class="nav-link">Home</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#contact" class="nav-link">Contact</a>
-      </nav>
-    </div>
-  </header>
+  <main class="container">
+    <p class="mono">Hi, my name is</p>
+    <h1>Alif Ayman Mahin</h1>
+    <h1 style="color: var(--muted); font-weight: 600; font-size: 2.5rem;">My engineering approach: Tony Stark's brain (on a budget), coffee-powered CAD, and the unwavering belief that g = 10 m/s².</h1>
+    
+    <a href="C:\Users\alifa\OneDrive\Desktop\New Portfolio\assets\resume.pdf" download class="resume-btn">Download Resume</a>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero fade-in">
-    <div class="container">
-      <img src="images/profile.jpg" alt="Profile Picture" class="profile-img" />
-      <h2>Mechanical Engineering Co-op Student | Robotics Enthusiast</h2>
-      <p>I'm passionate about designing and building cutting-edge technology.</p>
-      <a href="#projects" class="btn">Explore My Work</a>
-      <a href="assets/resume.pdf" download class="btn btn-outline">Download Resume</a>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="section light-bg fade-up">
-    <div class="container">
+    <section class="section" id="about">
       <h2>About Me</h2>
       <p>
-        I’m a second-year mechanical engineering co-op student at Memorial University of Newfoundland with a passion for designing and building cutting-edge technology.
-        Whether it's automobiles, robotics, or aerospace, I’m driven by the challenge of creating innovative and efficient systems.
+        As a third-year Mechanical Engineering student at Memorial University, I'm driven by a genuine obsession for building and improving, constantly diving into diverse engineering challenges through hands-on work and exploring passions in robotics, aerospace, sustainable energy, and automotive innovation. When I'm not immersed in design, you'll find me enjoying musical instruments or getting lost in a great movie.
       </p>
-    </div>
-  </section>
+    </section>
 
-  <!-- Projects -->
-  <section id="projects" class="section dark-bg fade-up">
-    <div class="container">
+    <section class="section" id="experience">
+  <h2>Experience</h2>
+
+  <div style="margin-bottom: 2rem;">
+    <p style="color: var(--accent); font-weight: 600;">The Commons, Memorial University</p>
+    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+      <p style="font-style: italic;">Engineering Co-op Student</p>
+      <p style="color: var(--muted); font-size: 0.9rem;">Jan 2025 – Apr 2025</p>
+    </div>
+    <ul style="padding-left: 1.5rem;">
+      <li>Delivered hands-on support to over 50 students weekly using 3D printers, electronics, and CAD tools.</li>
+      <li>Organized and led technical workshops on Arduino and 3D printing with practical instruction.</li>
+      <li>Redesigned pricing model for printing services to improve access and financial efficiency.</li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 2rem;">
+    <p style="color: var(--accent); font-weight: 600;">Sidus Robotics</p>
+    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+      <p style="font-style: italic;">Mechanical Team Member</p>
+      <p style="color: var(--muted); font-size: 0.9rem;">Feb 2025 – Present</p>
+    </div>
+    <ul style="padding-left: 1.5rem;">
+      <li>Worked with an interdisciplinary student team to develop rover components under competition constraints.</li>
+      <li>Focused on design-for-manufacturability and integration of mechanical subsystems.</li>
+      <li>Tested rocker-bogie suspension with electrical systems and iterated design after field testing.</li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 2rem;">
+    <p style="color: var(--accent); font-weight: 600;">Valiant Aerotech</p>
+    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+      <p style="font-style: italic;">Mechanical Team Member</p>
+      <p style="color: var(--muted); font-size: 0.9rem;">Jun 2025 – Present</p>
+    </div>
+    <ul style="padding-left: 1.5rem;">
+      <li>Collaborated on a VTOL UAV prototype for wildfire detection and rapid response missions.</li>
+      <li>Developed lightweight composite frame and CFD simulations to optimize flight stability.</li>
+      <li>Worked closely with the flight systems team for structure/control integration.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="projects">
       <h2>Projects</h2>
-      <div class="project-grid">
 
-        <div class="card fade-up">
-          <a href="https://sidusrobotics.ca/ " target="_blank">
-            <img src="images/rover.png" alt="Sidus Mars Rover" />
-          </a>
-          <div class="card-content">
-            <h3><a href="https://sidusrobotics.ca/ " target="_blank">Sidus Robotics — Mars Rover Arm</a></h3>
-            <p>Designed a 4-DOF robotic arm in Autodesk Inventor; optimized with simulation to reduce mass by 20%. Fabricated components using 3D printing and machining.</p>
-          </div>
-        </div>
-
-        <div class="card fade-up">
-          <a href="https://mun.onshape.com/documents/065e6be3480becdbff051b85/w/3d7473600df1a975e1897b36/e/ae2e1c57ce1b27618b34086e?renderMode=0&uiState=68606445125a8a1a869555e3&aa=true" target="_blank">
-            <img src="images/motor.png" alt="Emergency Motor Mount" />
-          </a>
-          <div class="card-content">
-            <h3><a href=" https://mun.onshape.com/documents/... " target="_blank">Emergency Outboard Motor Mount</a></h3>
-            <p>Designed a detachable motor mount in Onshape, applying fastening theory and stress analysis.</p>
-          </div>
-        </div>
-
-        <div class="card fade-up">
-          <a href="https://www.linkedin.com/company/valiant-aerotech/posts/?feedView=all" target="_blank">
-            <img src="images/uav.png" alt="UAV Development Project" />
-          </a>
-          <div class="card-content">
-            <h3>Valiant Aerotech — UAV Development</h3>
-            <p>Collaborated on a VTOL drone for wildfire surveillance. Used Fusion 360 for structural design, 3D printed parts for prototyping, and Ansys Fluent to simulate thrust and airflow performance.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Experience -->
-  <section id="experience" class="section light-bg fade-up">
-    <div class="container">
-      <h2>Experience</h2>
-      <ul class="timeline">
-
-        <li class="fade-up">
-          <strong>The Commons, Memorial University</strong><br/>
-          Engineering Co-op Student | Jan'25 — Apr'25<br/>
-          Provided technical support for 3D printers, electronics, and design software to 50+ weekly users. Reengineered large-format printing pricing model, increasing cost recovery by 25%. Led 6+ hands-on Arduino and 3D printing workshops, training over 35 participants.
-        </li>
-
-        <li class="fade-up">
-          <strong>Sidus Robotics</strong><br/>
-          Mechanical Design Team | Feb'25 — Present<br/>
-          Designed rover chassis, suspension, and drivetrain in Autodesk Inventor. Fabricated components using 3D printing and machining. Built and assembled rocker-bogie suspension; contributed to full mechanical system assembly.
-        </li>
-
-        <li class="fade-up">
-          <strong>Valiant Aerotech</strong><br/>
-          UAV Development Member | Jun'25 — Present<br/>
-          Designed, printed, and tested custom drone components for wildfire monitoring UAVs. Simulated aerodynamic performance in Ansys Fluent and contributed to early-stage quadcopter frame development.
-        </li>
-
-      </ul>
-    </div>
-  </section>
-
-  <!-- Education & Skills -->
-  <section class="section dark-bg fade-up">
-    <div class="container">
-      <h2>Education & Skills</h2>
-      <div class="info-grid">
-        <div class="info-card">
-          <h3>Education</h3>
-          <p><strong>Bachelor in Mechanical Engineering Co-op</strong><br/>Memorial University of Newfoundland<br/>Jan'23 — Present</p>
-          <p>Key courses: Mechanics of Solids, Production Technology, Fluid Mechanics, Thermodynamics</p>
-        </div>
-        <div class="info-card">
-          <h3>Skills</h3>
-          <p>Design Software: Inventor, SolidWorks, Fusion 360, Onshape</p>
-          <p>Simulation Tools: FEA, Motion Analysis, Ansys</p>
-          <p>Prototyping Techniques: FDM 3D Printing, Machining, Soldering</p>
-          <p>Programming Languages: Python, Arduino IDE, C++, JavaScript, HTML</p>
-          <p>Certifications: WHMIS, Tool Handling Safety, 3D Printer Maintenance</p>
+      <div class="project-card">
+        <img src="C:\Users\alifa\OneDrive\Desktop\New Portfolio\images\rover.png" alt="Robotic Arm Image">
+        <p class="project-description">As a key member of the Sidus Robotics team, I contributed to rover 'Screech,' designing its 4-DOF robotic arm in Autodesk Inventor and refining the rocker-bogie suspension. Our collaborative goal: victory at CIRC, through optimized mass and enhanced mechanical stiffness.</p>
+        <div class="skills-container">
+          <span class="skills-tag">Autodesk Inventor</span>
+          <span class="skills-tag">FEA</span>
+          <span class="skills-tag">Mechanical Design</span>
+          <span class="skills-tag">Robotics</span>
+          <span class="skills-tag">Prototyping</span>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Awards & Volunteering -->
-  <section id="awards" class="section light-bg fade-up">
-    <div class="container">
-      <h2>Awards & Volunteering</h2>
-      <div class="info-grid">
-        <div class="info-card">
-          <h3>Awards</h3>
-          <p><strong>Angus Bruneau Student LIFE Fund</strong><br/>Secured competitive funding to support Sidus Robotics’ Mars Rover project through a successful proposal. The grant enabled critical development of mechanical subsystems, prototyping, and team resources for ongoing engineering innovation.</p>
-        </div>
-        <div class="info-card">
-          <h3>Volunteering</h3>
-          <p><strong>Event Coordinator – Kishore Alo Charity Concerts</strong><br/>Chattogram, Bangladesh | 2022<br/>Organized and raised funds for homeless children as an Event Coordinator. Performed as a musician with my band at charity events to raise awareness and support for vulnerable youth.</p>
+      <div class="project-card">
+        <img src="C:\Users\alifa\OneDrive\Desktop\New Portfolio\images\uav.png" alt="UAV Image">
+        <p class="project-description">New to aerospace, this project was a deep dive into UAV development, encompassing both VTOL plane and quadcopter designs. I used Fusion 360 and ANSYS Fluent to craft composite frames for wildfire detection, which truly solidified my understanding of aerospace engineering fundamentals.</p>
+        <div class="skills-container">
+          <span class="skills-tag">Fusion 360</span>
+          <span class="skills-tag">ANSYS Fluent</span>
+          <span class="skills-tag">CFD</span>
+          <span class="skills-tag">Composite Design</span>
+          <span class="skills-tag">Aerodynamics</span>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Contact -->
-  <section id="contact" class="section dark-bg fade-up">
-    <div class="container">
+      <div class="project-card">
+        <img src="C:\Users\alifa\OneDrive\Desktop\New Portfolio\images\motor.png" alt="Motor Mount Image">
+        <p class="project-description">My very first engineering project involved designing a stress-optimized, detachable outboard motor mount. Applying fastening theory and FEA, it was a fantastic learning experience, and I especially loved the collaborative teamwork that brought it to life.</p>
+        <div class="skills-container">
+          <span class="skills-tag">Onshape</span>
+          <span class="skills-tag">Stress Analysis</span>
+          <span class="skills-tag">FEA</span>
+          <span class="skills-tag">Fastening Theory</span>
+          <span class="skills-tag">Design for Manufacturing</span>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section" id="contact">
       <h2>Contact</h2>
-      <p>If you'd like to collaborate or have any questions, feel free to reach out!</p>
-      <ul class="contact-list">
-        <li>Email: <a href="mailto:aamahin@mun.ca">aamahin@mun.ca</a></li>
-        <li>Phone: <a href="tel:+17092196127">+1 709-219-6127</a></li>
-        <li>LinkedIn: <a href=" https://www.linkedin.com/in/aamahin/ " target="_blank">@aamahin</a></li>
-      </ul>
-    </div>
-  </section>
+      <p>Reach out at <a href="mailto:aamahin@mun.ca">aamahin@mun.ca</a> or connect on <a href="https://linkedin.com/in/aamahin" target="_blank">LinkedIn</a>.</p>
+    </section>
+  </main>
 
-  <footer>
-    <div class="container">
-      <p>© 2025 Alif Ayman Mahin</p>
-    </div>
-  </footer>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.1 });
 
-  <script src="script.js"></script>
+    document.querySelectorAll('.section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
 </body>
 </html>
