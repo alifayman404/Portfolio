@@ -118,8 +118,7 @@
     /* Style for image inside project card */
     .project-card img {
         width: 100%;
-        height: auto; /* Ensures aspect ratio is maintained and fills width */
-        /* max-width: 300px; REMOVED to allow images to fill 100% of card width */
+        max-width: 300px; /* Optional: Constrain image width if needed */
         border-radius: 6px;
         margin-bottom: 1rem;
         display: block; /* Make image a block element */
@@ -135,7 +134,7 @@
     .project-description { /* Added a class for better targeting */
         color: var(--muted);
         margin-bottom: 1.2rem; /* This creates the gap between text and skills */
-        max-width: 600px; /* ADJUSTED: Increased to allow more text per line */
+        /* max-width for description can be set here if needed to avoid overly long lines in narrow cards */
         margin-left: auto; /* Centers the block-level paragraph if it has a max-width */
         margin-right: auto; /* Centers the block-level paragraph if it has a max-width */
     }
@@ -185,14 +184,14 @@
   <main class="container">
     <p class="mono">Hi, my name is</p>
     <h1>Alif Ayman Mahin</h1>
-    <h1 style="color: var(--muted); font-weight: 600; font-size: 2.5rem;">My engineering approach: Tony Stark's brain (on a budget), coffee-powered CAD, and the unwavering belief that g = 10 m/s².</h1>
+    <h1 style="color: var(--muted); font-weight: 600; font-size: 2.5rem;">Trying to be like Iron Man just with fewer explosions (for now).</h1>
     
-    <a href="C:\Users\alifa\OneDrive\Desktop\New Portfolio\assets\resume.pdf" download class="resume-btn">Download Resume</a>
+    <a href="C:\Users\alifa\OneDrive\Desktop\Portfolio\assets\resume.pdf" download class="resume-btn">Download Resume</a>
 
     <section class="section" id="about">
       <h2>About Me</h2>
       <p>
-        As a third-year Mechanical Engineering student at Memorial University, I'm driven by a genuine obsession for building and improving, constantly diving into diverse engineering challenges through hands-on work and exploring passions in robotics, aerospace, sustainable energy, and automotive innovation. When I'm not immersed in design, you'll find me enjoying musical instruments or getting lost in a great movie.
+        I'm a second-year mechanical engineering student at Memorial University of Newfoundland, currently exploring mechanical design through hands-on experience in student teams and co-op placements. I love building devices that merge technical rigor with practical application.
       </p>
     </section>
 
@@ -243,8 +242,8 @@
       <h2>Projects</h2>
 
       <div class="project-card">
-        <img src="C:\Users\alifa\OneDrive\Desktop\New Portfolio\images\rover.png" alt="Robotic Arm Image">
-        <p class="project-description">As a key member of the Sidus Robotics team, I contributed to rover 'Screech,' designing its 4-DOF robotic arm in Autodesk Inventor and refining the rocker-bogie suspension. Our collaborative goal: victory at CIRC, through optimized mass and enhanced mechanical stiffness.</p>
+        <img src="C:\Users\alifa\OneDrive\Desktop\Portfolio\images\rover.png" alt="Robotic Arm Image">
+        <p class="project-description">Lightweight 4-DOF robotic arm designed in Autodesk Inventor, focused on reducing mass and improving mechanical stiffness.</p>
         <div class="skills-container">
           <span class="skills-tag">Autodesk Inventor</span>
           <span class="skills-tag">FEA</span>
@@ -255,8 +254,8 @@
       </div>
 
       <div class="project-card">
-        <img src="C:\Users\alifa\OneDrive\Desktop\New Portfolio\images\uav.png" alt="UAV Image">
-        <p class="project-description">New to aerospace, this project was a deep dive into UAV development, encompassing both VTOL plane and quadcopter designs. I used Fusion 360 and ANSYS Fluent to craft composite frames for wildfire detection, which truly solidified my understanding of aerospace engineering fundamentals.</p>
+        <img src="C:\Users\alifa\OneDrive\Desktop\Portfolio\images\uav.png" alt="UAV Image">
+        <p class="project-description">Developed composite UAV frames using Fusion 360 and ANSYS Fluent for wildfire-response scenarios.</p>
         <div class="skills-container">
           <span class="skills-tag">Fusion 360</span>
           <span class="skills-tag">ANSYS Fluent</span>
@@ -267,8 +266,8 @@
       </div>
 
       <div class="project-card">
-        <img src="C:\Users\alifa\OneDrive\Desktop\New Portfolio\images\motor.png" alt="Motor Mount Image">
-        <p class="project-description">My very first engineering project involved designing a stress-optimized, detachable outboard motor mount. Applying fastening theory and FEA, it was a fantastic learning experience, and I especially loved the collaborative teamwork that brought it to life.</p>
+        <img src="C:\Users\alifa\OneDrive\Desktop\Portfolio\images\motor.png" alt="Motor Mount Image">
+        <p class="project-description">Stress-optimized a detachable outboard motor mount created using fastening theory and FEA.</p>
         <div class="skills-container">
           <span class="skills-tag">Onshape</span>
           <span class="skills-tag">Stress Analysis</span>
