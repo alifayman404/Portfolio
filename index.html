@@ -6,12 +6,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0a192f;
-      --fg: #ccd6f6;
-      --muted: #8892b0;
+      --bg: #020c1b;
+      --fg: #e6f1ff;
+      --muted: #a8b2d1;
       --accent: #64ffda;
       --font-main: 'Inter', sans-serif;
       --font-mono: 'Fira Code', monospace;
+      --navy: #0a192f;
+      --light-navy: #112240;
+      --lightest-navy: #233554;
+      --slate: #8892b0;
+      --light-slate: #a8b2d1;
+      --lightest-slate: #ccd6f6;
+      --green: #64ffda;
+      --transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
     }
 
     * {
@@ -20,12 +28,48 @@
       box-sizing: border-box;
     }
 
+    /* Spotlight effect */
+    .spotlight {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        circle at var(--x) var(--y),
+        transparent 10%,
+        rgba(0, 0, 0, 0.95) 20%
+      );
+      z-index: -1;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--fg);
       font-family: var(--font-main);
       line-height: 1.6;
       scroll-behavior: smooth;
+      counter-reset: section;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background: var(--lightest-navy);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1001;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--green);
+      width: 0%;
+      transition: width 0.1s ease-out;
     }
 
     a {
@@ -41,7 +85,9 @@
     .container {
       max-width: 900px;
       margin: 0 auto;
-      padding: 4rem 2rem; /* Default padding for desktop */
+      padding: 4rem clamp(1rem, 5vw, 2rem); /* Responsive padding */
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .mono {
@@ -60,7 +106,25 @@
       font-size: 1.5rem;
       font-weight: 600;
       margin: 3rem 0 1rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      color: var(--lightest-slate);
     }
+
+    h2::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 100%;
+      max-width: 300px;
+      background-color: var(--lightest-navy);
+      position: relative;
+      top: -5px;
+      margin-left: 20px;
+    }
+
 
     p {
       max-width: 600px;
@@ -71,12 +135,13 @@
       margin-bottom: 4rem;
       opacity: 0;
       transform: translateY(30px);
-      transition: all 0.6s ease;
+      transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .section.show {
       opacity: 1;
       transform: translateY(0);
+      transition-delay: 0.1s;
     }
 
     /* Desktop Sidebar Styles */
@@ -97,29 +162,54 @@
     .sidebar a {
       font-family: var(--font-mono);
       font-size: 0.85rem;
-      color: var(--muted);
-      transition: color 0.3s ease;
+      color: var(--light-slate);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0;
+      position: relative;
     }
 
     .sidebar a:hover {
-      color: var(--accent);
+      color: var(--green);
     }
 
+
     .project-card {
-      background-color: #112240;
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      transition: transform 0.3s ease;
-      text-align: center;
+      background-color: var(--light-navy);
+      padding: 2rem;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+      position: relative;
     }
 
     .project-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
+      box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+      background-color: var(--green);
+      mix-blend-mode: screen;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: var(--transition);
     }
 
     .project-card img {
-        width: 100%;
+        max-width: 100%;
         height: auto;
         border-radius: 6px;
         margin-bottom: 1rem;
@@ -150,12 +240,18 @@
 
     .skills-tag {
       display: inline-block;
-      background-color: #0a192f;
+      background-color: rgba(100, 255, 218, 0.1);
       color: var(--accent);
       border: 1px solid var(--accent);
       padding: 0.2rem 0.6rem;
       border-radius: 9999px;
       font-size: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .skills-tag:hover {
+      background-color: rgba(100, 255, 218, 0.2);
+      transform: scale(1.05);
     }
 
     .resume-btn {
@@ -166,11 +262,60 @@
       color: var(--accent);
       border-radius: 4px;
       font-family: var(--font-mono);
-      transition: background 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
     }
 
     .resume-btn:hover {
       background-color: rgba(100, 255, 218, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(100, 255, 218, 0.2);
+    }
+
+    .resume-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.1), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .resume-btn:hover::after {
+      transform: translateX(100%);
+    }
+
+    .subtitle {
+      color: var(--slate);
+      font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+      line-height: 1.3;
+      margin: 0 0 2rem;
+      max-width: 600px;
+    }
+
+    .dream-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tag-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .muted {
+      opacity: 0.8;
     }
 
     /* Mobile Styles: Sidebar to Top Navigation */
@@ -196,18 +341,28 @@
 
       /* Adjust main content padding to account for the fixed header */
       .container {
-        padding-top: 8rem; /* Push content down to avoid being under the fixed header */
-        padding-left: 1rem; /* Adjust horizontal padding for smaller screens */
-        padding-right: 1rem;
+        padding-top: 8rem;
+        padding-left: clamp(1rem, 5vw, 2rem);
+        padding-right: clamp(1rem, 5vw, 2rem);
       }
 
       h1 {
         font-size: 2rem; /* Adjust heading size for mobile */
       }
     }
+
+    #contact a:hover {
+      color: var(--green);
+    }
+
+    #contact svg {
+      width: 20px;
+      height: 20px;
+    }
   </style>
 </head>
 <body>
+  <div class="spotlight"></div>
   <nav class="sidebar">
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
@@ -216,9 +371,18 @@
   </nav>
 
   <main class="container">
-    <p class="mono">Hi, my name is</p>
-    <h1>Alif Ayman Mahin</h1>
-    <h1 style="color: var(--muted); font-weight: 600; font-size: 2.5rem;">My engineering approach: Tony Stark's brain (on a budget), coffee-powered CAD, and the unwavering belief that g = 10 m/s².</h1>
+    <p class="mono" style="color: var(--green); margin-bottom: 1rem;">Hi, my name is</p>
+    <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin: 0 0 1rem;">Alif Ayman Mahin.</h1>
+    <div class="subtitle">
+      <div class="dream-line">
+        <span>My engineering approach: </span>
+        <span class="accent">Be like Tony Stark (on a budget)</span>
+        <span>, </span>
+        <span class="accent">coffee-powered CAD</span>
+        <span>, and believe that </span>
+        <span class="accent">g = 10 m/s²</span>
+      </div>
+    </div>
     
     <a href="assets/resume.pdf" download class="resume-btn">Download Resume</a>
 
@@ -318,19 +482,70 @@
     </section>
 
     <section class="section" id="contact">
-      <h2>Contact</h2>
-      <p>Reach out at <a href="mailto:aamahin@mun.ca">aamahin@mun.ca</a> or connect on <a href="https://linkedin.com/in/aamahin" target="_blank">LinkedIn</a>.</p>
+      <h2>Get In Touch</h2>
+      <p style="margin-bottom: 2rem; max-width: 600px; text-align: center; margin-left: auto; margin-right: auto;">
+        I'm currently looking for new opportunities! Whether you have a question or just want to say hi, I'll do my best to get back to you!
+      </p>
+      
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-top: 2rem;">
+        <a href="mailto:aamahin@mun.ca" style="display: flex; align-items: center; gap: 0.5rem; color: var(--light-slate); transition: var(--transition);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          aamahin@mun.ca
+        </a>
+        
+        <a href="https://www.linkedin.com/in/aamahin" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; color: var(--light-slate); transition: var(--transition);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+          </svg>
+          linkedin.com/in/aamahin
+        </a>
+        
+        <a href="https://www.instagram.com/alifayman__" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; color: var(--light-slate); transition: var(--transition);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          @alifayman__
+        </a>
+      </div>
     </section>
   </main>
 
   <script>
+    // Spotlight effect
+    const spotlight = document.querySelector('.spotlight');
+    document.addEventListener('mousemove', e => {
+      const { clientX, clientY } = e;
+      spotlight.style.setProperty('--x', `${clientX}px`);
+      spotlight.style.setProperty('--y', `${clientY}px`);
+    });
+
+    // Scroll progress indicator
+    window.onscroll = function() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("progressBar").style.width = scrolled + "%";
+    };
+
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('show');
+          setTimeout(() => {
+            entry.target.classList.add('show');
+          }, index * 100);
         }
       });
-    }, { threshold: 0.1 });
+    }, { 
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
 
     document.querySelectorAll('.section').forEach(section => {
       observer.observe(section);
