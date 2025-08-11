@@ -25,7 +25,7 @@
       --accent: #00ffff;
       --border: rgba(0, 255, 255, 0.4);
       --shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-      background: #000 url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 0V20M0 10H20" stroke="%2300ffff" stroke-width="0.5" stroke-opacity="0.3"/></svg>') repeat;
+      background: #000;
       font-family: 'Fira Code', 'Courier New', monospace;
     }
 
@@ -55,11 +55,11 @@
       pointer-events: none;
       z-index: -1;
       background: radial-gradient(
-        circle 400px at var(--x, 50vw) var(--y, 50vh),
-        rgba(2, 12, 27, 0.4),
+        circle 600px at var(--x, 50vw) var(--y, 50vh),
+        rgba(2, 12, 27, 0.3),
         rgba(2, 12, 27, 0.8)
       );
-      transition: background 0.5s ease;
+      transition: background 0.6s ease;
     }
 
     /* Grid Deformation (JARVIS Mode) */
@@ -73,14 +73,13 @@
       z-index: -1;
       display: none;
       background-image: 
-        radial-gradient(circle at 50vw 50vh, rgba(0, 255, 255, 0.1) 0%, transparent 25%),
-        repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(0, 255, 255, 0.15) 20px),
-        repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(0, 255, 255, 0.15) 20px);
+        repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(0, 255, 255, 0.1) 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(0, 255, 255, 0.1) 20px);
       background-size: 20px 20px;
       background-position: 50vw 50vh;
       transition: background-position 0.05s ease-out;
       mix-blend-mode: overlay;
-      opacity: 0.7;
+      opacity: 0.6;
     }
 
     /* Progress Bar */
@@ -306,164 +305,127 @@
       transform: translateX(5px);
     }
 
-    /* Skills Tree */
-    .skill-tree {
+    /* Skills Section */
+    .skills-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin: 3rem 0;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
-
-    /* Skill Category Colors */
-    .skill-category[data-cat="cad"] {
-      border-left: 4px solid #4A90E2;
-      background: rgba(74, 144, 226, 0.1);
-    }
-    .skill-category[data-cat="cad"] h3 { color: #4A90E2; }
-
-    .skill-category[data-cat="simulation"] {
-      border-left: 4px solid #50C878;
-      background: rgba(80, 200, 120, 0.1);
-    }
-    .skill-category[data-cat="simulation"] h3 { color: #50C878; }
-
-    .skill-category[data-cat="prototyping"] {
-      border-left: 4px solid #FF6F61;
-      background: rgba(255, 111, 97, 0.1);
-    }
-    .skill-category[data-cat="prototyping"] h3 { color: #FF6F61; }
-
-    .skill-category[data-cat="electronics"] {
-      border-left: 4px solid #9C27B0;
-      background: rgba(156, 39, 176, 0.1);
-    }
-    .skill-category[data-cat="electronics"] h3 { color: #9C27B0; }
-
-    .skill-category[data-cat="programming"] {
-      border-left: 4px solid #FFD700;
-      background: rgba(255, 215, 0, 0.1);
-    }
-    .skill-category[data-cat="programming"] h3 { color: #FFD700; }
-
-    .skill-category[data-cat="general"] {
-      border-left: 4px solid #607D8B;
-      background: rgba(96, 125, 139, 0.1);
-    }
-    .skill-category[data-cat="general"] h3 { color: #607D8B; }
 
     .skill-category {
       background: var(--light-navy);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: var(--transition);
+      border-radius: 8px;
+      padding: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
+      overflow: hidden;
+    }
+
+    .skill-category:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
     .skill-category h3 {
       font-size: 1.1rem;
-      margin-bottom: 1rem;
-      letter-spacing: 0.5px;
+      margin-bottom: 0.8rem;
+      color: var(--accent);
+      text-align: center;
     }
 
     .skill-items {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 0.6rem;
     }
 
     .skill-item {
-      background: rgba(100, 255, 218, 0.1);
-      color: var(--muted);
+      font-size: 0.9rem;
       padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      background: rgba(100, 255, 218, 0.05);
       border: 1px solid var(--border);
+      border-radius: 4px;
       transition: all 0.3s ease;
-      cursor: pointer;
+      cursor: help;
       position: relative;
     }
 
     .skill-item:hover {
-      background: rgba(100, 255, 218, 0.2);
-      color: var(--accent);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(100, 255, 218, 0.3);
+      box-shadow: 0 4px 10px rgba(100, 255, 218, 0.2);
     }
 
-    /* Skill Popup (Larger, Animated) */
+    /* Image Popup on Hover */
     .skill-popup {
       position: absolute;
-      width: 240px;
-      height: 160px;
+      top: -180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 120px;
       background-size: contain;
-      background-position: center top;
+      background-position: center;
       background-repeat: no-repeat;
-      background-image: url('assets/images/placeholder.png');
       opacity: 0;
       pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: opacity 0.4s ease;
       z-index: 1000;
-      box-shadow: 0 10px 25px rgba(100, 255, 218, 0.5);
+      box-shadow: 0 10px 25px rgba(100, 255, 218, 0.4);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%) translateY(10px) scale(0.95);
-      margin-bottom: 12px;
-      overflow: hidden;
-      backdrop-filter: blur(2px);
-    }
-
-    .skill-popup::after {
-      content: attr(data-caption);
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(2, 12, 27, 0.85);
-      color: #e6f1ff;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.75rem;
-      padding: 6px 10px;
-      text-align: center;
-      white-space: nowrap;
+      border-radius: 8px;
+      display: none;
     }
 
     .lab-mode .skill-popup {
-      box-shadow: 0 10px 25px rgba(0, 255, 255, 0.6);
-      border-color: #00ffff;
+      box-shadow: 0 10px 25px rgba(0, 255, 255, 0.5);
     }
 
     .skill-item:hover .skill-popup,
     .skill-popup:hover {
       opacity: 1;
-      transform: translateX(-50%) translateY(0) scale(1);
     }
 
-    /* Tooltip for Non-JARVIS Mode */
-    .skill-tooltip {
+    /* JARVIS Mode Skill Categories */
+    .lab-mode .skill-category {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+    }
+
+    .lab-mode .skill-category::before {
+      content: '';
       position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--light-navy);
-      color: var(--accent);
-      font-family: 'Fira Code', monospace;
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 6px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      margin-bottom: 8px;
-      z-index: 1000;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
     }
 
-    .skill-item:hover .skill-tooltip {
-      opacity: 1;
+    .lab-mode .skill-category:nth-child(1)::before { background: #64ffda; }
+    .lab-mode .skill-category:nth-child(2)::before { background: #e9967a; }
+    .lab-mode .skill-category:nth-child(3)::before { background: #4fd1c5; }
+    .lab-mode .skill-category:nth-child(4)::before { background: #a0aec0; }
+    .lab-mode .skill-category:nth-child(5)::before { background: #f6e05e; }
+    .lab-mode .skill-category:nth-child(6)::before { background: #81e6d9; }
+
+    .lab-mode .skill-category h3 {
+      color: #00ffff;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+      font-family: 'Fira Code', monospace;
+      font-size: 1rem;
+    }
+
+    .lab-mode .skill-item {
+      background: rgba(0, 255, 255, 0.05);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      font-family: 'Fira Code', monospace;
+      color: #00ffff;
+    }
+
+    .lab-mode .skill-item:hover {
+      background: rgba(0, 255, 255, 0.1);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
     }
 
     /* Experience Section */
@@ -501,57 +463,6 @@
     #contact a:hover {
       background: var(--light-navy);
       transform: translateY(-3px);
-    }
-
-    /* Skill Modal */
-    .skill-modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #0a192f;
-      padding: 2rem;
-      border-radius: 8px;
-      width: 320px;
-      max-width: 90vw;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      z-index: 2000;
-      display: none;
-    }
-
-    .lab-mode .skill-modal {
-      background: #000;
-      border-color: #00ffff;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
-    }
-
-    .skill-modal h4 {
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      color: var(--muted);
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    #modalImage {
-      height: 120px;
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-      margin: 1rem 0;
-    }
-
-    #modalProjects {
-      color: var(--accent);
-      margin-top: 1rem;
-      font-size: 0.9rem;
     }
 
     /* Fix for g=10 line break */
@@ -687,105 +598,109 @@
       </div>
     </section>
 
-    <!-- Skills Tree -->
+    <!-- Skills Section -->
     <section class="section" id="skills">
       <h2>Skills</h2>
-      <div class="skill-tree">
-
-        <div class="skill-category" data-cat="cad">
+      <div class="skills-container">
+        <div class="skill-category">
           <h3>Design & CAD</h3>
           <div class="skill-items">
-            <span class="skill-item">Fusion 360</span>
-            <div class="skill-tooltip">Parametric modeling, simulation</div>
-            <div class="skill-popup" data-caption="Fusion 360 - CAD & CAM" style="background-image: url('assets/images/fusion360.png');"></div>
-
-            <span class="skill-item">SolidWorks</span>
-            <div class="skill-tooltip">Assembly design, FEA</div>
-            <div class="skill-popup" data-caption="SolidWorks - 3D Design" style="background-image: url('assets/images/solidworks.png');"></div>
-
-            <span class="skill-item">Inventor</span>
-            <div class="skill-tooltip">Mechanical design, drafting</div>
-            <div class="skill-popup" data-caption="Inventor - Autodesk Suite" style="background-image: url('assets/images/inventor.png');"></div>
-
-            <span class="skill-item">Onshape</span>
-            <div class="skill-tooltip">Cloud-based CAD</div>
-            <div class="skill-popup" data-caption="Onshape - Collaborative CAD" style="background-image: url('assets/images/onshape.png');"></div>
+            <span class="skill-item" data-desc="Parametric modeling, simulation">
+              Fusion 360
+              <div class="skill-popup" style="background-image: url('assets/images/fusion360.png');"></div>
+            </span>
+            <span class="skill-item" data-desc="Assembly design, FEA">
+              SolidWorks
+              <div class="skill-popup" style="background-image: url('assets/images/solidworks.png');"></div>
+            </span>
+            <span class="skill-item" data-desc="Mechanical design, drafting">
+              Inventor
+              <div class="skill-popup" style="background-image: url('assets/images/inventor.png');"></div>
+            </span>
+            <span class="skill-item" data-desc="Cloud-based CAD">
+              Onshape
+              <div class="skill-popup" style="background-image: url('assets/images/onshape.png');"></div>
+            </span>
           </div>
         </div>
 
-        <div class="skill-category" data-cat="simulation">
+        <div class="skill-category">
           <h3>Analysis & Simulation</h3>
           <div class="skill-items">
-            <span class="skill-item">ANSYS Fluent</span>
-            <div class="skill-tooltip">CFD, fluid dynamics</div>
-            <div class="skill-popup" data-caption="ANSYS Fluent - CFD Analysis" style="background-image: url('assets/images/ansys.png');"></div>
-
-            <span class="skill-item">Abaqus</span>
-            <div class="skill-tooltip">Structural FEA</div>
-            <div class="skill-popup" data-caption="Abaqus - Stress Simulation" style="background-image: url('assets/images/abaqus.png');"></div>
-
-            <span class="skill-item">MATLAB</span>
-            <div class="skill-tooltip">Data analysis, algorithms</div>
-            <div class="skill-popup" data-caption="MATLAB - Technical Computing" style="background-image: url('assets/images/matlab.png');"></div>
-
-            <span class="skill-item">Python</span>
-            <div class="skill-tooltip">Scripting, automation</div>
-            <div class="skill-popup" data-caption="Python - Robotics & Data" style="background-image: url('assets/images/python.png');"></div>
+            <span class="skill-item" data-desc="CFD, fluid dynamics">
+              ANSYS Fluent
+              <div class="skill-popup" style="background-image: url('assets/images/ansys.png');"></div>
+            </span>
+            <span class="skill-item" data-desc="Structural FEA">
+              Abaqus
+              <div class="skill-popup" style="background-image: url('assets/images/abaqus.png');"></div>
+            </span>
+            <span class="skill-item" data-desc="Data analysis, algorithms">
+              MATLAB
+              <div class="skill-popup" style="background-image: url('assets/images/matlab.png');"></div>
+            </span>
+            <span class="skill-item" data-desc="Scripting, automation">
+              Python
+              <div class="skill-popup" style="background-image: url('assets/images/python.png');"></div>
+            </span>
           </div>
         </div>
 
-        <div class="skill-category" data-cat="prototyping">
+        <div class="skill-category">
           <h3>Prototyping & Manufacturing</h3>
           <div class="skill-items">
-            <span class="skill-item">3D Printing</span>
-            <div class="skill-tooltip">FDM, SLA, rapid prototyping</div>
-            <div class="skill-popup" data-caption="3D Printing - FDM & Resin" style="background-image: url('assets/images/3dprinting.jpg');"></div>
-
-            <span class="skill-item">CNC Machining</span>
-            <div class="skill-tooltip">Precision metal/plastic parts</div>
-            <div class="skill-popup" data-caption="CNC - Milling & Lathe" style="background-image: url('assets/images/cnc.jpg');"></div>
-
-            <span class="skill-item">CAM Programming</span>
-            <div class="skill-tooltip">Toolpath generation</div>
-            <div class="skill-popup" data-caption="CAM - Toolpath Design"></div>
+            <span class="skill-item" data-desc="FDM, SLA, rapid prototyping">
+              3D Printing
+              <div class="skill-popup" style="background-image: url('assets/images/3dprinting.jpg');"></div>
+            </span>
+            <span class="skill-item" data-desc="Precision metal/plastic parts">
+              CNC Machining
+              <div class="skill-popup" style="background-image: url('assets/images/cnc.jpg');"></div>
+            </span>
+            <span class="skill-item" data-desc="Toolpath generation">
+              CAM Programming
+              <div class="skill-popup" style="background-image: url('assets/images/cam-programming.jpg');"></div>
+            </span>
           </div>
         </div>
 
-        <div class="skill-category" data-cat="electronics">
+        <div class="skill-category">
           <h3>Electronics & Embedded</h3>
           <div class="skill-items">
-            <span class="skill-item">Arduino</span>
-            <div class="skill-tooltip">Microcontroller, prototyping</div>
-            <div class="skill-popup" data-caption="Arduino - Embedded Control" style="background-image: url('assets/images/arduino.png');"></div>
-
-            <span class="skill-item">Sensors & Actuators</span>
-            <div class="skill-tooltip">Feedback systems, integration</div>
-            <div class="skill-popup" data-caption="Sensors - Data Input"></div>
-
-            <span class="skill-item">Soldering</span>
-            <div class="skill-tooltip">Circuit assembly, repair</div>
-            <div class="skill-popup" data-caption="Soldering - PCB Work"></div>
+            <span class="skill-item" data-desc="Microcontroller, prototyping">
+              Arduino
+              <div class="skill-popup" style="background-image: url('assets/images/arduino.png');"></div>
+            </span>
+            <span class="skill-item" data-desc="Feedback systems, integration">
+              Sensors & Actuators
+              <div class="skill-popup" style="background-image: url('assets/images/sensors-actuators.jpg');"></div>
+            </span>
+            <span class="skill-item" data-desc="Circuit assembly, repair">
+              Soldering
+              <div class="skill-popup" style="background-image: url('assets/images/soldering.jpg');"></div>
+            </span>
           </div>
         </div>
 
-        <div class="skill-category" data-cat="programming">
+        <div class="skill-category">
           <h3>Programming</h3>
           <div class="skill-items">
-            <span class="skill-item">Python</span>
-            <div class="skill-tooltip">Automation, robotics</div>
-            <div class="skill-popup" data-caption="Python - Scripting & AI" style="background-image: url('assets/images/python.png');"></div>
-
-            <span class="skill-item">C++</span>
-            <div class="skill-tooltip">High-performance systems</div>
-            <div class="skill-popup" data-caption="C++ - Embedded Systems"></div>
-
-            <span class="skill-item">HTML/CSS</span>
-            <div class="skill-tooltip">Web structure & styling</div>
-            <div class="skill-popup" data-caption="HTML/CSS - Web Dev"></div>
+            <span class="skill-item" data-desc="Automation, robotics">
+              Python
+              <div class="skill-popup" style="background-image: url('assets/images/python.png');"></div>
+            </span>
+            <span class="skill-item" data-desc="High-performance systems">
+              C++
+              <div class="skill-popup" style="background-image: url('assets/images/cpp.jpg');"></div>
+            </span>
+            <span class="skill-item" data-desc="Web structure & styling">
+              HTML/CSS
+              <div class="skill-popup" style="background-image: url('assets/images/html-css.jpg');"></div>
+            </span>
           </div>
         </div>
 
-        <div class="skill-category" data-cat="general">
+        <div class="skill-category">
           <h3>General Tools</h3>
           <div class="skill-items">
             <span class="skill-item">MS Office</span>
@@ -793,7 +708,6 @@
             <span class="skill-item">WHMIS Certified</span>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -876,14 +790,7 @@
 
   </main>
 
-  <!-- Skill Modal -->
-  <div class="skill-modal" id="skillModal">
-    <span class="close-modal" id="closeModal">×</span>
-    <h4 id="modalTitle">Skill Name</h4>
-    <div id="modalImage"></div>
-    <p id="modalDesc">Details about this skill and projects where it was used.</p>
-    <p id="modalProjects"></p>
-  </div>
+  <!-- Removed: skill-modal (was causing "Skill Name" issue) -->
 
   <script>
     // Spotlight Effect
@@ -934,7 +841,6 @@
     const rover = document.querySelector('.rover-vehicle');
     const heroName = document.getElementById('heroName');
     const aboutSection = document.getElementById('about');
-    const aboutContent = document.getElementById('aboutContent');
 
     // Store original content
     const originalAboutHTML = `
@@ -975,15 +881,9 @@
         setTimeout(() => rover.classList.add('active'), 100);
       }, 3000);
 
-      // Glow effect on name
-      setTimeout(() => {
-        heroName.style.color = '#00ffff';
-        heroName.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.7)';
-        setTimeout(() => {
-          heroName.style.color = '';
-          heroName.style.textShadow = '';
-        }, 2000);
-      }, 600);
+      // Light up name
+      heroName.style.color = '#00ffff';
+      heroName.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.7)';
 
       localStorage.setItem('jarvisMode', 'true');
     }
@@ -998,6 +898,10 @@
 
       // Restore original content
       aboutSection.innerHTML = originalAboutHTML;
+
+      // Reset name color
+      heroName.style.color = '';
+      heroName.style.textShadow = '';
 
       // Hide rover
       rover.style.display = 'none';
@@ -1031,16 +935,6 @@
         }
       }, 800);
     }
-
-    // Close modal
-    document.getElementById('closeModal').addEventListener('click', () => {
-      document.getElementById('skillModal').style.display = 'none';
-    });
-    window.addEventListener('click', e => {
-      if (e.target === document.getElementById('skillModal')) {
-        document.getElementById('skillModal').style.display = 'none';
-      }
-    });
   </script>
 </body>
 </html>
