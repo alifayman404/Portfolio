@@ -45,7 +45,7 @@
       transition: background 0.6s ease, color 0.6s ease;
     }
 
-    /* Spotlight Effect (Normal Mode) */
+    /* Spotlight Effect (Normal Mode) - Improved Visibility */
     .spotlight {
       position: fixed;
       top: 0;
@@ -54,33 +54,32 @@
       height: 100vh;
       pointer-events: none;
       z-index: -1;
+      /* Improved (more visible) */
       background: radial-gradient(
-        circle 600px at var(--x, 50vw) var(--y, 50vh),
-        rgba(2, 12, 27, 0.3),
-        rgba(2, 12, 27, 0.8)
+        circle 300px at var(--x, 50vw) var(--y, 50vh), /* Smaller radius */
+        rgba(100, 255, 218, 0.2), /* Lighter, use accent color with low opacity at center */
+        rgba(2, 12, 27, 0.9)      /* Keep dark edge, slightly adjusted opacity */
       );
       transition: background 0.6s ease;
     }
 
-    /* Grid Deformation (JARVIS Mode) */
-    .grid-deform {
+    /* --- Fluid JARVIS Grid Canvas CSS --- */
+    #gridCanvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* keep behind content */
       pointer-events: none;
-      z-index: -1;
-      display: none;
-      background-image: 
-        repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(0, 255, 255, 0.1) 20px),
-        repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(0, 255, 255, 0.1) 20px);
-      background-size: 20px 20px;
-      background-position: 50vw 50vh;
-      transition: background-position 0.05s ease-out;
-      mix-blend-mode: overlay;
-      opacity: 0.6;
+      background: transparent;
+      display: none; /* Initially hidden, controlled by JS */
     }
+    .lab-mode #gridCanvas {
+       display: block; /* Show in lab mode */
+    }
+    /* --- End Fluid JARVIS Grid Canvas CSS --- */
+
 
     /* Progress Bar */
     .progress-container {
@@ -160,7 +159,7 @@
       max-width: 600px;
     }
 
-    /* Lab Mode Toggle */
+    /* Lab Mode Toggle - Now a semantic button */
     .lab-toggle {
       position: fixed;
       bottom: 2rem;
@@ -273,12 +272,17 @@
 
     .project-img {
       flex: 1;
-      height: 400px;
+      min-height: 250px; /* Minimum height for smaller screens */
       background-size: cover;
       background-position: center;
       border-radius: 12px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
+    }
+    @media (min-width: 769px) {
+       .project-img {
+          height: 400px; /* Fixed height on larger screens */
+       }
     }
 
     .project-content {
@@ -320,7 +324,9 @@
       padding: 1rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
+      z-index: 10;
+
     }
 
     .skill-category:hover {
@@ -487,14 +493,14 @@
       50% { opacity: 0; }
     }
 
-    /* Rover Vehicle */
+    /* Rover Vehicle - Improved End Visibility */
     .rover-vehicle {
       position: fixed;
       bottom: 20px;
       left: -100px;
       width: 60px;
       height: 30px;
-      background: url('assets/images/rover-icon.png') no-repeat;
+      background: url('assets/images/rover-icon.png') no-repeat center center;
       background-size: contain;
       z-index: 999;
       opacity: 0;
@@ -503,14 +509,70 @@
 
     .rover-vehicle.active {
       opacity: 1;
-      animation: driveRover 8s linear forwards;
+      animation: driveRoverImproved 8s linear forwards;
     }
 
-    @keyframes driveRover {
-      0% { left: -100px; }
-      90% { left: calc(100vw - 100px); }
-      100% { left: calc(50% - 30px); opacity: 0; }
+    /* Improved Rover Animation - Ends visible */
+    @keyframes driveRoverImproved {
+      0% { left: -100px; opacity: 0; }
+      10% { opacity: 1; }
+      90% { left: calc(100vw - 100px); opacity: 1; }
+      100% { left: calc(50% - 30px); opacity: 1; }
     }
+
+    /* Mobile Navigation (Placeholder) */
+    .mobile-nav-toggle {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1002;
+        background: var(--light-navy);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: 'Fira Code', monospace;
+    }
+
+    .mobile-nav-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(10, 25, 47, 0.95);
+        z-index: 1001;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .mobile-nav-menu.active {
+        display: flex;
+    }
+
+    .mobile-nav-menu a {
+        font-size: 1.5rem;
+        color: var(--fg);
+        text-decoration: none;
+        padding: 1rem;
+        transition: color 0.3s ease;
+    }
+
+    .mobile-nav-menu a:hover {
+        color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+        .mobile-nav-toggle {
+            display: block;
+        }
+    }
+
   </style>
 </head>
 <body class="">
@@ -518,16 +580,17 @@
   <!-- Spotlight (Normal Mode) -->
   <div class="spotlight"></div>
 
-  <!-- Grid Deformation (JARVIS Mode) -->
-  <div class="grid-deform"></div>
+  <!-- --- Fluid JARVIS Grid Canvas HTML --- -->
+  <canvas id="gridCanvas"></canvas>
+  <!-- --- End Fluid JARVIS Grid Canvas HTML --- -->
 
   <!-- Progress Bar -->
   <div class="progress-container">
     <div class="progress-bar" id="progressBar"></div>
   </div>
 
-  <!-- Lab Mode Toggle -->
-  <div class="lab-toggle" id="labToggle">Activate JARVIS</div>
+  <!-- Lab Mode Toggle - Now a semantic button -->
+  <button type="button" class="lab-toggle" id="labToggle">Activate JARVIS</button>
 
   <!-- Sidebar -->
   <nav class="sidebar">
@@ -536,6 +599,17 @@
     <a href="#skills">Skills</a>
     <a href="#experience">Experience</a>
     <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Mobile Navigation Toggle (Placeholder) -->
+  <button type="button" class="mobile-nav-toggle" id="mobileNavToggle">Menu</button>
+  <nav class="mobile-nav-menu" id="mobileNavMenu">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+    <a href="#" id="mobileCloseMenu">Close</a>
   </nav>
 
   <!-- Rover Vehicle -->
@@ -789,23 +863,137 @@
 
   </main>
 
-  <script>
-    // Spotlight Effect
+    <script>
+    // --- Consolidated Mousemove Listener for Spotlight ---
     const spotlight = document.querySelector('.spotlight');
     document.addEventListener('mousemove', e => {
       const { clientX, clientY } = e;
       spotlight.style.setProperty('--x', `${clientX}px`);
       spotlight.style.setProperty('--y', `${clientY}px`);
     });
+    // --- End Consolidated Mousemove Listener for Spotlight ---
 
-    // Grid Deformation Effect
-    const gridDeform = document.querySelector('.grid-deform');
+
+    // --- JARVIS Water-Effect Grid JavaScript (Smooth & Slower Version) ---
+    const canvas = document.getElementById('gridCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas(); // Initial size
+
+    // --- Parameters for smoother, slower, eye-friendly animation ---
+    const spacing = 50; // Point spacing (increased for less density)
+    const rippleExpansionSpeed = 0.25; // Much slower ripple growth
+    const waveSpeed = 0.03; // Much slower wave propagation across points
+    const waveSize = 12; // Maximum potential wave displacement
+    const rippleFadeDistance = 400; // Ripples last longer before disappearing
+    const maxWaveContribution = 8; // Cap max pixel offset per ripple for smoothness
+    const baseOpacity = 0.3; // Base opacity of grid points
+    const lineWidth = 1.1; // Line width of grid points
+    // --- End Parameters ---
+
+    let ripples = []; // Array to store active ripples
+
+    // Add a new ripple at the mouse position when moving in lab mode
     document.addEventListener('mousemove', e => {
-      const { clientX, clientY } = e;
-      const x = (clientX / window.innerWidth) * 100;
-      const y = (clientY / window.innerHeight) * 100;
-      gridDeform.style.backgroundPosition = `${x}vw ${y}vh`;
+      if (document.body.classList.contains('lab-mode')) {
+        ripples.push({ x: e.clientX, y: e.clientY, radius: 0 });
+      }
     });
+
+    /**
+     * Draws the fluid grid with ripple distortions.
+     * Calculates the offset for each grid point based on active ripples.
+     */
+    function drawGrid() {
+      // Clear the entire canvas for the next frame
+      ctx.clearRect(0, 0, width, height);
+
+      // Set the visual style for the grid points
+      ctx.strokeStyle = `rgba(0, 255, 255, ${baseOpacity})`;
+      ctx.lineWidth = lineWidth;
+
+      // Iterate through each potential grid point location
+      for (let x = 0; x <= width; x += spacing) {
+        for (let y = 0; y <= height; y += spacing) {
+          let offsetX = 0;
+          let offsetY = 0;
+
+          // Calculate cumulative offset from all active ripples
+          ripples.forEach(r => {
+            const dx = x - r.x;
+            const dy = y - r.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            // Skip calculation if point is too close to ripple origin
+            if (dist < 1) return;
+
+            // --- Calculate the smooth, slow-moving wave effect ---
+            // Influence how far the wave has traveled to reach this point
+            const waveInfluence = dist / 20; // Slower wave propagation
+            // Time component based on ripple's current radius and wave speed
+            const waveTime = r.radius * waveSpeed;
+            // Calculate the sine wave value, diminishing with distance
+            // Adjusted falloff for smoother edges
+            const waveAmplitude = (waveSize / (1 + dist * 0.012));
+            const wave = Math.sin(waveInfluence - waveTime) * waveAmplitude;
+            // --- End Wave Calculation ---
+
+            // Normalize the direction vector from ripple center to point
+            const ndx = dx / dist;
+            const ndy = dy / dist;
+
+            // Apply the calculated wave offset, capped for stability
+            // Preserve the sign of the wave for directional influence
+            const contributionX = ndx * Math.min(Math.abs(wave), maxWaveContribution) * (wave >= 0 ? 1 : -1);
+            const contributionY = ndy * Math.min(Math.abs(wave), maxWaveContribution) * (wave >= 0 ? 1 : -1);
+
+            offsetX += contributionX;
+            offsetY += contributionY;
+          });
+
+          // Draw the grid point circle at its potentially distorted location
+          ctx.beginPath();
+          // Add a tiny bit of randomness to position to reduce visible grid alignment
+          const jitterX = (Math.random() - 0.5) * 0.5;
+          const jitterY = (Math.random() - 0.5) * 0.5;
+          ctx.arc(x + offsetX + jitterX, y + offsetY + jitterY, 1, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      // --- Update Ripple States ---
+      // Gradually increase the radius of each ripple
+      ripples.forEach(r => r.radius += rippleExpansionSpeed);
+      // Filter out ripples that have expanded beyond the fade distance
+      ripples = ripples.filter(r => r.radius < rippleFadeDistance);
+      // --- End Update Ripple States ---
+    }
+
+    /**
+     * Main animation loop.
+     * Calls drawGrid only if in lab mode, then requests the next animation frame.
+     */
+    function animate() {
+      if (document.body.classList.contains('lab-mode')) {
+        drawGrid(); // Draw the next frame of the animated grid
+      } else {
+        // Ensure canvas is clear when not in lab mode
+        ctx.clearRect(0, 0, width, height);
+      }
+      // Schedule the next frame
+      requestAnimationFrame(animate);
+    }
+
+    // Start the animation loop
+    animate();
+    // --- End JARVIS Water-Effect Grid JavaScript (Smooth & Slower Version) ---
+
 
     // Progress Bar
     window.addEventListener('scroll', () => {
@@ -838,16 +1026,10 @@
     const rover = document.querySelector('.rover-vehicle');
     const heroName = document.getElementById('heroName');
     const aboutSection = document.getElementById('about');
+    const aboutContentElement = document.getElementById('aboutContent');
 
-    // Store original content
-    const originalAboutHTML = `
-      <h2>About Me</h2>
-      <p id="aboutContent">
-        As a third-year Mechanical Engineering student at Memorial University, I’m driven by a deep passion for designing, building, and improving technology. From high-performance vehicles to UAVs, robotics, and sustainable energy systems, I thrive on tackling diverse engineering challenges through a mix of hands-on prototyping, CAD modeling, and simulation. I enjoy blending creativity with technical precision to develop innovative and efficient solutions. When I’m not immersed in engineering projects, you’ll often find me playing musical instruments or getting lost in a great movie.
-      </p>
-    `;
+    const originalAboutText = aboutContentElement.textContent;
 
-    // Check saved preference
     if (localStorage.getItem('jarvisMode') === 'true') {
       activateJarvis(true);
     }
@@ -865,20 +1047,18 @@
       document.body.classList.add('lab-mode');
       labToggle.textContent = 'JARVIS: ONLINE';
 
-      // Hide spotlight, show grid
       spotlight.style.display = 'none';
-      gridDeform.style.display = 'block';
+      // Grid canvas visibility is handled by CSS .lab-mode #gridCanvas { display: block; }
 
-      // Run boot sequence
-      typeBootSequence();
+      if (!silent) {
+        typeBootSequence();
+      }
 
-      // Show rover
       setTimeout(() => {
         rover.style.display = 'block';
         setTimeout(() => rover.classList.add('active'), 100);
       }, 3000);
 
-      // Light up name
       heroName.style.color = '#00ffff';
       heroName.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.7)';
 
@@ -889,18 +1069,21 @@
       document.body.classList.remove('lab-mode');
       labToggle.textContent = 'Activate JARVIS';
 
-      // Show spotlight, hide grid
       spotlight.style.display = 'block';
-      gridDeform.style.display = 'none';
+      // Grid canvas visibility is handled by CSS .lab-mode #gridCanvas { display: block; }
 
-      // Restore original content
-      aboutSection.innerHTML = originalAboutHTML;
+      aboutSection.innerHTML = '';
+      const title = document.createElement('h2');
+      title.textContent = 'About Me';
+      const content = document.createElement('p');
+      content.id = 'aboutContent';
+      content.textContent = originalAboutText;
+      aboutSection.appendChild(title);
+      aboutSection.appendChild(content);
 
-      // Reset name color
       heroName.style.color = '';
       heroName.style.textShadow = '';
 
-      // Hide rover
       rover.style.display = 'none';
       rover.classList.remove('active');
 
@@ -908,7 +1091,11 @@
     }
 
     function typeBootSequence() {
-      aboutSection.innerHTML = '';
+      const aboutContent = document.getElementById('aboutContent');
+      if (aboutContent) aboutContent.remove();
+      const aboutTitle = aboutSection.querySelector('h2');
+      if (aboutTitle) aboutTitle.remove();
+
       const lines = [
         "INITIALIZING SYSTEMS...",
         "LOADING PROFILE: ALIF_MAHIN",
@@ -932,6 +1119,26 @@
         }
       }, 800);
     }
+
+    // Mobile Navigation (Basic Implementation)
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const mobileNavMenu = document.getElementById('mobileNavMenu');
+    const mobileCloseMenu = document.getElementById('mobileCloseMenu');
+
+    if (mobileNavToggle && mobileNavMenu) {
+        mobileNavToggle.addEventListener('click', () => {
+            mobileNavMenu.classList.add('active');
+        });
+
+        const closeMenu = () => {
+            mobileNavMenu.classList.remove('active');
+        };
+
+        if (mobileCloseMenu) {
+            mobileCloseMenu.addEventListener('click', closeMenu);
+        }
+    }
+
   </script>
 </body>
 </html>
