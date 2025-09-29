@@ -333,7 +333,6 @@
     .view-btn:hover {
       transform: translateX(5px);
     }
-
     /* Skills Section */
     .skills-container {
       display: grid;
@@ -351,7 +350,7 @@
       position: relative;
       overflow: visible;
       z-index: 10;
-
+      cursor: pointer;
     }
 
     .skill-category:hover {
@@ -379,8 +378,8 @@
       border: 1px solid var(--border);
       border-radius: 4px;
       transition: all 0.3s ease;
-      /* cursor: help; Removed as popups are gone */
       position: relative;
+      cursor: pointer;
     }
 
     .skill-item:hover {
@@ -388,7 +387,93 @@
       box-shadow: 0 4px 10px rgba(100, 255, 218, 0.2);
     }
 
-    /* Experience Section */
+    /* Skill Popup */
+    .skill-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: var(--navy);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 600px;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .skill-popup.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .skill-popup-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .skill-popup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skill-popup-header h3 {
+      color: var(--accent);
+      margin: 0;
+    }
+
+    .skill-popup-close {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .skill-popup-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .skill-popup-description {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .skill-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .skill-popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+/* Experience Section */
     #experience {
       margin: 4rem 0;
     }
@@ -705,70 +790,79 @@
         </div>
       </div>
     </section>
-
     <!-- Skills Section -->
     <section class="section" id="skills">
       <h2>Skills</h2>
       <div class="skills-container">
-        <div class="skill-category">
+        <div class="skill-category" data-skill="design">
           <h3>Design & CAD</h3>
           <div class="skill-items">
-            <span class="skill-item">Fusion 360</span>
-            <span class="skill-item">SolidWorks</span>
-            <span class="skill-item">Inventor</span>
-            <!-- Removed Onshape -->
+            <span class="skill-item" data-skill="fusion360">Fusion 360</span>
+            <span class="skill-item" data-skill="solidworks">SolidWorks</span>
+            <span class="skill-item" data-skill="inventor">Inventor</span>
           </div>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category" data-skill="analysis">
           <h3>Analysis & Simulation</h3>
           <div class="skill-items">
-            <span class="skill-item">ANSYS Fluent</span>
-            <span class="skill-item">Abaqus</span>
-            <span class="skill-item">MATLAB</span>
-            <!-- Removed Python -->
+            <span class="skill-item" data-skill="ansys">ANSYS Fluent</span>
+            <span class="skill-item" data-skill="abaqus">Abaqus</span>
+            <span class="skill-item" data-skill="matlab">MATLAB</span>
           </div>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category" data-skill="prototyping">
           <h3>Prototyping & Manufacturing</h3>
           <div class="skill-items">
-            <span class="skill-item">3D Printing</span>
-            <span class="skill-item">CNC Machining</span>
-            <span class="skill-item">CAM Programming</span>
+            <span class="skill-item" data-skill="3dprinting">3D Printing</span>
+            <span class="skill-item" data-skill="cnc">CNC Machining</span>
+            <span class="skill-item" data-skill="cam">CAM Programming</span>
           </div>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category" data-skill="electronics">
           <h3>Electronics & Embedded</h3>
           <div class="skill-items">
-            <span class="skill-item">Arduino</span>
-            <span class="skill-item">Sensors & Actuators</span>
-            <span class="skill-item">Soldering</span>
+            <span class="skill-item" data-skill="arduino">Arduino</span>
+            <span class="skill-item" data-skill="sensors">Sensors & Actuators</span>
+            <span class="skill-item" data-skill="soldering">Soldering</span>
           </div>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category" data-skill="programming">
           <h3>Programming</h3>
           <div class="skill-items">
-            <span class="skill-item">Python</span>
-            <span class="skill-item">C++</span>
-            <span class="skill-item">HTML/CSS</span>
+            <span class="skill-item" data-skill="python">Python</span>
+            <span class="skill-item" data-skill="cpp">C++</span>
+            <span class="skill-item" data-skill="web">HTML/CSS</span>
           </div>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category" data-skill="tools">
           <h3>General Tools</h3>
           <div class="skill-items">
-            <span class="skill-item">MS Office</span>
-            <span class="skill-item">Adobe CC</span>
-            <span class="skill-item">WHMIS Certified</span>
+            <span class="skill-item" data-skill="office">MS Office</span>
+            <span class="skill-item" data-skill="adobe">Adobe CC</span>
+            <span class="skill-item" data-skill="whmis">WHMIS Certified</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Experience -->
+    <!-- Skill Popup -->
+    <div class="skill-popup-overlay" id="skillPopupOverlay"></div>
+    <div class="skill-popup" id="skillPopup">
+      <div class="skill-popup-content">
+        <div class="skill-popup-header">
+          <h3 id="skillPopupTitle">Skill Title</h3>
+          <button class="skill-popup-close" id="skillPopupClose">&times;</button>
+        </div>
+        <img id="skillPopupImage" class="skill-popup-image" src="" alt="Skill Image">
+        <p id="skillPopupDescription" class="skill-popup-description">Skill description will appear here.</p>
+      </div>
+    </div>
+<!-- Experience -->
     <section class="section" id="experience">
       <h2>Experience</h2>
 
@@ -1219,7 +1313,6 @@
         }
       }, 800);
     }
-
     // Mobile Navigation (Basic Implementation)
     const mobileNavToggle = document.getElementById('mobileNavToggle');
     const mobileNavMenu = document.getElementById('mobileNavMenu');
@@ -1238,6 +1331,163 @@
             mobileCloseMenu.addEventListener('click', closeMenu);
         }
     }
+
+    // Skill Popup Functionality
+    const skillPopup = document.getElementById('skillPopup');
+    const skillPopupOverlay = document.getElementById('skillPopupOverlay');
+    const skillPopupClose = document.getElementById('skillPopupClose');
+    const skillPopupTitle = document.getElementById('skillPopupTitle');
+    const skillPopupImage = document.getElementById('skillPopupImage');
+    const skillPopupDescription = document.getElementById('skillPopupDescription');
+
+    // Skill data with descriptions and images
+    const skillData = {
+      // Design & CAD
+      fusion360: {
+        title: "Autodesk Fusion 360",
+        image: "http://static.photos/technology/640x360/1",
+        description: "Extensive experience in parametric modeling, assembly design, and manufacturing workflows using Fusion 360. Proficient in creating complex geometries, simulations, and generating production-ready drawings."
+      },
+      solidworks: {
+        title: "SolidWorks",
+        image: "http://static.photos/technology/640x360/2",
+        description: "Advanced skills in 3D CAD modeling, assembly design, and mechanical simulation. Experienced in creating detailed engineering drawings and performing motion studies for mechanism design."
+      },
+      inventor: {
+        title: "Autodesk Inventor",
+        image: "http://static.photos/technology/640x360/3",
+        description: "Proficient in parametric modeling and assembly design with Inventor. Skilled in creating weldments, sheet metal parts, and generating detailed manufacturing documentation."
+      },
+      
+      // Analysis & Simulation
+      ansys: {
+        title: "ANSYS Fluent",
+        image: "http://static.photos/technology/640x360/4",
+        description: "Hands-on experience with computational fluid dynamics simulations. Capable of setting up complex flow scenarios, turbulence modeling, and interpreting results for engineering optimization."
+      },
+      abaqus: {
+        title: "Abaqus",
+        image: "http://static.photos/technology/640x360/5",
+        description: "Skilled in finite element analysis for structural mechanics problems. Experienced in nonlinear analysis, contact modeling, and material behavior simulation for complex engineering components."
+      },
+      matlab: {
+        title: "MATLAB",
+        image: "http://static.photos/technology/640x360/6",
+        description: "Proficient in numerical computing, data analysis, and algorithm development. Experienced in control system design, signal processing, and mathematical modeling for engineering applications."
+      },
+      
+      // Prototyping & Manufacturing
+      "3dprinting": {
+        title: "3D Printing",
+        image: "http://static.photos/technology/640x360/7",
+        description: "Extensive hands-on experience with FDM and SLA 3D printing technologies. Knowledgeable in print preparation, material selection, troubleshooting, and post-processing techniques for functional prototypes."
+      },
+      cnc: {
+        title: "CNC Machining",
+        image: "http://static.photos/technology/640x360/8",
+        description: "Practical experience in CNC mill and lathe operation. Skilled in setup, tool selection, workholding, and machining various materials including metals and plastics to precise tolerances."
+      },
+      cam: {
+        title: "CAM Programming",
+        image: "http://static.photos/technology/640x360/9",
+        description: "Proficient in generating toolpaths using CAM software for CNC machining. Experienced in programming 2.5-axis to complex 3D machining operations with proper cutting strategies."
+      },
+      
+      // Electronics & Embedded
+      arduino: {
+        title: "Arduino",
+        image: "http://static.photos/technology/640x360/10",
+        description: "Strong skills in embedded systems development using Arduino platforms. Experienced in sensor integration, actuator control, communication protocols, and real-time system programming."
+      },
+      sensors: {
+        title: "Sensors & Actuators",
+        image: "http://static.photos/technology/640x360/11",
+        description: "Knowledgeable in selecting and integrating various sensors (temperature, pressure, IMU, etc.) and actuators (motors, servos, solenoids) for automated systems and IoT applications."
+      },
+      soldering: {
+        title: "Soldering",
+        image: "http://static.photos/technology/640x360/12",
+        description: "Proficient in through-hole and surface-mount soldering techniques. Experienced in circuit board assembly, rework, and repair for electronic prototypes and custom hardware projects."
+      },
+      
+      // Programming
+      python: {
+        title: "Python",
+        image: "http://static.photos/technology/640x360/13",
+        description: "Strong programming skills in Python for automation, data analysis, and scripting. Experienced in scientific computing libraries, web scraping, and developing GUI applications."
+      },
+      cpp: {
+        title: "C++",
+        image: "http://static.photos/technology/640x360/14",
+        description: "Competent in C++ for system-level programming and performance-critical applications. Knowledgeable in object-oriented programming, memory management, and standard template library usage."
+      },
+      web: {
+        title: "Web Development (HTML/CSS)",
+        image: "http://static.photos/technology/640x360/15",
+        description: "Skilled in front-end web development with HTML5 and CSS3. Experienced in responsive design, modern layout techniques, and creating visually appealing user interfaces for web applications."
+      },
+      
+      // General Tools
+      office: {
+        title: "Microsoft Office Suite",
+        image: "http://static.photos/office/640x360/16",
+        description: "Proficient in Microsoft Word, Excel, and PowerPoint for technical documentation, data analysis, and presentation creation. Experienced in advanced Excel functions and data visualization."
+      },
+      adobe: {
+        title: "Adobe Creative Suite",
+        image: "http://static.photos/technology/640x360/17",
+        description: "Skilled in Adobe Photoshop, Illustrator, and InDesign for graphic design, image editing, and professional document layout. Experienced in creating technical illustrations and marketing materials."
+      },
+      whmis: {
+        title: "WHMIS Certification",
+        image: "http://static.photos/industry/640x360/18",
+        description: "Certified in Workplace Hazardous Materials Information System (WHMIS). Knowledgeable in hazard identification, safe handling procedures, and regulatory compliance for workplace chemicals."
+      }
+    };
+
+    // Open popup when clicking on skill items or categories
+    document.querySelectorAll('.skill-item, .skill-category').forEach(element => {
+      element.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const skillKey = element.dataset.skill;
+        
+        // If we clicked on a category, show a generic popup for the category
+        if (element.classList.contains('skill-category')) {
+          const categoryName = element.querySelector('h3').textContent;
+          skillPopupTitle.textContent = categoryName;
+          skillPopupImage.src = `http://static.photos/technology/640x360/${Math.floor(Math.random() * 100) + 1}`;
+          skillPopupDescription.textContent = `This category includes various skills and tools related to ${categoryName.toLowerCase()}. Hover over individual skills to see detailed information.`;
+        } 
+        // If we clicked on a specific skill item
+        else if (skillData[skillKey]) {
+          const skill = skillData[skillKey];
+          skillPopupTitle.textContent = skill.title;
+          skillPopupImage.src = skill.image;
+          skillPopupDescription.textContent = skill.description;
+        }
+        
+        skillPopup.classList.add('active');
+        skillPopupOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when popup is open
+      });
+    });
+
+    // Close popup functions
+    function closeSkillPopup() {
+      skillPopup.classList.remove('active');
+      skillPopupOverlay.classList.remove('active');
+      document.body.style.overflow = ''; // Re-enable scrolling
+    }
+
+    skillPopupClose.addEventListener('click', closeSkillPopup);
+    skillPopupOverlay.addEventListener('click', closeSkillPopup);
+
+    // Close popup with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && skillPopup.classList.contains('active')) {
+        closeSkillPopup();
+      }
+    });
 
   </script>
 </body>
