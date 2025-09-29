@@ -17,7 +17,6 @@
       --border: rgba(100, 255, 218, 0.2);
       --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
-
     .lab-mode {
       --bg: #000;
       --fg: #0f8d8f;
@@ -28,13 +27,11 @@
       background: #000;
       font-family: 'Fira Code', 'Courier New', monospace;
     }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       background-color: var(--bg);
       color: var(--fg);
@@ -44,7 +41,6 @@
       overflow-x: hidden;
       transition: background 0.6s ease, color 0.6s ease;
     }
-
     /* Spotlight Effect (Normal Mode) - Improved Visibility */
     .spotlight {
       position: fixed;
@@ -62,7 +58,6 @@
       );
       transition: background 0.6s ease;
     }
-
     /* --- Fluid JARVIS Grid Canvas CSS --- */
     #gridCanvas {
       position: fixed;
@@ -79,8 +74,6 @@
        display: block; /* Show in lab mode */
     }
     /* --- End Fluid JARVIS Grid Canvas CSS --- */
-
-
     /* Progress Bar */
     .progress-container {
       width: 100%;
@@ -91,41 +84,34 @@
       left: 0;
       z-index: 1001;
     }
-
     .lab-mode .progress-container {
       background: #111;
     }
-
     .progress-bar {
       height: 4px;
       background: var(--accent);
       width: 0%;
       transition: width 0.1s ease-out;
     }
-
     a {
       color: var(--accent);
       text-decoration: none;
       transition: color 0.3s ease;
     }
-
     a:hover {
       color: #7fffd4;
     }
-
     .container {
       max-width: 900px;
       margin: 0 auto;
       padding: 4rem clamp(1rem, 5vw, 2rem);
       width: 100%;
     }
-
     .mono {
       font-family: 'Fira Code', monospace;
       color: var(--accent);
       font-size: 0.9rem;
     }
-
     h1 {
       font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 700;
@@ -133,7 +119,6 @@
       line-height: 1.1;
       transition: color 0.5s, text-shadow 0.5s;
     }
-
     h2 {
       font-size: 1.5rem;
       font-weight: 600;
@@ -143,7 +128,6 @@
       display: flex;
       align-items: center;
     }
-
     h2::after {
       content: '';
       display: block;
@@ -153,12 +137,10 @@
       background-color: var(--border);
       margin-left: 20px;
     }
-
     p {
       color: var(--muted);
       max-width: 600px;
     }
-
     /* Lab Mode Toggle - Now a semantic button */
     .lab-toggle {
       position: fixed;
@@ -176,11 +158,9 @@
       transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
       box-shadow: 0 4px 10px rgba(100, 255, 218, 0.1);
     }
-
     .lab-toggle:hover {
       transform: translateY(-2px);
     }
-
     .lab-mode .lab-toggle {
       background: rgba(0, 255, 255, 0.1);
       color: #00ffff;
@@ -188,13 +168,11 @@
       animation: pulse 1.5s infinite;
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
-
     @keyframes pulse {
       0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.4); }
       50% { box-shadow: 0 0 25px rgba(0, 255, 255, 0.7); }
       100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.4); }
     }
-
     /* Sidebar */
     .sidebar {
       position: fixed;
@@ -206,18 +184,15 @@
       gap: 1rem;
       z-index: 1000;
     }
-
     .sidebar a {
       font-family: 'Fira Code', monospace;
       font-size: 0.85rem;
       color: var(--muted);
       transition: var(--transition);
     }
-
     .sidebar a:hover {
       color: var(--accent);
     }
-
     @media (max-width: 768px) {
       .sidebar {
         display: none;
@@ -226,31 +201,26 @@
         padding-top: 6rem;
       }
     }
-
     /* Section Animations */
     .section {
       opacity: 0;
       transform: translateY(30px);
       transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
-
     .section.show {
       opacity: 1;
       transform: translateY(0);
     }
-
     /* Projects Section */
     #projects {
       overflow: hidden;
       margin: 4rem 0;
     }
-
     .project-scroll-container {
       display: flex;
       flex-direction: column;
       gap: 6rem;
     }
-
     .project-slide {
       display: flex;
       min-height: 80vh;
@@ -260,16 +230,13 @@
       transform: translateX(-60px);
       transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
-
     .project-slide.show {
       opacity: 1;
       transform: translateX(0);
     }
-
     .project-slide.reverse {
       flex-direction: row-reverse;
     }
-
     /* --- Project Image Slideshow --- */
     .project-img-container {
       flex: 1;
@@ -280,13 +247,11 @@
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
     }
-
     @media (min-width: 769px) {
        .project-img-container {
           height: 400px; /* Fixed height on larger screens */
        }
     }
-
     .project-img-slide {
       position: absolute;
       top: 0;
@@ -297,30 +262,24 @@
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
-
     /* Show the first image by default */
     .project-img-slide:first-child {
         opacity: 1;
     }
-
     /* Optional: Add a class to explicitly show an image */
     .project-img-slide.active {
         opacity: 1;
     }
     /* --- End Project Image Slideshow --- */
-
-
     .project-content {
       flex: 1;
       max-width: 500px;
     }
-
     .project-content h3 {
       font-size: 1.8rem;
       color: var(--accent);
       margin-bottom: 1rem;
     }
-
     .view-btn {
       display: inline-block;
       color: var(--accent);
@@ -329,11 +288,9 @@
       font-size: 0.9rem;
       transition: all 0.3s ease;
     }
-
     .view-btn:hover {
       transform: translateX(5px);
     }
-
     /* Skills Section */
     .skills-container {
       display: grid;
@@ -341,7 +298,6 @@
       gap: 1.5rem;
       margin-top: 2rem;
     }
-
     .skill-category {
       background: var(--light-navy);
       border: 1px solid var(--border);
@@ -351,27 +307,40 @@
       position: relative;
       overflow: visible;
       z-index: 10;
-
     }
-
     .skill-category:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
-
     .skill-category h3 {
       font-size: 1.1rem;
       margin-bottom: 0.8rem;
       color: var(--accent);
       text-align: center;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-
+    .skill-category h3::after {
+      content: "▼";
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+    }
+    .skill-category.expanded h3::after {
+      transform: rotate(180deg);
+    }
     .skill-items {
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
     }
-
+    .skill-category.expanded .skill-items {
+      max-height: 500px;
+    }
     .skill-item {
       font-size: 0.9rem;
       padding: 0.4rem 0.8rem;
@@ -379,29 +348,23 @@
       border: 1px solid var(--border);
       border-radius: 4px;
       transition: all 0.3s ease;
-      /* cursor: help; Removed as popups are gone */
       position: relative;
     }
-
     .skill-item:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 10px rgba(100, 255, 218, 0.2);
     }
-
     /* Experience Section */
     #experience {
       margin: 4rem 0;
     }
-
     .experience-item {
       margin-bottom: 2.5rem;
     }
-
     /* Contact Section */
     #contact {
       text-align: center;
     }
-
     #contact div {
       display: flex;
       flex-wrap: wrap;
@@ -409,7 +372,6 @@
       gap: 2rem;
       margin-top: 2rem;
     }
-
     #contact a {
       display: flex;
       align-items: center;
@@ -419,12 +381,10 @@
       border-radius: 30px;
       transition: var(--transition);
     }
-
     #contact a:hover {
       background: var(--light-navy);
       transform: translateY(-3px);
     }
-
     /* Fix for g=10 line break */
     .subtitle {
       display: flex;
@@ -434,7 +394,6 @@
     .subtitle span {
       white-space: nowrap;
     }
-
     /* Terminal Cursor */
     .lab-mode h1::after {
       content: "_";
@@ -442,12 +401,10 @@
       margin-left: 5px;
       color: var(--accent);
     }
-
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
-
     /* Rover Vehicle - Improved End Visibility */
     .rover-vehicle {
       position: fixed;
@@ -461,12 +418,10 @@
       opacity: 0;
       transition: opacity 0.5s;
     }
-
     .rover-vehicle.active {
       opacity: 1;
       animation: driveRoverImproved 8s linear forwards;
     }
-
     /* Improved Rover Animation - Ends visible */
     @keyframes driveRoverImproved {
       0% { left: -100px; opacity: 0; }
@@ -474,7 +429,6 @@
       90% { left: calc(100vw - 100px); opacity: 1; }
       100% { left: calc(50% - 30px); opacity: 1; }
     }
-
     /* Mobile Navigation (Placeholder) */
     .mobile-nav-toggle {
         display: none;
@@ -490,7 +444,6 @@
         cursor: pointer;
         font-family: 'Fira Code', monospace;
     }
-
     .mobile-nav-menu {
         display: none;
         position: fixed;
@@ -505,11 +458,9 @@
         align-items: center;
         gap: 2rem;
     }
-
     .mobile-nav-menu.active {
         display: flex;
     }
-
     .mobile-nav-menu a {
         font-size: 1.5rem;
         color: var(--fg);
@@ -517,17 +468,14 @@
         padding: 1rem;
         transition: color 0.3s ease;
     }
-
     .mobile-nav-menu a:hover {
         color: var(--accent);
     }
-
     @media (max-width: 768px) {
         .mobile-nav-toggle {
             display: block;
         }
     }
-
     /* --- JARVIS Boot/Shutdown Overlay --- */
     .jarvis-overlay {
         position: fixed;
@@ -547,12 +495,10 @@
         pointer-events: none; /* Allow clicks to pass through when hidden */
         transition: opacity 0.5s ease;
     }
-
     .jarvis-overlay.active {
         opacity: 1;
         pointer-events: auto; /* Block clicks when active */
     }
-
     .jarvis-overlay-text {
         text-align: center;
         white-space: pre-wrap; /* Allow line breaks */
@@ -562,56 +508,79 @@
         /* background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px); */
     }
     /* --- End JARVIS Boot/Shutdown Overlay --- */
-
     /* --- Improved JARVIS Mode Skills Contrast --- */
     /* Enhance text color and potentially background for better readability */
     .lab-mode .skill-category {
         background: rgba(10, 25, 47, 0.8); /* Slightly more opaque background */
         border: 1px solid rgba(0, 255, 255, 0.5); /* Increase border opacity */
     }
-
     .lab-mode .skill-category h3 {
         color: #00ffff; /* Keep accent color */
         text-shadow: 0 0 8px rgba(0, 255, 255, 0.8); /* Enhance text shadow */
     }
-
     .lab-mode .skill-item {
         background: rgba(0, 255, 255, 0.1); /* Slightly more opaque background */
         border: 1px solid rgba(0, 255, 255, 0.3); /* Increase border opacity */
         color: #00ffff; /* Ensure text is bright cyan */
         /* Optional: Add a subtle glow on hover for items too */
     }
-
     .lab-mode .skill-item:hover {
         background: rgba(0, 255, 255, 0.2);
         box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); /* Enhance hover glow */
     }
     /* --- End Improved JARVIS Mode Skills Contrast --- */
-
+    /* Lightbox Styles */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10001;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+    }
+    .close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 10002;
+    }
   </style>
 </head>
 <body class="">
-
   <!-- JARVIS Boot/Shutdown Screen Overlay -->
   <div id="jarvisOverlay" class="jarvis-overlay">
     <pre id="jarvisOverlayText" class="jarvis-overlay-text"></pre>
   </div>
-
   <!-- Spotlight (Normal Mode) -->
   <div class="spotlight"></div>
-
   <!-- --- Fluid JARVIS Grid Canvas HTML --- -->
   <canvas id="gridCanvas"></canvas>
   <!-- --- End Fluid JARVIS Grid Canvas HTML --- -->
-
   <!-- Progress Bar -->
   <div class="progress-container">
     <div class="progress-bar" id="progressBar"></div>
   </div>
-
   <!-- Lab Mode Toggle - Now a semantic button -->
   <button type="button" class="lab-toggle" id="labToggle">Activate JARVIS</button>
-
   <!-- Sidebar -->
   <nav class="sidebar">
     <a href="#about">About</a>
@@ -620,7 +589,6 @@
     <a href="#experience">Experience</a>
     <a href="#contact">Contact</a>
   </nav>
-
   <!-- Mobile Navigation Toggle (Placeholder) -->
   <button type="button" class="mobile-nav-toggle" id="mobileNavToggle">Menu</button>
   <nav class="mobile-nav-menu" id="mobileNavMenu">
@@ -631,13 +599,10 @@
     <a href="#contact">Contact</a>
     <a href="#" id="mobileCloseMenu">Close</a>
   </nav>
-
   <!-- Rover Vehicle -->
   <div class="rover-vehicle"></div>
-
   <!-- Main Content -->
   <main class="container">
-
     <!-- Hero -->
     <p class="mono" style="color: var(--accent); margin-bottom: 1rem;">Hi, my name is</p>
     <h1 id="heroName">Alif Ayman Mahin.</h1>
@@ -649,7 +614,6 @@
       <span>, and believe that <span class="accent">g = 10 m/s²</span></span>
     </div>
     <a href="assets/resume.pdf" download class="resume-btn">Download Resume</a> <!-- Ensure resume.pdf exists -->
-
     <!-- About -->
     <section class="section" id="about">
       <h2>About Me</h2>
@@ -657,7 +621,6 @@
         As a third-year Mechanical Engineering student at Memorial University, I’m driven by a deep passion for designing, building, and improving technology. From high-performance vehicles to UAVs, robotics, and sustainable energy systems, I thrive on tackling diverse engineering challenges through a mix of hands-on prototyping, CAD modeling, and simulation. I enjoy blending creativity with technical precision to develop innovative and efficient solutions. When I’m not immersed in engineering projects, you’ll often find me playing musical instruments or getting lost in a great movie.
       </p>
     </section>
-
     <!-- Projects -->
     <section class="section" id="projects">
       <h2>Projects</h2>
@@ -675,7 +638,6 @@
             <a href="https://sidusrobotics.ca/" target="_blank" class="view-btn">View Team Site →</a>
           </div>
         </div>
-
         <!-- Project 2 -->
         <div class="project-slide reverse">
           <div class="project-img-container">
@@ -689,7 +651,6 @@
             <a href="https://www.linkedin.com/company/valiant-aerotech/" target="_blank" class="view-btn">Learn More →</a>
           </div>
         </div>
-
         <!-- Project 3 -->
         <div class="project-slide">
           <div class="project-img-container">
@@ -705,7 +666,6 @@
         </div>
       </div>
     </section>
-
     <!-- Skills Section -->
     <section class="section" id="skills">
       <h2>Skills</h2>
@@ -719,7 +679,6 @@
             <!-- Removed Onshape -->
           </div>
         </div>
-
         <div class="skill-category">
           <h3>Analysis & Simulation</h3>
           <div class="skill-items">
@@ -729,7 +688,6 @@
             <!-- Removed Python -->
           </div>
         </div>
-
         <div class="skill-category">
           <h3>Prototyping & Manufacturing</h3>
           <div class="skill-items">
@@ -738,7 +696,6 @@
             <span class="skill-item">CAM Programming</span>
           </div>
         </div>
-
         <div class="skill-category">
           <h3>Electronics & Embedded</h3>
           <div class="skill-items">
@@ -747,7 +704,6 @@
             <span class="skill-item">Soldering</span>
           </div>
         </div>
-
         <div class="skill-category">
           <h3>Programming</h3>
           <div class="skill-items">
@@ -756,7 +712,6 @@
             <span class="skill-item">HTML/CSS</span>
           </div>
         </div>
-
         <div class="skill-category">
           <h3>General Tools</h3>
           <div class="skill-items">
@@ -767,11 +722,9 @@
         </div>
       </div>
     </section>
-
     <!-- Experience -->
     <section class="section" id="experience">
       <h2>Experience</h2>
-
       <div class="experience-item">
         <p style="color: var(--accent); font-weight: 600;">The Commons, Memorial University</p>
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
@@ -784,7 +737,6 @@
           <li>Redesigned service pricing model to improve access and efficiency.</li>
         </ul>
       </div>
-
       <div class="experience-item">
         <p style="color: var(--accent); font-weight: 600;">Valiant Aerotech</p>
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
@@ -797,7 +749,6 @@
           <li>Supported structural design validation through detailed modeling and finite element analysis.</li>
         </ul>
       </div>
-
       <div class="experience-item">
         <p style="color: var(--accent); font-weight: 600;">Sidus Robotics</p>
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
@@ -811,7 +762,6 @@
         </ul>
       </div>
     </section>
-
     <!-- Contact -->
     <section class="section" id="contact">
       <h2>Get In Touch</h2>
@@ -844,9 +794,12 @@
         </a>
       </div>
     </section>
-
   </main>
-
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="close-lightbox" id="closeLightbox">&times;</span>
+    <img class="lightbox-content" id="lightboxContent" src="" alt="Lightbox Image">
+  </div>
     <script>
     // --- Consolidated Mousemove Listener for Spotlight ---
     const spotlight = document.querySelector('.spotlight');
@@ -856,20 +809,16 @@
       spotlight.style.setProperty('--y', `${clientY}px`);
     });
     // --- End Consolidated Mousemove Listener for Spotlight ---
-
-
     // --- JARVIS Water-Effect Grid JavaScript (Smooth & Slower Version) ---
     const canvas = document.getElementById('gridCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
-
     function resizeCanvas() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas(); // Initial size
-
     // --- Parameters for smoother, slower, eye-friendly animation ---
     const spacing = 50; // Point spacing (increased for less density)
     const rippleExpansionSpeed = 0.25; // Much slower ripple growth
@@ -880,16 +829,13 @@
     const baseOpacity = 0.3; // Base opacity of grid points
     const lineWidth = 1.1; // Line width of grid points
     // --- End Parameters ---
-
     let ripples = []; // Array to store active ripples
-
     // Add a new ripple at the mouse position when moving in lab mode
     document.addEventListener('mousemove', e => {
       if (document.body.classList.contains('lab-mode')) {
         ripples.push({ x: e.clientX, y: e.clientY, radius: 0 });
       }
     });
-
     /**
      * Draws the fluid grid with ripple distortions.
      * Calculates the offset for each grid point based on active ripples.
@@ -897,26 +843,21 @@
     function drawGrid() {
       // Clear the entire canvas for the next frame
       ctx.clearRect(0, 0, width, height);
-
       // Set the visual style for the grid points
       ctx.strokeStyle = `rgba(0, 255, 255, ${baseOpacity})`;
       ctx.lineWidth = lineWidth;
-
       // Iterate through each potential grid point location
       for (let x = 0; x <= width; x += spacing) {
         for (let y = 0; y <= height; y += spacing) {
           let offsetX = 0;
           let offsetY = 0;
-
           // Calculate cumulative offset from all active ripples
           ripples.forEach(r => {
             const dx = x - r.x;
             const dy = y - r.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-
             // Skip calculation if point is too close to ripple origin
             if (dist < 1) return;
-
             // --- Calculate the smooth, slow-moving wave effect ---
             // Influence how far the wave has traveled to reach this point
             const waveInfluence = dist / 20; // Slower wave propagation
@@ -927,20 +868,16 @@
             const waveAmplitude = (waveSize / (1 + dist * 0.012));
             const wave = Math.sin(waveInfluence - waveTime) * waveAmplitude;
             // --- End Wave Calculation ---
-
             // Normalize the direction vector from ripple center to point
             const ndx = dx / dist;
             const ndy = dy / dist;
-
             // Apply the calculated wave offset, capped for stability
             // Preserve the sign of the wave for directional influence
             const contributionX = ndx * Math.min(Math.abs(wave), maxWaveContribution) * (wave >= 0 ? 1 : -1);
             const contributionY = ndy * Math.min(Math.abs(wave), maxWaveContribution) * (wave >= 0 ? 1 : -1);
-
             offsetX += contributionX;
             offsetY += contributionY;
           });
-
           // Draw the grid point circle at its potentially distorted location
           ctx.beginPath();
           // Add a tiny bit of randomness to position to reduce visible grid alignment
@@ -950,7 +887,6 @@
           ctx.stroke();
         }
       }
-
       // --- Update Ripple States ---
       // Gradually increase the radius of each ripple
       ripples.forEach(r => r.radius += rippleExpansionSpeed);
@@ -958,7 +894,6 @@
       ripples = ripples.filter(r => r.radius < rippleFadeDistance);
       // --- End Update Ripple States ---
     }
-
     /**
      * Main animation loop.
      * Calls drawGrid only if in lab mode, then requests the next animation frame.
@@ -973,12 +908,9 @@
       // Schedule the next frame
       requestAnimationFrame(animate);
     }
-
     // Start the animation loop
     animate();
     // --- End JARVIS Water-Effect Grid JavaScript (Smooth & Slower Version) ---
-
-
     // Progress Bar
     window.addEventListener('scroll', () => {
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -986,7 +918,6 @@
       const scrolled = (winScroll / height) * 100;
       document.getElementById("progressBar").style.width = scrolled + "%";
     });
-
     // Section Observer
     const sections = document.querySelectorAll('.section');
     const observer = new IntersectionObserver((entries) => {
@@ -995,7 +926,6 @@
       });
     }, { threshold: 0.1 });
     sections.forEach(s => observer.observe(s));
-
     // Project Slide Animation
     const projectSlides = document.querySelectorAll('.project-slide');
     const slideObserver = new IntersectionObserver((entries) => {
@@ -1004,45 +934,35 @@
       });
     }, { threshold: 0.2 });
     projectSlides.forEach(s => slideObserver.observe(s));
-
     // --- Project Image Slideshow JavaScript ---
     // Find all project slides
     const projectSlidesForSlideshow = document.querySelectorAll('.project-slide');
-
     // Object to store slideshow state for each slide
     const slideshowState = {};
-
     // Function to initialize slideshow for a specific slide
     function initSlideshow(slideElement) {
         const container = slideElement.querySelector('.project-img-container');
         if (!container) return; // Safety check
-
         const images = container.querySelectorAll('.project-img-slide');
         if (images.length <= 1) return; // No need for slideshow if 1 or no images
-
         let currentIndex = 0;
-
         // Function to show the next image
         function showNextImage() {
             // Fade out current image
             images[currentIndex].classList.remove('active');
             images[currentIndex].style.opacity = '0';
-
             // Calculate next index
             currentIndex = (currentIndex + 1) % images.length;
-
             // Fade in next image
             images[currentIndex].classList.add('active');
             images[currentIndex].style.opacity = '1';
         }
-
         // Store the interval ID and currentIndex in the state object
         slideshowState[slideElement.id || `slide-${Array.from(projectSlidesForSlideshow).indexOf(slideElement)}`] = {
             intervalId: setInterval(showNextImage, 3000), // Change image every 3 seconds
             currentIndex: currentIndex
         };
     }
-
     // Function to stop slideshow for a specific slide
     function stopSlideshow(slideElement) {
         const slideId = slideElement.id || `slide-${Array.from(projectSlidesForSlideshow).indexOf(slideElement)}`;
@@ -1052,7 +972,6 @@
             delete slideshowState[slideId]; // Clean up state
         }
     }
-
     // Create an Intersection Observer to manage slideshows
     const slideshowObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1068,25 +987,19 @@
     }, {
         threshold: 0.5 // Trigger when 50% of the slide is visible
     });
-
     // Observe each project slide
     projectSlidesForSlideshow.forEach(slide => slideshowObserver.observe(slide));
     // --- End Project Image Slideshow JavaScript ---
-
-
     // Lab Mode Toggle
     const labToggle = document.getElementById('labToggle');
     const rover = document.querySelector('.rover-vehicle');
     const heroName = document.getElementById('heroName');
     const aboutSection = document.getElementById('about');
     const aboutContentElement = document.getElementById('aboutContent');
-
     const originalAboutText = aboutContentElement.textContent;
-
     if (localStorage.getItem('jarvisMode') === 'true') {
       activateJarvis(true);
     }
-
     labToggle.addEventListener('click', () => {
       const isLabMode = !document.body.classList.contains('lab-mode');
       if (isLabMode) {
@@ -1095,75 +1008,60 @@
         shutdownJarvis();
       }
     });
-
     // --- Updated JARVIS Activation with Boot Screen --- //
     function activateJarvis(silent = false) {
         const overlay = document.getElementById('jarvisOverlay');
         const overlayText = document.getElementById('jarvisOverlayText');
-
         // Show the overlay immediately
         overlay.classList.add('active');
-        overlayText.textContent = "SYSTEM BOOTING UP...\n[====================] 100%";
-
+        overlayText.textContent = "SYSTEM BOOTING UP...
+[====================] 100%";
         // Delay the full activation slightly to show the boot screen
         setTimeout(() => {
             // Apply the lab-mode class and change button text
             document.body.classList.add('lab-mode');
             labToggle.textContent = 'JARVIS: ONLINE';
-
             // Hide spotlight and show grid (handled by CSS)
             spotlight.style.display = 'none';
-
             // Change hero name style
             heroName.style.color = '#00ffff';
             heroName.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.7)';
-
             // Start the boot sequence text in the About section
             if (!silent) {
                 typeBootSequence();
             }
-
             // Animate the rover
             setTimeout(() => {
                 rover.style.display = 'block';
                 setTimeout(() => rover.classList.add('active'), 100);
             }, 3000); // Start rover animation after 3s
-
             // Hide the boot screen overlay after a short time
             setTimeout(() => {
                 overlay.classList.remove('active');
             }, 2000); // Hide overlay after 2s
-
             // Save state
             localStorage.setItem('jarvisMode', 'true');
-
         }, 1500); // Delay full activation by 1.5s to show boot screen
     }
     // --- End Updated JARVIS Activation --- //
-
     // --- Updated JARVIS Shutdown with Shutdown Screen --- //
     function shutdownJarvis() {
         const overlay = document.getElementById('jarvisOverlay');
         const overlayText = document.getElementById('jarvisOverlayText');
-
         // Show the shutdown screen overlay
         overlay.classList.add('active');
-        overlayText.textContent = "SYSTEM SHUTTING DOWN...\n[====================] 100%";
-
+        overlayText.textContent = "SYSTEM SHUTTING DOWN...
+[====================] 100%";
         // Perform shutdown actions after a short delay to show the screen
         setTimeout(() => {
-
             // Remove lab-mode class and reset button text
             document.body.classList.remove('lab-mode');
             labToggle.textContent = 'Activate JARVIS';
-
             // Show spotlight and hide grid (handled by CSS)
             spotlight.style.display = 'block';
-
             // Reset hero name style
             heroName.style.color = '';
             heroName.style.textShadow = '';
-
             // Reset About section content
             aboutSection.innerHTML = '';
             const title = document.createElement('h2');
@@ -1173,29 +1071,23 @@
             content.textContent = originalAboutText;
             aboutSection.appendChild(title);
             aboutSection.appendChild(content);
-
             // Hide the rover
             rover.style.display = 'none';
             rover.classList.remove('active');
-
             // Save state
             localStorage.setItem('jarvisMode', 'false');
-
             // Hide the shutdown screen overlay after actions are complete
             setTimeout(() => {
                  overlay.classList.remove('active');
             }, 1000); // Hide overlay after 1s
-
         }, 1500); // Delay actions by 1.5s to show shutdown screen
     }
     // --- End Updated JARVIS Shutdown --- //
-
     function typeBootSequence() {
       const aboutContent = document.getElementById('aboutContent');
       if (aboutContent) aboutContent.remove();
       const aboutTitle = aboutSection.querySelector('h2');
       if (aboutTitle) aboutTitle.remove();
-
       const lines = [
         "INITIALIZING SYSTEMS...",
         "LOADING PROFILE: ALIF_MAHIN",
@@ -1203,7 +1095,6 @@
         "RUNNING DIAGNOSTICS: PASSED",
         "JARVIS INTERFACE READY"
       ];
-
       let i = 0;
       const interval = setInterval(() => {
         if (i < lines.length) {
@@ -1219,26 +1110,52 @@
         }
       }, 800);
     }
-
     // Mobile Navigation (Basic Implementation)
     const mobileNavToggle = document.getElementById('mobileNavToggle');
     const mobileNavMenu = document.getElementById('mobileNavMenu');
     const mobileCloseMenu = document.getElementById('mobileCloseMenu');
-
     if (mobileNavToggle && mobileNavMenu) {
         mobileNavToggle.addEventListener('click', () => {
             mobileNavMenu.classList.add('active');
         });
-
         const closeMenu = () => {
             mobileNavMenu.classList.remove('active');
         };
-
         if (mobileCloseMenu) {
             mobileCloseMenu.addEventListener('click', closeMenu);
         }
     }
-
+    // Skills Accordion
+    const skillCategories = document.querySelectorAll('.skill-category');
+    skillCategories.forEach(category => {
+      const header = category.querySelector('h3');
+      header.addEventListener('click', () => {
+        category.classList.toggle('expanded');
+      });
+    });
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxContent = document.getElementById('lightboxContent');
+    const closeLightbox = document.getElementById('closeLightbox');
+    
+    // Function to open lightbox
+    function openLightbox(src) {
+      lightboxContent.src = src;
+      lightbox.classList.add('active');
+    }
+    
+    // Function to close lightbox
+    function closeLightboxFunc() {
+      lightbox.classList.remove('active');
+    }
+    
+    // Event listeners for lightbox
+    closeLightbox.addEventListener('click', closeLightboxFunc);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightboxFunc();
+      }
+    });
   </script>
 </body>
 </html>
