@@ -6,698 +6,654 @@
   <title>Alif Ayman Mahin</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #020c1b;
-      --fg: #e6f1ff;
-      --muted: #a8b2d1;
-      --accent: #64ffda;
-      --navy: #0a192f;
-      --light-navy: #112240;
-      --shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
-      --border: rgba(100, 255, 218, 0.2);
-      --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .lab-mode {
-      --bg: #000;
-      --fg: #0f8d8f;
-      --muted: #00ffff;
-      --accent: #00ffff;
-      --border: rgba(0, 255, 255, 0.4);
-      --shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-      background: #000;
-      font-family: 'Fira Code', 'Courier New', monospace;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--fg);
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      transition: background 0.6s ease, color 0.6s ease;
-    }
-
-    /* Spotlight Effect (Normal Mode) - Improved Visibility */
-    .spotlight {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: -1;
-      /* Improved (more visible) */
-      background: radial-gradient(
-        circle 300px at var(--x, 50vw) var(--y, 50vh), /* Smaller radius */
-        rgba(100, 255, 218, 0.2), /* Lighter, use accent color with low opacity at center */
-        rgba(2, 12, 27, 0.9)      /* Keep dark edge, slightly adjusted opacity */
-      );
-      transition: background 0.6s ease;
-    }
-
-    /* --- Fluid JARVIS Grid Canvas CSS --- */
-    #gridCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1; /* keep behind content */
-      pointer-events: none;
-      background: transparent;
-      display: none; /* Initially hidden, controlled by JS */
-    }
-    .lab-mode #gridCanvas {
-       display: block; /* Show in lab mode */
-    }
-    /* --- End Fluid JARVIS Grid Canvas CSS --- */
-
-
-    /* Progress Bar */
-    .progress-container {
-      width: 100%;
-      height: 4px;
-      background: #112240;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1001;
-    }
-
-    .lab-mode .progress-container {
-      background: #111;
-    }
-
-    .progress-bar {
-      height: 4px;
-      background: var(--accent);
-      width: 0%;
-      transition: width 0.1s ease-out;
-    }
-
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    a:hover {
-      color: #7fffd4;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 4rem clamp(1rem, 5vw, 2rem);
-      width: 100%;
-    }
-
-    .mono {
-      font-family: 'Fira Code', monospace;
-      color: var(--accent);
-      font-size: 0.9rem;
-    }
-
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 700;
-      margin: 0 0 1rem;
-      line-height: 1.1;
-      transition: color 0.5s, text-shadow 0.5s;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin: 3rem 0 1.5rem;
-      color: var(--accent);
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    h2::after {
-      content: '';
-      display: block;
-      height: 1px;
-      width: 100%;
-      max-width: 300px;
-      background-color: var(--border);
-      margin-left: 20px;
-    }
-
-    p {
-      color: var(--muted);
-      max-width: 600px;
-    }
-
-    /* Lab Mode Toggle - Now a semantic button */
-    .lab-toggle {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 1000;
-      background: var(--light-navy);
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 0.6rem 1rem;
-      border-radius: 30px;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 4px 10px rgba(100, 255, 218, 0.1);
-    }
-
-    .lab-toggle:hover {
-      transform: translateY(-2px);
-    }
-
-    .lab-mode .lab-toggle {
-      background: rgba(0, 255, 255, 0.1);
-      color: #00ffff;
-      border-color: #00ffff;
-      animation: pulse 1.5s infinite;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.4); }
-      50% { box-shadow: 0 0 25px rgba(0, 255, 255, 0.7); }
-      100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.4); }
-    }
-
-    /* Sidebar */
+  :root {
+    --bg: #020c1b;
+    --fg: #e6f1ff;
+    --muted: #a8b2d1;
+    --accent: #64ffda;
+    --navy: #0a192f;
+    --light-navy: #112240;
+    --shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+    --border: rgba(100, 255, 218, 0.2);
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .lab-mode {
+    --bg: #000;
+    --fg: #0f8d8f;
+    --muted: #00ffff;
+    --accent: #00ffff;
+    --border: rgba(0, 255, 255, 0.4);
+    --shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    background: #000;
+    font-family: 'Fira Code', 'Courier New', monospace;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    transition: background 0.6s ease, color 0.6s ease;
+  }
+  /* Spotlight Effect (Normal Mode) - Improved Visibility */
+  .spotlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(
+      circle 300px at var(--x, 50vw) var(--y, 50vh),
+      rgba(100, 255, 218, 0.2),
+      rgba(2, 12, 27, 0.9)
+    );
+    transition: background 0.6s ease;
+  }
+  /* --- Fluid JARVIS Grid Canvas CSS --- */
+  #gridCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background: transparent;
+    display: none;
+  }
+  .lab-mode #gridCanvas {
+     display: block;
+  }
+  /* Progress Bar */
+  .progress-container {
+    width: 100%;
+    height: 4px;
+    background: #112240;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+  }
+  .lab-mode .progress-container {
+    background: #111;
+  }
+  .progress-bar {
+    height: 4px;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.1s ease-out;
+  }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover {
+    color: #7fffd4;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem clamp(1rem, 5vw, 2rem);
+    width: 100%;
+  }
+  .mono {
+    font-family: 'Fira Code', monospace;
+    color: var(--accent);
+    font-size: 0.9rem;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin: 0 0 1rem;
+    line-height: 1.1;
+    transition: color 0.5s, text-shadow 0.5s;
+  }
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 3rem 0 1.5rem;
+    color: var(--accent);
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  h2::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 100%;
+    max-width: 300px;
+    background-color: var(--border);
+    margin-left: 20px;
+  }
+  p {
+    color: var(--muted);
+    max-width: 600px;
+  }
+  .lab-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    background: var(--light-navy);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.6rem 1rem;
+    border-radius: 30px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 10px rgba(100, 255, 218, 0.1);
+  }
+  .lab-toggle:hover {
+    transform: translateY(-2px);
+  }
+  .lab-mode .lab-toggle {
+    background: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+    border-color: #00ffff;
+    animation: pulse 1.5s infinite;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.4); }
+    50% { box-shadow: 0 0 25px rgba(0, 255, 255, 0.7); }
+    100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.4); }
+  }
+  .sidebar {
+    position: fixed;
+    top: 50%;
+    left: 1.5rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 1000;
+  }
+  .sidebar a {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    transition: var(--transition);
+  }
+  .sidebar a:hover {
+    color: var(--accent);
+  }
+  @media (max-width: 768px) {
     .sidebar {
+      display: none;
+    }
+    .container {
+      padding-top: 6rem;
+    }
+  }
+  .section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .section.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #projects {
+    overflow: hidden;
+    margin: 4rem 0;
+  }
+  .project-scroll-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+  }
+  .project-slide {
+    display: flex;
+    min-height: 80vh;
+    align-items: center;
+    gap: 3rem;
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .project-slide.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .project-slide.reverse {
+    flex-direction: row-reverse;
+  }
+  .project-img-container {
+    flex: 1;
+    position: relative;
+    min-height: 250px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  @media (min-width: 769px) {
+     .project-img-container {
+        height: 400px;
+     }
+  }
+  .project-img-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  .project-img-slide:first-child {
+      opacity: 1;
+  }
+  .project-img-slide.active {
+      opacity: 1;
+  }
+  .project-content {
+    flex: 1;
+    max-width: 500px;
+  }
+  .project-content h3 {
+    font-size: 1.8rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .view-btn {
+    display: inline-block;
+    color: var(--accent);
+    font-family: 'Fira Code', monospace;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+  .view-btn:hover {
+    transform: translateX(5px);
+  }
+  .skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .skill-category {
+    background: var(--light-navy);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: visible;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .skill-category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  .skill-category h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    color: var(--accent);
+    text-align: center;
+  }
+  .skill-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .skill-item {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(100, 255, 218, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+  }
+  .skill-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(100, 255, 218, 0.2);
+  }
+  .skill-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: var(--navy);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+  .skill-popup.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .skill-popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .skill-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .skill-popup-header h3 {
+    color: var(--accent);
+    margin: 0;
+  }
+  .skill-popup-close {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .skill-popup-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .skill-popup-description {
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .skill-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  .skill-popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  #experience {
+    margin: 4rem 0;
+  }
+  .experience-item {
+    margin-bottom: 2.5rem;
+  }
+  #contact {
+    text-align: center;
+  }
+  #contact div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  #contact a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    transition: var(--transition);
+  }
+  #contact a:hover {
+    background: var(--light-navy);
+    transform: translateY(-3px);
+  }
+  .subtitle {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 600px;
+  }
+  .subtitle span {
+    white-space: nowrap;
+  }
+  .lab-mode h1::after {
+    content: "_";
+    animation: blink 1s step-end infinite;
+    margin-left: 5px;
+    color: var(--accent);
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .rover-vehicle {
+    position: fixed;
+    bottom: 20px;
+    left: -100px;
+    width: 60px;
+    height: 30px;
+    background: url('assets/images/rover-icon.png') no-repeat center center;
+    background-size: contain;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .rover-vehicle.active {
+    opacity: 1;
+    animation: driveRoverImproved 8s linear forwards;
+  }
+  @keyframes driveRoverImproved {
+    0% { left: -100px; opacity: 0; }
+    10% { opacity: 1; }
+    90% { left: calc(100vw - 100px); opacity: 1; }
+    100% { left: calc(50% - 30px); opacity: 1; }
+  }
+  .mobile-nav-toggle {
+      display: none;
       position: fixed;
-      top: 50%;
-      left: 1.5rem;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      z-index: 1000;
-    }
-
-    .sidebar a {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.85rem;
-      color: var(--muted);
-      transition: var(--transition);
-    }
-
-    .sidebar a:hover {
-      color: var(--accent);
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        display: none;
-      }
-      .container {
-        padding-top: 6rem;
-      }
-    }
-
-    /* Section Animations */
-    .section {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .section.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Projects Section */
-    #projects {
-      overflow: hidden;
-      margin: 4rem 0;
-    }
-
-    .project-scroll-container {
-      display: flex;
-      flex-direction: column;
-      gap: 6rem;
-    }
-
-    .project-slide {
-      display: flex;
-      min-height: 80vh;
-      align-items: center;
-      gap: 3rem;
-      opacity: 0;
-      transform: translateX(-60px);
-      transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-
-    .project-slide.show {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .project-slide.reverse {
-      flex-direction: row-reverse;
-    }
-
-    /* --- Project Image Slideshow --- */
-    .project-img-container {
-      flex: 1;
-      position: relative;
-      min-height: 250px; /* Minimum height for smaller screens */
-      border-radius: 12px;
-      overflow: hidden; /* Ensures images don't overflow rounded corners */
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
-
-    @media (min-width: 769px) {
-       .project-img-container {
-          height: 400px; /* Fixed height on larger screens */
-       }
-    }
-
-    .project-img-slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* Ensures image covers the area */
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-
-    /* Show the first image by default */
-    .project-img-slide:first-child {
-        opacity: 1;
-    }
-
-    /* Optional: Add a class to explicitly show an image */
-    .project-img-slide.active {
-        opacity: 1;
-    }
-    /* --- End Project Image Slideshow --- */
-
-
-    .project-content {
-      flex: 1;
-      max-width: 500px;
-    }
-
-    .project-content h3 {
-      font-size: 1.8rem;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-
-    .view-btn {
-      display: inline-block;
-      color: var(--accent);
-      font-family: 'Fira Code', monospace;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-    }
-
-    .view-btn:hover {
-      transform: translateX(5px);
-    }
-    /* Skills Section */
-    .skills-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .skill-category {
+      top: 1rem;
+      right: 1rem;
+      z-index: 1002;
       background: var(--light-navy);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      overflow: visible;
-      z-index: 10;
-      cursor: pointer;
-    }
-
-    .skill-category:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .skill-category h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.8rem;
-      color: var(--accent);
-      text-align: center;
-    }
-
-    .skill-items {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .skill-item {
-      font-size: 0.9rem;
-      padding: 0.4rem 0.8rem;
-      background: rgba(100, 255, 218, 0.05);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      transition: all 0.3s ease;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .skill-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(100, 255, 218, 0.2);
-    }
-
-    /* Skill Popup */
-    .skill-popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      background: var(--navy);
       border: 1px solid var(--accent);
-      border-radius: 8px;
-      padding: 2rem;
-      width: 90%;
-      max-width: 600px;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    }
-
-    .skill-popup.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .skill-popup-content {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .skill-popup-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .skill-popup-header h3 {
       color: var(--accent);
-      margin: 0;
-    }
-
-    .skill-popup-close {
-      background: none;
-      border: none;
-      color: var(--accent);
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .skill-popup-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
+      padding: 0.5rem 1rem;
       border-radius: 4px;
-      border: 1px solid var(--border);
-    }
-
-    .skill-popup-description {
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .skill-popup-overlay {
+      cursor: pointer;
+      font-family: 'Fira Code', monospace;
+  }
+  .mobile-nav-menu {
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 999;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .skill-popup-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-/* Experience Section */
-    #experience {
-      margin: 4rem 0;
-    }
-
-    .experience-item {
-      margin-bottom: 2.5rem;
-    }
-
-    /* Contact Section */
-    #contact {
-      text-align: center;
-    }
-
-    #contact div {
-      display: flex;
-      flex-wrap: wrap;
+      background-color: rgba(10, 25, 47, 0.95);
+      z-index: 1001;
+      flex-direction: column;
       justify-content: center;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    #contact a {
-      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      transition: var(--transition);
-    }
-
-    #contact a:hover {
-      background: var(--light-navy);
-      transform: translateY(-3px);
-    }
-
-    /* Fix for g=10 line break */
-    .subtitle {
+      gap: 2rem;
+  }
+  .mobile-nav-menu.active {
       display: flex;
-      flex-wrap: wrap;
-      max-width: 600px;
-    }
-    .subtitle span {
-      white-space: nowrap;
-    }
-
-    /* Terminal Cursor */
-    .lab-mode h1::after {
-      content: "_";
-      animation: blink 1s step-end infinite;
-      margin-left: 5px;
+  }
+  .mobile-nav-menu a {
+      font-size: 1.5rem;
+      color: var(--fg);
+      text-decoration: none;
+      padding: 1rem;
+      transition: color 0.3s ease;
+  }
+  .mobile-nav-menu a:hover {
       color: var(--accent);
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    /* Rover Vehicle - Improved End Visibility */
-    .rover-vehicle {
+  }
+  @media (max-width: 768px) {
+      .mobile-nav-toggle {
+          display: block;
+      }
+  }
+  .jarvis-overlay {
       position: fixed;
-      bottom: 20px;
-      left: -100px;
-      width: 60px;
-      height: 30px;
-      background: url('assets/images/rover-icon.png') no-repeat center center; /* Ensure image exists */
-      background-size: contain;
-      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      color: #00ffff;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
       opacity: 0;
-      transition: opacity 0.5s;
-    }
-
-    .rover-vehicle.active {
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+  }
+  .jarvis-overlay.active {
       opacity: 1;
-      animation: driveRoverImproved 8s linear forwards;
-    }
+      pointer-events: auto;
+  }
+  .jarvis-overlay-text {
+      text-align: center;
+      white-space: pre-wrap;
+      padding: 2rem;
+  }
 
-    /* Improved Rover Animation - Ends visible */
-    @keyframes driveRoverImproved {
-      0% { left: -100px; opacity: 0; }
-      10% { opacity: 1; }
-      90% { left: calc(100vw - 100px); opacity: 1; }
-      100% { left: calc(50% - 30px); opacity: 1; }
-    }
-
-    /* Mobile Navigation (Placeholder) */
-    .mobile-nav-toggle {
-        display: none;
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        z-index: 1002;
-        background: var(--light-navy);
-        border: 1px solid var(--accent);
-        color: var(--accent);
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        cursor: pointer;
-        font-family: 'Fira Code', monospace;
-    }
-
-    .mobile-nav-menu {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(10, 25, 47, 0.95);
-        z-index: 1001;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-    }
-
-    .mobile-nav-menu.active {
-        display: flex;
-    }
-
-    .mobile-nav-menu a {
-        font-size: 1.5rem;
-        color: var(--fg);
-        text-decoration: none;
-        padding: 1rem;
-        transition: color 0.3s ease;
-    }
-
-    .mobile-nav-menu a:hover {
-        color: var(--accent);
-    }
-
-    @media (max-width: 768px) {
-        .mobile-nav-toggle {
-            display: block;
-        }
-    }
-
-    /* --- JARVIS Boot/Shutdown Overlay --- */
-    .jarvis-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        color: #00ffff;
-        font-family: 'Fira Code', 'Courier New', monospace;
-        font-size: 1.2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10000; /* Higher than other fixed elements */
-        opacity: 0;
-        pointer-events: none; /* Allow clicks to pass through when hidden */
-        transition: opacity 0.5s ease;
-    }
-
-    .jarvis-overlay.active {
-        opacity: 1;
-        pointer-events: auto; /* Block clicks when active */
-    }
-
-    .jarvis-overlay-text {
-        text-align: center;
-        white-space: pre-wrap; /* Allow line breaks */
-        padding: 2rem;
-        /* Optional: Add a subtle scanline effect or border */
-        /* border: 1px solid rgba(0, 255, 255, 0.2); */
-        /* background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px); */
-    }
-    /* --- End JARVIS Boot/Shutdown Overlay --- */
-
-    /* --- Improved JARVIS Mode Skills Contrast --- */
-    /* Enhance text color and potentially background for better readability */
-    .lab-mode .skill-category {
-        background: rgba(10, 25, 47, 0.8); /* Slightly more opaque background */
-        border: 1px solid rgba(0, 255, 255, 0.5); /* Increase border opacity */
-    }
-
-    .lab-mode .skill-category h3 {
-        color: #00ffff; /* Keep accent color */
-        text-shadow: 0 0 8px rgba(0, 255, 255, 0.8); /* Enhance text shadow */
-    }
-
-    .lab-mode .skill-item {
-        background: rgba(0, 255, 255, 0.1); /* Slightly more opaque background */
-        border: 1px solid rgba(0, 255, 255, 0.3); /* Increase border opacity */
-        color: #00ffff; /* Ensure text is bright cyan */
-        /* Optional: Add a subtle glow on hover for items too */
-    }
-
-    .lab-mode .skill-item:hover {
-        background: rgba(0, 255, 255, 0.2);
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); /* Enhance hover glow */
-    }
-    /* --- End Improved JARVIS Mode Skills Contrast --- */
-
-  </style>
+  /* === JARVIS SKILLS GLITCH ENHANCEMENT (Updated per request) === */
+  .lab-mode #skills {
+    position: relative;
+    overflow: hidden;
+  }
+  /* Scanline overlay */
+  .lab-mode #skills::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 255, 255, 0.04),
+      rgba(0, 255, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    animation: scanlines 6s linear infinite;
+    opacity: 0.4;
+    z-index: 0;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  }
+  @keyframes scanlines {
+    from { background-position: 0 0; }
+    to { background-position: 0 10px; }
+  }
+  /* Glitch only on headings when category is hovered */
+  .lab-mode .skill-category {
+    background: rgba(0, 10, 20, 0.85);
+    border: 1px solid rgba(0, 255, 255, 0.35);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);
+    backdrop-filter: blur(3px);
+  }
+  .lab-mode .skill-category h3 {
+    color: #00ffff;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+  }
+  /* Remove glitch from skill items */
+  .lab-mode .skill-item {
+    background: rgba(0, 15, 25, 0.7);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    color: #00ffff;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.1);
+    /* No pseudo-elements, no animation */
+  }
+  .lab-mode .skill-item:hover {
+    background: rgba(0, 25, 35, 0.9);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    /* Still allow subtle hover, but NO glitch */
+  }
+  /* Glitch ghosts ONLY for h3 */
+  .lab-mode .skill-category h3::before,
+  .lab-mode .skill-category h3::after {
+    content: attr(data-glitch);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    opacity: 0;
+    color: transparent;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .lab-mode .skill-category h3::before {
+    color: rgba(255, 0, 64, 0.9);
+    transform: translate(-1px, -1px);
+  }
+  .lab-mode .skill-category h3::after {
+    color: rgba(0, 255, 255, 0.9);
+    transform: translate(1px, 1px);
+  }
+  /* Trigger glitch on category hover */
+  .lab-mode .skill-category:hover h3 {
+    animation: glitch 0.3s steps(2, end) infinite;
+  }
+  .lab-mode .skill-category:hover h3::before,
+  .lab-mode .skill-category:hover h3::after {
+    opacity: 1;
+  }
+  @keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-0.5px, 0.5px); }
+    40% { transform: translate(0.5px, -0.5px); }
+    60% { transform: translate(-1px, 0); }
+    80% { transform: translate(1px, 0); }
+    100% { transform: translate(0); }
+  }
+  /* === END JARVIS SKILLS GLITCH ENHANCEMENT === */
+</style>
 </head>
 <body class="">
-
-  <!-- JARVIS Boot/Shutdown Screen Overlay -->
   <div id="jarvisOverlay" class="jarvis-overlay">
     <pre id="jarvisOverlayText" class="jarvis-overlay-text"></pre>
   </div>
-
-  <!-- Spotlight (Normal Mode) -->
   <div class="spotlight"></div>
-
-  <!-- --- Fluid JARVIS Grid Canvas HTML --- -->
   <canvas id="gridCanvas"></canvas>
-  <!-- --- End Fluid JARVIS Grid Canvas HTML --- -->
-
-  <!-- Progress Bar -->
   <div class="progress-container">
     <div class="progress-bar" id="progressBar"></div>
   </div>
-
-  <!-- Lab Mode Toggle - Now a semantic button -->
   <button type="button" class="lab-toggle" id="labToggle">Activate JARVIS</button>
-
-  <!-- Sidebar -->
   <nav class="sidebar">
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
@@ -705,8 +661,6 @@
     <a href="#experience">Experience</a>
     <a href="#contact">Contact</a>
   </nav>
-
-  <!-- Mobile Navigation Toggle (Placeholder) -->
   <button type="button" class="mobile-nav-toggle" id="mobileNavToggle">Menu</button>
   <nav class="mobile-nav-menu" id="mobileNavMenu">
     <a href="#about">About</a>
@@ -716,14 +670,8 @@
     <a href="#contact">Contact</a>
     <a href="#" id="mobileCloseMenu">Close</a>
   </nav>
-
-  <!-- Rover Vehicle -->
   <div class="rover-vehicle"></div>
-
-  <!-- Main Content -->
   <main class="container">
-
-    <!-- Hero -->
     <p class="mono" style="color: var(--accent); margin-bottom: 1rem;">Hi, my name is</p>
     <h1 id="heroName">Alif Ayman Mahin.</h1>
     <div class="subtitle">
@@ -731,66 +679,56 @@
       <span class="accent">Be like Tony Stark (on a budget)</span>
       <span>, </span>
       <span class="accent">coffee-powered CAD</span>
-      <span>, and believe that <span class="accent">g = 10 m/s²</span></span>
+      <span>, and believe that <span class="accent">g = 10 m/sÂ²</span></span>
     </div>
-    <a href="assets/resume.pdf" download class="resume-btn">Download Resume</a> <!-- Ensure resume.pdf exists -->
-
-    <!-- About -->
+    <a href="assets/resume.pdf" download class="resume-btn">Download Resume</a>
     <section class="section" id="about">
       <h2>About Me</h2>
       <p id="aboutContent">
-        As a third-year Mechanical Engineering student at Memorial University, I’m driven by a deep passion for designing, building, and improving technology. From high-performance vehicles to UAVs, robotics, and sustainable energy systems, I thrive on tackling diverse engineering challenges through a mix of hands-on prototyping, CAD modeling, and simulation. I enjoy blending creativity with technical precision to develop innovative and efficient solutions. When I’m not immersed in engineering projects, you’ll often find me playing musical instruments or getting lost in a great movie.
+        As a third-year Mechanical Engineering student at Memorial University, Iâ€™m driven by a deep passion for designing, building, and improving technology. From high-performance vehicles to UAVs, robotics, and sustainable energy systems, I thrive on tackling diverse engineering challenges through a mix of hands-on prototyping, CAD modeling, and simulation. I enjoy blending creativity with technical precision to develop innovative and efficient solutions. When Iâ€™m not immersed in engineering projects, youâ€™ll often find me playing musical instruments or getting lost in a great movie.
       </p>
     </section>
-
-    <!-- Projects -->
     <section class="section" id="projects">
       <h2>Projects</h2>
       <div class="project-scroll-container">
-        <!-- Project 1 -->
         <div class="project-slide">
           <div class="project-img-container">
-            <img class="project-img-slide" src="assets/images/mars-rover.jpg" alt="Mars Rover Image 1"> <!-- Ensure image exists -->
-            <img class="project-img-slide" src="assets/images/mars-rover-2.jpg" alt="Mars Rover Image 2"> <!-- Ensure image exists -->
-            <img class="project-img-slide" src="assets/images/mars-rover-3.jpg" alt="Mars Rover Image 3"> <!-- Ensure image exists -->
+            <img class="project-img-slide" src="assets/images/mars-rover.jpg" alt="Mars Rover Image 1">
+            <img class="project-img-slide" src="assets/images/mars-rover-2.jpg" alt="Mars Rover Image 2">
+            <img class="project-img-slide" src="assets/images/mars-rover-3.jpg" alt="Mars Rover Image 3">
           </div>
           <div class="project-content">
             <h3>Sidus Robotics - Mars Rover</h3>
             <p>Memorial University's first Mars rover design team preparing for the 2026 Canadian International Rover Challenge (CIRC). Designed mechanical subsystems with a focus on design-for-manufacturability, system integration, and field-tested suspension performance.</p>
-            <a href="https://sidusrobotics.ca/" target="_blank" class="view-btn">View Team Site →</a>
+            <a href="https://sidusrobotics.ca/" target="_blank" class="view-btn">View Team Site â†’</a>
           </div>
         </div>
-
-        <!-- Project 2 -->
         <div class="project-slide reverse">
           <div class="project-img-container">
-            <img class="project-img-slide" src="assets/images/vtol-uav.jpg" alt="VTOL UAV Image 1"> <!-- Ensure image exists -->
-            <img class="project-img-slide" src="assets/images/vtol-uav-2.jpg" alt="VTOL UAV Image 2"> <!-- Ensure image exists -->
-            <img class="project-img-slide" src="assets/images/vtol-uav-3.jpg" alt="VTOL UAV Image 3"> <!-- Ensure image exists -->
+            <img class="project-img-slide" src="assets/images/vtol-uav.jpg" alt="VTOL UAV Image 1">
+            <img class="project-img-slide" src="assets/images/vtol-uav-2.jpg" alt="VTOL UAV Image 2">
+            <img class="project-img-slide" src="assets/images/vtol-uav-3.jpg" alt="VTOL UAV Image 3">
           </div>
           <div class="project-content">
             <h3>Valiant Aerotech - VTOL UAV</h3>
             <p>Engineered a composite frame and stability jig for a quadcopter UAV. Designed aerodynamic components for a VTOL surveillance drone using SolidWorks, ANSYS Fluent, and Abaqus for structural validation.</p>
-            <a href="https://www.linkedin.com/company/valiant-aerotech/" target="_blank" class="view-btn">Learn More →</a>
+            <a href="https://www.linkedin.com/company/valiant-aerotech/" target="_blank" class="view-btn">Learn More â†’</a>
           </div>
         </div>
-
-        <!-- Project 3 -->
         <div class="project-slide">
           <div class="project-img-container">
-            <img class="project-img-slide" src="assets/images/motor-mount.jpg" alt="Motor Mount Image 1"> <!-- Ensure image exists -->
-            <img class="project-img-slide" src="assets/images/motor-mount-2.jpg" alt="Motor Mount Image 2"> <!-- Ensure image exists -->
-            <img class="project-img-slide" src="assets/images/motor-mount-3.jpg" alt="Motor Mount Image 3"> <!-- Ensure image exists -->
+            <img class="project-img-slide" src="assets/images/motor-mount.jpg" alt="Motor Mount Image 1">
+            <img class="project-img-slide" src="assets/images/motor-mount-2.jpg" alt="Motor Mount Image 2">
+            <img class="project-img-slide" src="assets/images/motor-mount-3.jpg" alt="Motor Mount Image 3">
           </div>
           <div class="project-content">
             <h3>Emergency Outboard Motor Mount</h3>
             <p>Designed a detachable motor mount in Onshape, applying fastening theory and stress analysis. Produced detailed GD&T part drawings and BOM; project earned 90% final score.</p>
-            <a href="#projects" class="view-btn">View Details →</a>
+            <a href="#projects" class="view-btn">View Details â†’</a>
           </div>
         </div>
       </div>
     </section>
-    <!-- Skills Section -->
     <section class="section" id="skills">
       <h2>Skills</h2>
       <div class="skills-container">
@@ -802,7 +740,6 @@
             <span class="skill-item" data-skill="inventor">Inventor</span>
           </div>
         </div>
-
         <div class="skill-category" data-skill="analysis">
           <h3>Analysis & Simulation</h3>
           <div class="skill-items">
@@ -811,7 +748,6 @@
             <span class="skill-item" data-skill="matlab">MATLAB</span>
           </div>
         </div>
-
         <div class="skill-category" data-skill="prototyping">
           <h3>Prototyping & Manufacturing</h3>
           <div class="skill-items">
@@ -820,7 +756,6 @@
             <span class="skill-item" data-skill="cam">CAM Programming</span>
           </div>
         </div>
-
         <div class="skill-category" data-skill="electronics">
           <h3>Electronics & Embedded</h3>
           <div class="skill-items">
@@ -829,7 +764,6 @@
             <span class="skill-item" data-skill="soldering">Soldering</span>
           </div>
         </div>
-
         <div class="skill-category" data-skill="programming">
           <h3>Programming</h3>
           <div class="skill-items">
@@ -838,7 +772,6 @@
             <span class="skill-item" data-skill="web">HTML/CSS</span>
           </div>
         </div>
-
         <div class="skill-category" data-skill="tools">
           <h3>General Tools</h3>
           <div class="skill-items">
@@ -849,8 +782,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Skill Popup -->
     <div class="skill-popup-overlay" id="skillPopupOverlay"></div>
     <div class="skill-popup" id="skillPopup">
       <div class="skill-popup-content">
@@ -862,15 +793,13 @@
         <p id="skillPopupDescription" class="skill-popup-description">Skill description will appear here.</p>
       </div>
     </div>
-<!-- Experience -->
     <section class="section" id="experience">
       <h2>Experience</h2>
-
       <div class="experience-item">
         <p style="color: var(--accent); font-weight: 600;">The Commons, Memorial University</p>
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
           <p style="font-style: italic;">Engineering Co-op Student</p>
-          <p style="color: var(--muted); font-size: 0.9rem;">Jan 2025 – Apr 2025</p>
+          <p style="color: var(--muted); font-size: 0.9rem;">Jan 2025 â€“ Apr 2025</p>
         </div>
         <ul style="padding-left: 1.5rem;">
           <li>Supported 50+ students weekly with 3D printing, CAD, and electronics.</li>
@@ -878,12 +807,11 @@
           <li>Redesigned service pricing model to improve access and efficiency.</li>
         </ul>
       </div>
-
       <div class="experience-item">
         <p style="color: var(--accent); font-weight: 600;">Valiant Aerotech</p>
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
           <p style="font-style: italic;">Mechanical Team Member</p>
-          <p style="color: var(--muted); font-size: 0.9rem;">Jun 2025 – Present</p>
+          <p style="color: var(--muted); font-size: 0.9rem;">Jun 2025 â€“ Present</p>
         </div>
         <ul style="padding-left: 1.5rem;">
           <li>Engineered a stability jig and composite frame for a quadcopter UAV designed for payload delivery.</li>
@@ -891,12 +819,11 @@
           <li>Supported structural design validation through detailed modeling and finite element analysis.</li>
         </ul>
       </div>
-
       <div class="experience-item">
         <p style="color: var(--accent); font-weight: 600;">Sidus Robotics</p>
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
           <p style="font-style: italic;">Mechanical Team Member</p>
-          <p style="color: var(--muted); font-size: 0.9rem;">Feb 2025 – Present</p>
+          <p style="color: var(--muted); font-size: 0.9rem;">Feb 2025 â€“ Present</p>
         </div>
         <ul style="padding-left: 1.5rem;">
           <li>Designed rover components under competition constraints for the 2026 Canadian International Rover Challenge (CIRC).</li>
@@ -905,8 +832,6 @@
         </ul>
       </div>
     </section>
-
-    <!-- Contact -->
     <section class="section" id="contact">
       <h2>Get In Touch</h2>
       <p>
@@ -920,7 +845,7 @@
           </svg>
           aamahin@mun.ca
         </a>
-        <a href="https://www.linkedin.com/in/aamahin" target="_blank" style="font-size: 0.9rem;"> <!-- Corrected URL -->
+        <a href="https://www.linkedin.com/in/aamahin" target="_blank" style="font-size: 0.9rem;">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
             <rect x="2" y="9" width="4" height="12"/>
@@ -928,7 +853,7 @@
           </svg>
           linkedin.com/in/aamahin
         </a>
-        <a href="https://www.instagram.com/alifayman__" target="_blank" style="font-size: 0.9rem;"> <!-- Corrected URL -->
+        <a href="https://www.instagram.com/alifayman__" target="_blank" style="font-size: 0.9rem;">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
@@ -938,142 +863,86 @@
         </a>
       </div>
     </section>
-
   </main>
-
-    <script>
-    // --- Consolidated Mousemove Listener for Spotlight ---
+  <script>
     const spotlight = document.querySelector('.spotlight');
     document.addEventListener('mousemove', e => {
       const { clientX, clientY } = e;
       spotlight.style.setProperty('--x', `${clientX}px`);
       spotlight.style.setProperty('--y', `${clientY}px`);
     });
-    // --- End Consolidated Mousemove Listener for Spotlight ---
 
-
-    // --- JARVIS Water-Effect Grid JavaScript (Smooth & Slower Version) ---
     const canvas = document.getElementById('gridCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
-
     function resizeCanvas() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', resizeCanvas);
-    resizeCanvas(); // Initial size
+    resizeCanvas();
 
-    // --- Parameters for smoother, slower, eye-friendly animation ---
-    const spacing = 50; // Point spacing (increased for less density)
-    const rippleExpansionSpeed = 0.25; // Much slower ripple growth
-    const waveSpeed = 0.03; // Much slower wave propagation across points
-    const waveSize = 12; // Maximum potential wave displacement
-    const rippleFadeDistance = 400; // Ripples last longer before disappearing
-    const maxWaveContribution = 8; // Cap max pixel offset per ripple for smoothness
-    const baseOpacity = 0.3; // Base opacity of grid points
-    const lineWidth = 1.1; // Line width of grid points
-    // --- End Parameters ---
+    const spacing = 50;
+    const rippleExpansionSpeed = 0.25;
+    const waveSpeed = 0.03;
+    const waveSize = 12;
+    const rippleFadeDistance = 400;
+    const maxWaveContribution = 8;
+    const baseOpacity = 0.3;
+    const lineWidth = 1.1;
 
-    let ripples = []; // Array to store active ripples
-
-    // Add a new ripple at the mouse position when moving in lab mode
+    let ripples = [];
     document.addEventListener('mousemove', e => {
       if (document.body.classList.contains('lab-mode')) {
         ripples.push({ x: e.clientX, y: e.clientY, radius: 0 });
       }
     });
 
-    /**
-     * Draws the fluid grid with ripple distortions.
-     * Calculates the offset for each grid point based on active ripples.
-     */
     function drawGrid() {
-      // Clear the entire canvas for the next frame
       ctx.clearRect(0, 0, width, height);
-
-      // Set the visual style for the grid points
       ctx.strokeStyle = `rgba(0, 255, 255, ${baseOpacity})`;
       ctx.lineWidth = lineWidth;
-
-      // Iterate through each potential grid point location
       for (let x = 0; x <= width; x += spacing) {
         for (let y = 0; y <= height; y += spacing) {
           let offsetX = 0;
           let offsetY = 0;
-
-          // Calculate cumulative offset from all active ripples
           ripples.forEach(r => {
             const dx = x - r.x;
             const dy = y - r.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-
-            // Skip calculation if point is too close to ripple origin
             if (dist < 1) return;
-
-            // --- Calculate the smooth, slow-moving wave effect ---
-            // Influence how far the wave has traveled to reach this point
-            const waveInfluence = dist / 20; // Slower wave propagation
-            // Time component based on ripple's current radius and wave speed
+            const waveInfluence = dist / 20;
             const waveTime = r.radius * waveSpeed;
-            // Calculate the sine wave value, diminishing with distance
-            // Adjusted falloff for smoother edges
             const waveAmplitude = (waveSize / (1 + dist * 0.012));
             const wave = Math.sin(waveInfluence - waveTime) * waveAmplitude;
-            // --- End Wave Calculation ---
-
-            // Normalize the direction vector from ripple center to point
             const ndx = dx / dist;
             const ndy = dy / dist;
-
-            // Apply the calculated wave offset, capped for stability
-            // Preserve the sign of the wave for directional influence
             const contributionX = ndx * Math.min(Math.abs(wave), maxWaveContribution) * (wave >= 0 ? 1 : -1);
             const contributionY = ndy * Math.min(Math.abs(wave), maxWaveContribution) * (wave >= 0 ? 1 : -1);
-
             offsetX += contributionX;
             offsetY += contributionY;
           });
-
-          // Draw the grid point circle at its potentially distorted location
-          ctx.beginPath();
-          // Add a tiny bit of randomness to position to reduce visible grid alignment
           const jitterX = (Math.random() - 0.5) * 0.5;
           const jitterY = (Math.random() - 0.5) * 0.5;
+          ctx.beginPath();
           ctx.arc(x + offsetX + jitterX, y + offsetY + jitterY, 1, 0, Math.PI * 2);
           ctx.stroke();
         }
       }
-
-      // --- Update Ripple States ---
-      // Gradually increase the radius of each ripple
       ripples.forEach(r => r.radius += rippleExpansionSpeed);
-      // Filter out ripples that have expanded beyond the fade distance
       ripples = ripples.filter(r => r.radius < rippleFadeDistance);
-      // --- End Update Ripple States ---
     }
 
-    /**
-     * Main animation loop.
-     * Calls drawGrid only if in lab mode, then requests the next animation frame.
-     */
     function animate() {
       if (document.body.classList.contains('lab-mode')) {
-        drawGrid(); // Draw the next frame of the animated grid
+        drawGrid();
       } else {
-        // Ensure canvas is clear when not in lab mode
         ctx.clearRect(0, 0, width, height);
       }
-      // Schedule the next frame
       requestAnimationFrame(animate);
     }
-
-    // Start the animation loop
     animate();
-    // --- End JARVIS Water-Effect Grid JavaScript (Smooth & Slower Version) ---
 
-
-    // Progress Bar
     window.addEventListener('scroll', () => {
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -1081,7 +950,6 @@
       document.getElementById("progressBar").style.width = scrolled + "%";
     });
 
-    // Section Observer
     const sections = document.querySelectorAll('.section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1090,7 +958,6 @@
     }, { threshold: 0.1 });
     sections.forEach(s => observer.observe(s));
 
-    // Project Slide Animation
     const projectSlides = document.querySelectorAll('.project-slide');
     const slideObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1099,82 +966,51 @@
     }, { threshold: 0.2 });
     projectSlides.forEach(s => slideObserver.observe(s));
 
-    // --- Project Image Slideshow JavaScript ---
-    // Find all project slides
     const projectSlidesForSlideshow = document.querySelectorAll('.project-slide');
-
-    // Object to store slideshow state for each slide
     const slideshowState = {};
-
-    // Function to initialize slideshow for a specific slide
     function initSlideshow(slideElement) {
         const container = slideElement.querySelector('.project-img-container');
-        if (!container) return; // Safety check
-
+        if (!container) return;
         const images = container.querySelectorAll('.project-img-slide');
-        if (images.length <= 1) return; // No need for slideshow if 1 or no images
-
+        if (images.length <= 1) return;
         let currentIndex = 0;
-
-        // Function to show the next image
         function showNextImage() {
-            // Fade out current image
             images[currentIndex].classList.remove('active');
             images[currentIndex].style.opacity = '0';
-
-            // Calculate next index
             currentIndex = (currentIndex + 1) % images.length;
-
-            // Fade in next image
             images[currentIndex].classList.add('active');
             images[currentIndex].style.opacity = '1';
         }
-
-        // Store the interval ID and currentIndex in the state object
         slideshowState[slideElement.id || `slide-${Array.from(projectSlidesForSlideshow).indexOf(slideElement)}`] = {
-            intervalId: setInterval(showNextImage, 3000), // Change image every 3 seconds
+            intervalId: setInterval(showNextImage, 3000),
             currentIndex: currentIndex
         };
     }
-
-    // Function to stop slideshow for a specific slide
     function stopSlideshow(slideElement) {
         const slideId = slideElement.id || `slide-${Array.from(projectSlidesForSlideshow).indexOf(slideElement)}`;
         const state = slideshowState[slideId];
         if (state) {
             clearInterval(state.intervalId);
-            delete slideshowState[slideId]; // Clean up state
+            delete slideshowState[slideId];
         }
     }
-
-    // Create an Intersection Observer to manage slideshows
     const slideshowObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const slideElement = entry.target;
             if (entry.isIntersecting) {
-                // Slide is visible, start or resume slideshow
                 initSlideshow(slideElement);
             } else {
-                // Slide is not visible, stop slideshow
                 stopSlideshow(slideElement);
             }
         });
-    }, {
-        threshold: 0.5 // Trigger when 50% of the slide is visible
-    });
-
-    // Observe each project slide
+    }, { threshold: 0.5 });
     projectSlidesForSlideshow.forEach(slide => slideshowObserver.observe(slide));
-    // --- End Project Image Slideshow JavaScript ---
 
-
-    // Lab Mode Toggle
     const labToggle = document.getElementById('labToggle');
     const rover = document.querySelector('.rover-vehicle');
     const heroName = document.getElementById('heroName');
     const aboutSection = document.getElementById('about');
     const aboutContentElement = document.getElementById('aboutContent');
-
     const originalAboutText = aboutContentElement.textContent;
 
     if (localStorage.getItem('jarvisMode') === 'true') {
@@ -1190,75 +1026,43 @@
       }
     });
 
-    // --- Updated JARVIS Activation with Boot Screen --- //
+    // âœ… FIXED: Use \n instead of actual line breaks
     function activateJarvis(silent = false) {
         const overlay = document.getElementById('jarvisOverlay');
         const overlayText = document.getElementById('jarvisOverlayText');
-
-        // Show the overlay immediately
         overlay.classList.add('active');
         overlayText.textContent = "SYSTEM BOOTING UP...\n[====================] 100%";
-
-        // Delay the full activation slightly to show the boot screen
         setTimeout(() => {
-            // Apply the lab-mode class and change button text
             document.body.classList.add('lab-mode');
             labToggle.textContent = 'JARVIS: ONLINE';
-
-            // Hide spotlight and show grid (handled by CSS)
             spotlight.style.display = 'none';
-
-            // Change hero name style
             heroName.style.color = '#00ffff';
             heroName.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.7)';
-
-            // Start the boot sequence text in the About section
             if (!silent) {
                 typeBootSequence();
             }
-
-            // Animate the rover
             setTimeout(() => {
                 rover.style.display = 'block';
                 setTimeout(() => rover.classList.add('active'), 100);
-            }, 3000); // Start rover animation after 3s
-
-            // Hide the boot screen overlay after a short time
+            }, 3000);
             setTimeout(() => {
                 overlay.classList.remove('active');
-            }, 2000); // Hide overlay after 2s
-
-            // Save state
+            }, 2000);
             localStorage.setItem('jarvisMode', 'true');
-
-        }, 1500); // Delay full activation by 1.5s to show boot screen
+        }, 1500);
     }
-    // --- End Updated JARVIS Activation --- //
 
-    // --- Updated JARVIS Shutdown with Shutdown Screen --- //
     function shutdownJarvis() {
         const overlay = document.getElementById('jarvisOverlay');
         const overlayText = document.getElementById('jarvisOverlayText');
-
-        // Show the shutdown screen overlay
         overlay.classList.add('active');
         overlayText.textContent = "SYSTEM SHUTTING DOWN...\n[====================] 100%";
-
-        // Perform shutdown actions after a short delay to show the screen
         setTimeout(() => {
-
-            // Remove lab-mode class and reset button text
             document.body.classList.remove('lab-mode');
             labToggle.textContent = 'Activate JARVIS';
-
-            // Show spotlight and hide grid (handled by CSS)
             spotlight.style.display = 'block';
-
-            // Reset hero name style
             heroName.style.color = '';
             heroName.style.textShadow = '';
-
-            // Reset About section content
             aboutSection.innerHTML = '';
             const title = document.createElement('h2');
             title.textContent = 'About Me';
@@ -1267,29 +1071,20 @@
             content.textContent = originalAboutText;
             aboutSection.appendChild(title);
             aboutSection.appendChild(content);
-
-            // Hide the rover
             rover.style.display = 'none';
             rover.classList.remove('active');
-
-            // Save state
             localStorage.setItem('jarvisMode', 'false');
-
-            // Hide the shutdown screen overlay after actions are complete
             setTimeout(() => {
                  overlay.classList.remove('active');
-            }, 1000); // Hide overlay after 1s
-
-        }, 1500); // Delay actions by 1.5s to show shutdown screen
+            }, 1000);
+        }, 1500);
     }
-    // --- End Updated JARVIS Shutdown --- //
 
     function typeBootSequence() {
       const aboutContent = document.getElementById('aboutContent');
       if (aboutContent) aboutContent.remove();
       const aboutTitle = aboutSection.querySelector('h2');
       if (aboutTitle) aboutTitle.remove();
-
       const lines = [
         "INITIALIZING SYSTEMS...",
         "LOADING PROFILE: ALIF_MAHIN",
@@ -1297,7 +1092,6 @@
         "RUNNING DIAGNOSTICS: PASSED",
         "JARVIS INTERFACE READY"
       ];
-
       let i = 0;
       const interval = setInterval(() => {
         if (i < lines.length) {
@@ -1313,26 +1107,22 @@
         }
       }, 800);
     }
-    // Mobile Navigation (Basic Implementation)
+
     const mobileNavToggle = document.getElementById('mobileNavToggle');
     const mobileNavMenu = document.getElementById('mobileNavMenu');
     const mobileCloseMenu = document.getElementById('mobileCloseMenu');
-
     if (mobileNavToggle && mobileNavMenu) {
         mobileNavToggle.addEventListener('click', () => {
             mobileNavMenu.classList.add('active');
         });
-
         const closeMenu = () => {
             mobileNavMenu.classList.remove('active');
         };
-
         if (mobileCloseMenu) {
             mobileCloseMenu.addEventListener('click', closeMenu);
         }
     }
 
-    // Skill Popup Functionality
     const skillPopup = document.getElementById('skillPopup');
     const skillPopupOverlay = document.getElementById('skillPopupOverlay');
     const skillPopupClose = document.getElementById('skillPopupClose');
@@ -1340,155 +1130,76 @@
     const skillPopupImage = document.getElementById('skillPopupImage');
     const skillPopupDescription = document.getElementById('skillPopupDescription');
 
-    // Skill data with descriptions and images
     const skillData = {
-      // Design & CAD
-      fusion360: {
-        title: "Autodesk Fusion 360",
-        image: "http://static.photos/technology/640x360/1",
-        description: "Extensive experience in parametric modeling, assembly design, and manufacturing workflows using Fusion 360. Proficient in creating complex geometries, simulations, and generating production-ready drawings."
-      },
-      solidworks: {
-        title: "SolidWorks",
-        image: "http://static.photos/technology/640x360/2",
-        description: "Advanced skills in 3D CAD modeling, assembly design, and mechanical simulation. Experienced in creating detailed engineering drawings and performing motion studies for mechanism design."
-      },
-      inventor: {
-        title: "Autodesk Inventor",
-        image: "http://static.photos/technology/640x360/3",
-        description: "Proficient in parametric modeling and assembly design with Inventor. Skilled in creating weldments, sheet metal parts, and generating detailed manufacturing documentation."
-      },
-      
-      // Analysis & Simulation
-      ansys: {
-        title: "ANSYS Fluent",
-        image: "http://static.photos/technology/640x360/4",
-        description: "Hands-on experience with computational fluid dynamics simulations. Capable of setting up complex flow scenarios, turbulence modeling, and interpreting results for engineering optimization."
-      },
-      abaqus: {
-        title: "Abaqus",
-        image: "http://static.photos/technology/640x360/5",
-        description: "Skilled in finite element analysis for structural mechanics problems. Experienced in nonlinear analysis, contact modeling, and material behavior simulation for complex engineering components."
-      },
-      matlab: {
-        title: "MATLAB",
-        image: "http://static.photos/technology/640x360/6",
-        description: "Proficient in numerical computing, data analysis, and algorithm development. Experienced in control system design, signal processing, and mathematical modeling for engineering applications."
-      },
-      
-      // Prototyping & Manufacturing
-      "3dprinting": {
-        title: "3D Printing",
-        image: "http://static.photos/technology/640x360/7",
-        description: "Extensive hands-on experience with FDM and SLA 3D printing technologies. Knowledgeable in print preparation, material selection, troubleshooting, and post-processing techniques for functional prototypes."
-      },
-      cnc: {
-        title: "CNC Machining",
-        image: "http://static.photos/technology/640x360/8",
-        description: "Practical experience in CNC mill and lathe operation. Skilled in setup, tool selection, workholding, and machining various materials including metals and plastics to precise tolerances."
-      },
-      cam: {
-        title: "CAM Programming",
-        image: "http://static.photos/technology/640x360/9",
-        description: "Proficient in generating toolpaths using CAM software for CNC machining. Experienced in programming 2.5-axis to complex 3D machining operations with proper cutting strategies."
-      },
-      
-      // Electronics & Embedded
-      arduino: {
-        title: "Arduino",
-        image: "http://static.photos/technology/640x360/10",
-        description: "Strong skills in embedded systems development using Arduino platforms. Experienced in sensor integration, actuator control, communication protocols, and real-time system programming."
-      },
-      sensors: {
-        title: "Sensors & Actuators",
-        image: "http://static.photos/technology/640x360/11",
-        description: "Knowledgeable in selecting and integrating various sensors (temperature, pressure, IMU, etc.) and actuators (motors, servos, solenoids) for automated systems and IoT applications."
-      },
-      soldering: {
-        title: "Soldering",
-        image: "http://static.photos/technology/640x360/12",
-        description: "Proficient in through-hole and surface-mount soldering techniques. Experienced in circuit board assembly, rework, and repair for electronic prototypes and custom hardware projects."
-      },
-      
-      // Programming
-      python: {
-        title: "Python",
-        image: "http://static.photos/technology/640x360/13",
-        description: "Strong programming skills in Python for automation, data analysis, and scripting. Experienced in scientific computing libraries, web scraping, and developing GUI applications."
-      },
-      cpp: {
-        title: "C++",
-        image: "http://static.photos/technology/640x360/14",
-        description: "Competent in C++ for system-level programming and performance-critical applications. Knowledgeable in object-oriented programming, memory management, and standard template library usage."
-      },
-      web: {
-        title: "Web Development (HTML/CSS)",
-        image: "http://static.photos/technology/640x360/15",
-        description: "Skilled in front-end web development with HTML5 and CSS3. Experienced in responsive design, modern layout techniques, and creating visually appealing user interfaces for web applications."
-      },
-      
-      // General Tools
-      office: {
-        title: "Microsoft Office Suite",
-        image: "http://static.photos/office/640x360/16",
-        description: "Proficient in Microsoft Word, Excel, and PowerPoint for technical documentation, data analysis, and presentation creation. Experienced in advanced Excel functions and data visualization."
-      },
-      adobe: {
-        title: "Adobe Creative Suite",
-        image: "http://static.photos/technology/640x360/17",
-        description: "Skilled in Adobe Photoshop, Illustrator, and InDesign for graphic design, image editing, and professional document layout. Experienced in creating technical illustrations and marketing materials."
-      },
-      whmis: {
-        title: "WHMIS Certification",
-        image: "http://static.photos/industry/640x360/18",
-        description: "Certified in Workplace Hazardous Materials Information System (WHMIS). Knowledgeable in hazard identification, safe handling procedures, and regulatory compliance for workplace chemicals."
-      }
+      fusion360: { title: "Autodesk Fusion 360", image: "http://static.photos/technology/640x360/1", description: "Extensive experience in parametric modeling, assembly design, and manufacturing workflows using Fusion 360. Proficient in creating complex geometries, simulations, and generating production-ready drawings." },
+      solidworks: { title: "SolidWorks", image: "http://static.photos/technology/640x360/2", description: "Advanced skills in 3D CAD modeling, assembly design, and mechanical simulation. Experienced in creating detailed engineering drawings and performing motion studies for mechanism design." },
+      inventor: { title: "Autodesk Inventor", image: "http://static.photos/technology/640x360/3", description: "Proficient in parametric modeling and assembly design with Inventor. Skilled in creating weldments, sheet metal parts, and generating detailed manufacturing documentation." },
+      ansys: { title: "ANSYS Fluent", image: "http://static.photos/technology/640x360/4", description: "Hands-on experience with computational fluid dynamics simulations. Capable of setting up complex flow scenarios, turbulence modeling, and interpreting results for engineering optimization." },
+      abaqus: { title: "Abaqus", image: "http://static.photos/technology/640x360/5", description: "Skilled in finite element analysis for structural mechanics problems. Experienced in nonlinear analysis, contact modeling, and material behavior simulation for complex engineering components." },
+      matlab: { title: "MATLAB", image: "http://static.photos/technology/640x360/6", description: "Proficient in numerical computing, data analysis, and algorithm development. Experienced in control system design, signal processing, and mathematical modeling for engineering applications." },
+      "3dprinting": { title: "3D Printing", image: "http://static.photos/technology/640x360/7", description: "Extensive hands-on experience with FDM and SLA 3D printing technologies. Knowledgeable in print preparation, material selection, troubleshooting, and post-processing techniques for functional prototypes." },
+      cnc: { title: "CNC Machining", image: "http://static.photos/technology/640x360/8", description: "Practical experience in CNC mill and lathe operation. Skilled in setup, tool selection, workholding, and machining various materials including metals and plastics to precise tolerances." },
+      cam: { title: "CAM Programming", image: "http://static.photos/technology/640x360/9", description: "Proficient in generating toolpaths using CAM software for CNC machining. Experienced in programming 2.5-axis to complex 3D machining operations with proper cutting strategies." },
+      arduino: { title: "Arduino", image: "http://static.photos/technology/640x360/10", description: "Strong skills in embedded systems development using Arduino platforms. Experienced in sensor integration, actuator control, communication protocols, and real-time system programming." },
+      sensors: { title: "Sensors & Actuators", image: "http://static.photos/technology/640x360/11", description: "Knowledgeable in selecting and integrating various sensors (temperature, pressure, IMU, etc.) and actuators (motors, servos, solenoids) for automated systems and IoT applications." },
+      soldering: { title: "Soldering", image: "http://static.photos/technology/640x360/12", description: "Proficient in through-hole and surface-mount soldering techniques. Experienced in circuit board assembly, rework, and repair for electronic prototypes and custom hardware projects." },
+      python: { title: "Python", image: "http://static.photos/technology/640x360/13", description: "Strong programming skills in Python for automation, data analysis, and scripting. Experienced in scientific computing libraries, web scraping, and developing GUI applications." },
+      cpp: { title: "C++", image: "http://static.photos/technology/640x360/14", description: "Competent in C++ for system-level programming and performance-critical applications. Knowledgeable in object-oriented programming, memory management, and standard template library usage." },
+      web: { title: "Web Development (HTML/CSS)", image: "http://static.photos/technology/640x360/15", description: "Skilled in front-end web development with HTML5 and CSS3. Experienced in responsive design, modern layout techniques, and creating visually appealing user interfaces for web applications." },
+      office: { title: "Microsoft Office Suite", image: "http://static.photos/office/640x360/16", description: "Proficient in Microsoft Word, Excel, and PowerPoint for technical documentation, data analysis, and presentation creation. Experienced in advanced Excel functions and data visualization." },
+      adobe: { title: "Adobe Creative Suite", image: "http://static.photos/technology/640x360/17", description: "Skilled in Adobe Photoshop, Illustrator, and InDesign for graphic design, image editing, and professional document layout. Experienced in creating technical illustrations and marketing materials." },
+      whmis: { title: "WHMIS Certification", image: "http://static.photos/industry/640x360/18", description: "Certified in Workplace Hazardous Materials Information System (WHMIS). Knowledgeable in hazard identification, safe handling procedures, and regulatory compliance for workplace chemicals." }
     };
 
-    // Open popup when clicking on skill items or categories
+    // Add data-glitch for glitch effect
+    function addGlitchAttributes() {
+      document.querySelectorAll('#skills .skill-category h3, #skills .skill-item').forEach(el => {
+        if (!el.hasAttribute('data-glitch')) {
+          el.setAttribute('data-glitch', el.textContent);
+        }
+      });
+    }
+    addGlitchAttributes();
+    const glitchObserver = new MutationObserver(() => {
+      if (document.body.classList.contains('lab-mode')) {
+        addGlitchAttributes();
+      }
+    });
+    glitchObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
     document.querySelectorAll('.skill-item, .skill-category').forEach(element => {
       element.addEventListener('click', (e) => {
         e.stopPropagation();
         const skillKey = element.dataset.skill;
-        
-        // If we clicked on a category, show a generic popup for the category
         if (element.classList.contains('skill-category')) {
           const categoryName = element.querySelector('h3').textContent;
           skillPopupTitle.textContent = categoryName;
           skillPopupImage.src = `http://static.photos/technology/640x360/${Math.floor(Math.random() * 100) + 1}`;
           skillPopupDescription.textContent = `This category includes various skills and tools related to ${categoryName.toLowerCase()}. Hover over individual skills to see detailed information.`;
-        } 
-        // If we clicked on a specific skill item
-        else if (skillData[skillKey]) {
+        } else if (skillData[skillKey]) {
           const skill = skillData[skillKey];
           skillPopupTitle.textContent = skill.title;
           skillPopupImage.src = skill.image;
           skillPopupDescription.textContent = skill.description;
         }
-        
         skillPopup.classList.add('active');
         skillPopupOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent scrolling when popup is open
+        document.body.style.overflow = 'hidden';
       });
     });
 
-    // Close popup functions
     function closeSkillPopup() {
       skillPopup.classList.remove('active');
       skillPopupOverlay.classList.remove('active');
-      document.body.style.overflow = ''; // Re-enable scrolling
+      document.body.style.overflow = '';
     }
-
     skillPopupClose.addEventListener('click', closeSkillPopup);
     skillPopupOverlay.addEventListener('click', closeSkillPopup);
-
-    // Close popup with Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && skillPopup.classList.contains('active')) {
         closeSkillPopup();
       }
     });
-
   </script>
 </body>
 </html>
