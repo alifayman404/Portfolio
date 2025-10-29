@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -545,7 +546,6 @@
       white-space: pre-wrap;
       padding: 2rem;
   }
-
   /* === JARVIS SKILLS GLITCH ENHANCEMENT (Updated per request) === */
   .lab-mode #skills {
     position: relative;
@@ -679,13 +679,13 @@
       <span class="accent">Be like Tony Stark (on a budget)</span>
       <span>, </span>
       <span class="accent">coffee-powered CAD</span>
-      <span>, and believe that <span class="accent">g = 10 m/sÂ²</span></span>
+      <span>, and believe that <span class="accent">g = 10 m/s²</span></span>
     </div>
     <a href="assets/resume.pdf" download class="resume-btn">Download Resume</a>
     <section class="section" id="about">
       <h2>About Me</h2>
       <p id="aboutContent">
-        As a third-year Mechanical Engineering student at Memorial University, Iâ€™m driven by a deep passion for designing, building, and improving technology. From high-performance vehicles to UAVs, robotics, and sustainable energy systems, I thrive on tackling diverse engineering challenges through a mix of hands-on prototyping, CAD modeling, and simulation. I enjoy blending creativity with technical precision to develop innovative and efficient solutions. When Iâ€™m not immersed in engineering projects, youâ€™ll often find me playing musical instruments or getting lost in a great movie.
+        As a third-year Mechanical Engineering student at Memorial University, I’m driven by a deep passion for designing, building, and improving technology. From high-performance vehicles to UAVs, robotics, and sustainable energy systems, I thrive on tackling diverse engineering challenges through a mix of hands-on prototyping, CAD modeling, and simulation. I enjoy blending creativity with technical precision to develop innovative and efficient solutions. When I’m not immersed in engineering projects, you’ll often find me playing musical instruments or getting lost in a great movie.
       </p>
     </section>
     <section class="section" id="projects">
@@ -700,7 +700,7 @@
           <div class="project-content">
             <h3>Sidus Robotics - Mars Rover</h3>
             <p>Memorial University's first Mars rover design team preparing for the 2026 Canadian International Rover Challenge (CIRC). Designed mechanical subsystems with a focus on design-for-manufacturability, system integration, and field-tested suspension performance.</p>
-            <a href="https://sidusrobotics.ca/" target="_blank" class="view-btn">View Team Site â†’</a>
+            <a href="https://sidusrobotics.ca/" target="_blank" class="view-btn">View Team Site →</a>
           </div>
         </div>
         <div class="project-slide reverse">
@@ -712,7 +712,7 @@
           <div class="project-content">
             <h3>Valiant Aerotech - VTOL UAV</h3>
             <p>Engineered a composite frame and stability jig for a quadcopter UAV. Designed aerodynamic components for a VTOL surveillance drone using SolidWorks, ANSYS Fluent, and Abaqus for structural validation.</p>
-            <a href="https://www.linkedin.com/company/valiant-aerotech/" target="_blank" class="view-btn">Learn More â†’</a>
+            <a href="https://www.linkedin.com/company/valiant-aerotech/" target="_blank" class="view-btn">Learn More →</a>
           </div>
         </div>
         <div class="project-slide">
@@ -724,7 +724,7 @@
           <div class="project-content">
             <h3>Emergency Outboard Motor Mount</h3>
             <p>Designed a detachable motor mount in Onshape, applying fastening theory and stress analysis. Produced detailed GD&T part drawings and BOM; project earned 90% final score.</p>
-            <a href="#projects" class="view-btn">View Details â†’</a>
+            <a href="#projects" class="view-btn">View Details →</a>
           </div>
         </div>
       </div>
@@ -799,7 +799,7 @@
         <p style="color: var(--accent); font-weight: 600;">The Commons, Memorial University</p>
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
           <p style="font-style: italic;">Engineering Co-op Student</p>
-          <p style="color: var(--muted); font-size: 0.9rem;">Jan 2025 â€“ Apr 2025</p>
+          <p style="color: var(--muted); font-size: 0.9rem;">Jan 2025 – Apr 2025</p>
         </div>
         <ul style="padding-left: 1.5rem;">
           <li>Supported 50+ students weekly with 3D printing, CAD, and electronics.</li>
@@ -811,7 +811,7 @@
         <p style="color: var(--accent); font-weight: 600;">Valiant Aerotech</p>
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
           <p style="font-style: italic;">Mechanical Team Member</p>
-          <p style="color: var(--muted); font-size: 0.9rem;">Jun 2025 â€“ Present</p>
+          <p style="color: var(--muted); font-size: 0.9rem;">Jun 2025 – Present</p>
         </div>
         <ul style="padding-left: 1.5rem;">
           <li>Engineered a stability jig and composite frame for a quadcopter UAV designed for payload delivery.</li>
@@ -823,7 +823,7 @@
         <p style="color: var(--accent); font-weight: 600;">Sidus Robotics</p>
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
           <p style="font-style: italic;">Mechanical Team Member</p>
-          <p style="color: var(--muted); font-size: 0.9rem;">Feb 2025 â€“ Present</p>
+          <p style="color: var(--muted); font-size: 0.9rem;">Feb 2025 – Present</p>
         </div>
         <ul style="padding-left: 1.5rem;">
           <li>Designed rover components under competition constraints for the 2026 Canadian International Rover Challenge (CIRC).</li>
@@ -871,7 +871,6 @@
       spotlight.style.setProperty('--x', `${clientX}px`);
       spotlight.style.setProperty('--y', `${clientY}px`);
     });
-
     const canvas = document.getElementById('gridCanvas');
     const ctx = canvas.getContext('2d');
     let width, height;
@@ -881,7 +880,6 @@
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-
     const spacing = 50;
     const rippleExpansionSpeed = 0.25;
     const waveSpeed = 0.03;
@@ -890,14 +888,12 @@
     const maxWaveContribution = 8;
     const baseOpacity = 0.3;
     const lineWidth = 1.1;
-
     let ripples = [];
     document.addEventListener('mousemove', e => {
       if (document.body.classList.contains('lab-mode')) {
         ripples.push({ x: e.clientX, y: e.clientY, radius: 0 });
       }
     });
-
     function drawGrid() {
       ctx.clearRect(0, 0, width, height);
       ctx.strokeStyle = `rgba(0, 255, 255, ${baseOpacity})`;
@@ -932,7 +928,6 @@
       ripples.forEach(r => r.radius += rippleExpansionSpeed);
       ripples = ripples.filter(r => r.radius < rippleFadeDistance);
     }
-
     function animate() {
       if (document.body.classList.contains('lab-mode')) {
         drawGrid();
@@ -942,81 +937,43 @@
       requestAnimationFrame(animate);
     }
     animate();
-
     window.addEventListener('scroll', () => {
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = (winScroll / height) * 100;
       document.getElementById("progressBar").style.width = scrolled + "%";
     });
-
-    const sections = document.querySelectorAll('.section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('show');
-      });
-    }, { threshold: 0.1 });
-    sections.forEach(s => observer.observe(s));
-
-    const projectSlides = document.querySelectorAll('.project-slide');
-    const slideObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('show');
-      });
-    }, { threshold: 0.2 });
-    projectSlides.forEach(s => slideObserver.observe(s));
-
-    const projectSlidesForSlideshow = document.querySelectorAll('.project-slide');
-    const slideshowState = {};
-    function initSlideshow(slideElement) {
-        const container = slideElement.querySelector('.project-img-container');
-        if (!container) return;
-        const images = container.querySelectorAll('.project-img-slide');
-        if (images.length <= 1) return;
-        let currentIndex = 0;
-        function showNextImage() {
-            images[currentIndex].classList.remove('active');
-            images[currentIndex].style.opacity = '0';
-            currentIndex = (currentIndex + 1) % images.length;
-            images[currentIndex].classList.add('active');
-            images[currentIndex].style.opacity = '1';
-        }
-        slideshowState[slideElement.id || `slide-${Array.from(projectSlidesForSlideshow).indexOf(slideElement)}`] = {
-            intervalId: setInterval(showNextImage, 3000),
-            currentIndex: currentIndex
-        };
-    }
-    function stopSlideshow(slideElement) {
-        const slideId = slideElement.id || `slide-${Array.from(projectSlidesForSlideshow).indexOf(slideElement)}`;
-        const state = slideshowState[slideId];
-        if (state) {
-            clearInterval(state.intervalId);
-            delete slideshowState[slideId];
-        }
-    }
-    const slideshowObserver = new IntersectionObserver((entries) => {
+    function resetAnimations() {
+      const sections = document.querySelectorAll('.section');
+      const projectSlides = document.querySelectorAll('.project-slide');
+      
+      sections.forEach(section => section.classList.remove('show'));
+      projectSlides.forEach(slide => slide.classList.remove('show'));
+      
+      // Re-initialize observers
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            const slideElement = entry.target;
-            if (entry.isIntersecting) {
-                initSlideshow(slideElement);
-            } else {
-                stopSlideshow(slideElement);
-            }
+          if (entry.isIntersecting) entry.target.classList.add('show');
         });
-    }, { threshold: 0.5 });
-    projectSlidesForSlideshow.forEach(slide => slideshowObserver.observe(slide));
-
+      }, { threshold: 0.1 });
+      
+      const slideObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('show');
+        });
+      }, { threshold: 0.2 });
+      
+      sections.forEach(s => observer.observe(s));
+      projectSlides.forEach(s => slideObserver.observe(s));
+    }
+    // Initialize animations on first load
+    resetAnimations();
     const labToggle = document.getElementById('labToggle');
     const rover = document.querySelector('.rover-vehicle');
     const heroName = document.getElementById('heroName');
     const aboutSection = document.getElementById('about');
     const aboutContentElement = document.getElementById('aboutContent');
     const originalAboutText = aboutContentElement.textContent;
-
-    if (localStorage.getItem('jarvisMode') === 'true') {
-      activateJarvis(true);
-    }
-
     labToggle.addEventListener('click', () => {
       const isLabMode = !document.body.classList.contains('lab-mode');
       if (isLabMode) {
@@ -1024,10 +981,11 @@
       } else {
         shutdownJarvis();
       }
+      // Scroll to top and reset animations
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(resetAnimations, 500);
     });
-
-    // âœ… FIXED: Use \n instead of actual line breaks
-    function activateJarvis(silent = false) {
+    function activateJarvis() {
         const overlay = document.getElementById('jarvisOverlay');
         const overlayText = document.getElementById('jarvisOverlayText');
         overlay.classList.add('active');
@@ -1038,9 +996,7 @@
             spotlight.style.display = 'none';
             heroName.style.color = '#00ffff';
             heroName.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.7)';
-            if (!silent) {
-                typeBootSequence();
-            }
+            typeBootSequence();
             setTimeout(() => {
                 rover.style.display = 'block';
                 setTimeout(() => rover.classList.add('active'), 100);
@@ -1048,10 +1004,8 @@
             setTimeout(() => {
                 overlay.classList.remove('active');
             }, 2000);
-            localStorage.setItem('jarvisMode', 'true');
         }, 1500);
     }
-
     function shutdownJarvis() {
         const overlay = document.getElementById('jarvisOverlay');
         const overlayText = document.getElementById('jarvisOverlayText');
@@ -1073,13 +1027,11 @@
             aboutSection.appendChild(content);
             rover.style.display = 'none';
             rover.classList.remove('active');
-            localStorage.setItem('jarvisMode', 'false');
             setTimeout(() => {
                  overlay.classList.remove('active');
             }, 1000);
         }, 1500);
     }
-
     function typeBootSequence() {
       const aboutContent = document.getElementById('aboutContent');
       if (aboutContent) aboutContent.remove();
@@ -1107,7 +1059,6 @@
         }
       }, 800);
     }
-
     const mobileNavToggle = document.getElementById('mobileNavToggle');
     const mobileNavMenu = document.getElementById('mobileNavMenu');
     const mobileCloseMenu = document.getElementById('mobileCloseMenu');
@@ -1122,14 +1073,12 @@
             mobileCloseMenu.addEventListener('click', closeMenu);
         }
     }
-
     const skillPopup = document.getElementById('skillPopup');
     const skillPopupOverlay = document.getElementById('skillPopupOverlay');
     const skillPopupClose = document.getElementById('skillPopupClose');
     const skillPopupTitle = document.getElementById('skillPopupTitle');
     const skillPopupImage = document.getElementById('skillPopupImage');
     const skillPopupDescription = document.getElementById('skillPopupDescription');
-
     const skillData = {
       fusion360: { title: "Autodesk Fusion 360", image: "http://static.photos/technology/640x360/1", description: "Extensive experience in parametric modeling, assembly design, and manufacturing workflows using Fusion 360. Proficient in creating complex geometries, simulations, and generating production-ready drawings." },
       solidworks: { title: "SolidWorks", image: "http://static.photos/technology/640x360/2", description: "Advanced skills in 3D CAD modeling, assembly design, and mechanical simulation. Experienced in creating detailed engineering drawings and performing motion studies for mechanism design." },
@@ -1150,8 +1099,6 @@
       adobe: { title: "Adobe Creative Suite", image: "http://static.photos/technology/640x360/17", description: "Skilled in Adobe Photoshop, Illustrator, and InDesign for graphic design, image editing, and professional document layout. Experienced in creating technical illustrations and marketing materials." },
       whmis: { title: "WHMIS Certification", image: "http://static.photos/industry/640x360/18", description: "Certified in Workplace Hazardous Materials Information System (WHMIS). Knowledgeable in hazard identification, safe handling procedures, and regulatory compliance for workplace chemicals." }
     };
-
-    // Add data-glitch for glitch effect
     function addGlitchAttributes() {
       document.querySelectorAll('#skills .skill-category h3, #skills .skill-item').forEach(el => {
         if (!el.hasAttribute('data-glitch')) {
@@ -1166,7 +1113,6 @@
       }
     });
     glitchObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-
     document.querySelectorAll('.skill-item, .skill-category').forEach(element => {
       element.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1187,7 +1133,6 @@
         document.body.style.overflow = 'hidden';
       });
     });
-
     function closeSkillPopup() {
       skillPopup.classList.remove('active');
       skillPopupOverlay.classList.remove('active');
@@ -1203,3 +1148,4 @@
   </script>
 </body>
 </html>
+```
