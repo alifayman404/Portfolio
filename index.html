@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Alif Ayman Mahin — Mechanical Engineer</title>
-<meta name="description" content="Alif Ayman Mahin — Mechanical Engineering student at Memorial University. Robotics, UAVs, CAD design, and hands-on prototyping.">
-<meta property="og:title" content="Alif Ayman Mahin — Mechanical Engineer">
+<title>Alif Ayman Mahin, Mechanical Engineer</title>
+<meta name="description" content="Alif Ayman Mahin, Mechanical Engineering student at Memorial University. Robotics, UAVs, CAD design, and hands-on prototyping.">
+<meta property="og:title" content="Alif Ayman Mahin, Mechanical Engineer">
 <meta property="og:description" content="Mechanical Engineering student at Memorial University. Robotics, UAVs, CAD design, and hands-on prototyping.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aamahin.me">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Alif Ayman Mahin — Mechanical Engineer">
+<meta name="twitter:title" content="Alif Ayman Mahin, Mechanical Engineer">
 <meta name="twitter:description" content="Mechanical Engineering student at Memorial University. Robotics, UAVs, CAD design, and hands-on prototyping.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -160,7 +160,11 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 .proj-modal-close:hover{background:rgba(255,255,255,.12);color:var(--fg);}
 .proj-modal-desc{font-size:.94rem;color:var(--muted);line-height:1.8;margin-bottom:1.25rem;}
 .proj-modal-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;}
-.proj-modal-tag{font-family:'Fira Code',monospace;font-size:.68rem;padding:.22rem .6rem;border-radius:30px;border:1px solid var(--border);color:var(--accent);background:var(--accent-dim);}
+.proj-modal-tag{font-family:'Fira Code',monospace;font-size:.68rem;padding:.28rem .7rem;border-radius:4px;border:1px solid var(--border);color:var(--accent);background:var(--accent-dim);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem;}
+.proj-modal-tag::before{content:'⬡';font-size:.5rem;opacity:.6;}
+.proj-modal-tag:hover{background:rgba(100,255,218,.18);border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px var(--glow);}
+.proj-modal-tag.no-link{cursor:default;}
+.proj-modal-tag.no-link:hover{transform:none;box-shadow:none;background:var(--accent-dim);}
 .proj-modal-link{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.4rem;border:1px solid var(--accent);border-radius:7px;color:var(--accent);font-family:'Fira Code',monospace;font-size:.83rem;transition:var(--tr);}
 .proj-modal-link:hover{background:var(--accent-dim);transform:translateX(3px);color:var(--accent);}
 
@@ -512,7 +516,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 
 <!-- ABOUT -->
 <section class="section" id="about">
-  <p class="section-label">01 — about</p>
+  <p class="section-label">01 / about</p>
   <h2>Who I <span class="hl">Am</span></h2>
   <p class="about-body" id="aboutContent">As a third-year Mechanical Engineering student at Memorial University, I'm driven by a deep passion for designing, building, and improving technology. From high-performance vehicles to UAVs, robotics, and sustainable energy systems, I thrive on tackling diverse engineering challenges through a mix of hands-on prototyping, CAD modeling, and simulation. I enjoy blending creativity with technical precision to develop innovative and efficient solutions. When I'm not immersed in engineering projects, you'll often find me playing musical instruments or getting lost in a great movie.</p>
   <div class="jarvis-terminal" id="jarvisTerminal" style="display:none;"></div>
@@ -521,7 +525,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 
 <!-- PROJECTS — BENTO -->
 <section class="section" id="projects">
-  <p class="section-label">02 — projects</p>
+  <p class="section-label">02 / projects</p>
   <h2>Things I've <span class="hl">Built</span></h2>
   <div class="bento-grid" id="bentoGrid">
     <div class="bento-card featured" data-project="0">
@@ -529,35 +533,27 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       <div class="bento-open-hint">↗</div>
       <div class="bento-content">
         <span class="bento-num">Robotics</span>
-        <div class="bento-title">Sidus Robotics —<br>Mars Rover</div>
-        <div class="bento-tags"><span class="bento-tag">SolidWorks</span><span class="bento-tag">Suspension</span><span class="bento-tag">CIRC 2026</span></div>
+        <div class="bento-title">Sidus Robotics<br>Mars Rover</div>
+        <div class="bento-tags"><span class="bento-tag">SolidWorks</span><span class="bento-tag">Abaqus FEA</span><span class="bento-tag">CIRC 2026</span></div>
       </div>
     </div>
     <div class="bento-card slot-tr" data-project="1">
-      <div class="bento-bg" style="background-image:url('assets/images/vtol-uav.jpg')"></div>
-      <div class="bento-open-hint">↗</div>
-      <div class="bento-content">
-        <span class="bento-num">Aerospace</span>
-        <div class="bento-title">VTOL UAV — Fixed Wing</div>
-        <div class="bento-tags"><span class="bento-tag">ANSYS Fluent</span><span class="bento-tag">Abaqus</span><span class="bento-tag">CFD</span></div>
-      </div>
-    </div>
-    <div class="bento-card slot-br" data-project="2">
       <div class="bento-bg" style="background-image:url('assets/images/firefighting-uav.jpg')"></div>
       <div class="bento-open-hint">↗</div>
       <div class="bento-content">
         <span class="bento-num">Aerospace</span>
-        <div class="bento-title">Valiant Aerotech — Firefighting UAV</div>
+        <div class="bento-title">Valiant Aerotech: Firefighting UAV</div>
         <div class="bento-tags"><span class="bento-tag">SolidWorks</span><span class="bento-tag">Composites</span></div>
       </div>
     </div>
-  </div>
-  <div class="bento-card bento-wide" data-project="3" style="position:relative;overflow:hidden;">
-    <div class="bento-bg" style="background-image:url('assets/images/motor-mount.jpg');background-position:center 40%;"></div>
-    <div class="bento-open-hint">↗</div>
-    <div class="bento-content">
-      <div><span class="bento-num">Mechanical Design</span><div class="bento-title">Emergency Outboard Motor Mount</div></div>
-      <div class="bento-tags"><span class="bento-tag">Onshape</span><span class="bento-tag">GD&amp;T</span><span class="bento-tag">Stress Analysis</span></div>
+    <div class="bento-card slot-br" data-project="2">
+      <div class="bento-bg" style="background-image:url('assets/images/motor-mount.jpg')"></div>
+      <div class="bento-open-hint">↗</div>
+      <div class="bento-content">
+        <span class="bento-num">Academic · Year 1</span>
+        <div class="bento-title">Emergency Motor Mount</div>
+        <div class="bento-tags"><span class="bento-tag">Onshape</span><span class="bento-tag">GD&amp;T</span></div>
+      </div>
     </div>
   </div>
   <p style="font-family:'Fira Code',monospace;font-size:.72rem;color:var(--muted);margin-top:1rem;opacity:.5;text-align:right;">// click any card to expand</p>
@@ -582,7 +578,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 
 <!-- SKILLS — JARVIS WHEEL -->
 <section class="section" id="skills">
-  <p class="section-label">03 — skills</p>
+  <p class="section-label">03 / skills</p>
   <h2>What I <span class="hl">Know</span></h2>
 
   <div class="jarvis-skill-wrap">
@@ -614,7 +610,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
         <div class="ji-cat-view" id="jiCatView">
           <div class="ji-cat-header">
             <div class="ji-cat-label" id="jiCatLabel">Subsystem</div>
-            <div class="ji-cat-name" id="jiCatName">—</div>
+            <div class="ji-cat-name" id="jiCatName"> </div>
           </div>
           <div class="ji-skills-grid" id="jiSkillsGrid"></div>
         </div>
@@ -634,7 +630,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 
 <!-- EXPERIENCE -->
 <section class="section" id="experience">
-  <p class="section-label">04 — experience</p>
+  <p class="section-label">04 / experience</p>
   <h2>Where I've <span class="hl">Worked</span></h2>
 
   <div class="bp-tabs">
@@ -744,7 +740,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 
 <!-- CONTACT -->
 <section class="section" id="contact">
-  <p class="section-label">05 — contact</p>
+  <p class="section-label">05 / contact</p>
   <p class="contact-headline">Let's Build<br><span>Something Cool</span></p>
   <p>I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll do my best to get back to you.</p>
   <div class="contact-links">
@@ -769,10 +765,9 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 <script>
 /* ───────────────── DATA ───────────────── */
 const PROJECTS = [
-  {num:'Robotics',title:"Sidus Robotics — Mars Rover",desc:"Memorial University's first Mars rover design team preparing for the 2026 Canadian International Rover Challenge (CIRC). Designed mechanical subsystems with a focus on design-for-manufacturability, system integration, and field-tested suspension performance.",tags:['SolidWorks','Suspension Design','CIRC 2026','Structural Analysis'],imgs:['assets/images/mars-rover.jpg','assets/images/mars-rover-2.jpg','assets/images/mars-rover-3.jpg'],link:'https://sidusrobotics.ca/',linkLabel:'View Team Site →'},
-  {num:'Aerospace',title:'VTOL UAV — Fixed Wing',desc:'Led aerodynamic analysis and structural design of a fixed-wing VTOL UAV. Performed CFD and FEA simulations to validate airframe integrity and optimize lift-to-drag performance under various load conditions.',tags:['ANSYS Fluent','Abaqus','CFD','FEA'],imgs:['assets/images/vtol-uav.jpg','assets/images/vtol-uav-2.jpg','assets/images/vtol-uav-3.jpg'],link:'',linkLabel:''},
-  {num:'Aerospace',title:'Valiant Aerotech — Firefighting UAV',desc:'Engineered a composite frame and stability jig for a payload quadcopter UAV. Designed a surveillance drone using SolidWorks and Abaqus for structural validation.',tags:['SolidWorks','Abaqus','Composites','UAV Design'],imgs:['assets/images/firefighting-uav.jpg','assets/images/firefighting-uav-2.jpg','assets/images/firefighting-uav-3.jpg'],link:'https://www.linkedin.com/company/valiant-aerotech/',linkLabel:'Learn More →'},
-  {num:'Mechanical Design',title:'Emergency Outboard Motor Mount',desc:"Designed a detachable motor mount in Onshape, applying fastening theory and stress analysis. Produced detailed GD&T part drawings and BOM; project earned 90% final score.",tags:['Onshape','GD&T','Stress Analysis','Fastening Theory'],imgs:['assets/images/motor-mount.jpg','assets/images/motor-mount-2.jpg','assets/images/motor-mount-3.jpg'],link:'',linkLabel:''},
+  {num:'Robotics',title:"Sidus Robotics: Mars Rover",desc:"Part of Memorial University's first Mars rover team competing at the 2026 Canadian International Rover Challenge (CIRC). Working on the robotic arm and suspension, reduced arm mass by 20% using Abaqus FEA, designed rocker-bogie suspension capable of traversing 15cm obstacles, and CNC-machined linkages and housings for subsystem validation.",tags:['SolidWorks','Abaqus FEA','CNC Machining','Suspension Design','CIRC 2026'],imgs:['assets/images/mars-rover.jpg','assets/images/mars-rover-2.jpg','assets/images/mars-rover-3.jpg'],link:'https://sidusrobotics.ca/',linkLabel:'View Team Site →'},
+  {num:'Aerospace',title:'Valiant Aerotech: Firefighting UAV',desc:'Mechanical Team Lead for a quadcopter fire-surveillance UAV competing in AEAC. Designed a composite airframe in SolidWorks using DFM/DFA principles to minimize weight while enabling rapid assembly. Manufactured carbon-fiber and metal AM components in-house and built a stability-calibration jig to validate frame symmetry and motor alignment.',tags:['SolidWorks','Composites','DFM/DFA','UAV Design','Carbon Fibre'],imgs:['assets/images/firefighting-uav.jpg','assets/images/firefighting-uav-2.jpg','assets/images/firefighting-uav-3.jpg'],link:'https://www.linkedin.com/company/valiant-aerotech/',linkLabel:'Learn More →'},
+  {num:'Academic · Year 1',title:'Emergency Outboard Motor Mount',desc:"First-year CAD design project. Conceived and modelled a detachable emergency motor mount for a small watercraft. Applied basic fastening theory, stress analysis, and produced GD&T part drawings with a full BOM.",tags:['Onshape','GD&T','Stress Analysis','Fastening Theory'],imgs:['assets/images/motor-mount.jpg','assets/images/motor-mount-2.jpg','assets/images/motor-mount-3.jpg'],link:'',linkLabel:''},
 ];
 
 const ENG_CATS = {
@@ -945,7 +940,34 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
     document.getElementById('projModalTitle').textContent=p.title;
     document.getElementById('projModalDesc').textContent=p.desc;
     const te=document.getElementById('projModalTags');te.innerHTML='';
-    p.tags.forEach(t=>{const s=document.createElement('span');s.className='proj-modal-tag';s.textContent=t;te.appendChild(s);});
+    // map tag names to CATS category index for navigation
+    const TAG_CAT = {
+      'SolidWorks':0,'Autodesk Fusion 360':0,'Fusion 360':0,'Inventor':0,'DFM/DFA':0,
+      'ANSYS Fluent':1,'Abaqus FEA':1,'Abaqus':1,'MATLAB':1,'CFD':1,'FEA':1,
+      '3D Printing':2,'CNC Machining':2,'CAM Programming':2,'Composites':2,
+      'Arduino':3,
+      'Onshape':0,'GD&T':0,
+    };
+    p.tags.forEach(t=>{
+      const s=document.createElement('span');
+      const catIdx = TAG_CAT[t];
+      s.className='proj-modal-tag'+(catIdx===undefined?' no-link':'');
+      s.textContent=t;
+      if(catIdx!==undefined){
+        s.title='View in Skills section';
+        s.addEventListener('click',()=>{
+          closeModal();
+          setTimeout(()=>{
+            document.getElementById('skills').scrollIntoView({behavior:'smooth'});
+            setTimeout(()=>{
+              // trigger the wheel category open
+              if(window._openSkillCat) window._openSkillCat(catIdx);
+            },700);
+          },300);
+        });
+      }
+      te.appendChild(s);
+    });
     const lk=document.getElementById('projModalLink');
     if(p.link){lk.href=p.link;lk.textContent=p.linkLabel;lk.style.display='';}else{lk.style.display='none';}
     overlay.classList.add('open');document.body.style.overflow='hidden';
@@ -1234,6 +1256,8 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
 
   /* ── open category panel ── */
   function openCat(i){
+    activeCat = i;
+    draw();
     const cat = CATS[i];
     document.getElementById('jiEmpty').style.display = 'none';
     document.getElementById('jiTabName').textContent = cat.label;
@@ -1302,6 +1326,9 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
     const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
     return `rgba(${r},${g},${b},${a})`;
   }
+
+  /* ── expose for project tag navigation ── */
+  window._openSkillCat = openCat;
 })();
 
 
