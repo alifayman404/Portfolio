@@ -1,1133 +1,912 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <title>Alif Ayman Mahin</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Alif Ayman Mahin — Mechanical Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <style>
   :root {
-    --bg: #020c1b;
-    --fg: #e6f1ff;
-    --muted: #a8b2d1;
-    --accent: #64ffda;
-    --navy: #0a192f;
-    --light-navy: #112240;
-    --shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
-    --border: rgba(100, 255, 218, 0.2);
-    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --bg:#020c1b; --bg2:#0a192f; --bg3:#112240;
+    --fg:#e6f1ff; --muted:#8892b0;
+    --accent:#64ffda; --accent2:#57cbff;
+    --accent-dim:rgba(100,255,218,0.10); --accent2-dim:rgba(87,203,255,0.10);
+    --glow:rgba(100,255,218,0.30); --glow2:rgba(87,203,255,0.20);
+    --border:rgba(100,255,218,0.18); --border2:rgba(136,146,176,0.10);
+    --shadow:0 10px 30px -15px rgba(2,12,27,0.9);
+    --tr:all 0.35s cubic-bezier(0.25,0.8,0.25,1);
   }
   .lab-mode {
-    --bg: #000;
-    --fg: #0f8d8f;
-    --muted: #00ffff;
-    --accent: #00ffff;
-    --border: rgba(0, 255, 255, 0.4);
-    --shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-    background: #000;
-    font-family: 'Fira Code', 'Courier New', monospace;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  body {
-    background-color: var(--bg);
-    color: var(--fg);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    transition: background 0.6s ease, color 0.6s ease;
-  }
-  /* Spotlight Effect (Normal Mode) - Improved Visibility */
-  .spotlight {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: -1;
-    background: radial-gradient(
-      circle 300px at var(--x, 50vw) var(--y, 50vh),
-      rgba(100, 255, 218, 0.2),
-      rgba(2, 12, 27, 0.9)
-    );
-    transition: background 0.6s ease;
-  }
-  /* --- Fluid JARVIS Grid Canvas CSS --- */
-  #gridCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
-    background: transparent;
-    display: none;
-  }
-  .lab-mode #gridCanvas {
-     display: block;
-  }
-  /* Progress Bar */
-  .progress-container {
-    width: 100%;
-    height: 4px;
-    background: #112240;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1001;
-  }
-  .lab-mode .progress-container {
-    background: #111;
-  }
-  .progress-bar {
-    height: 4px;
-    background: var(--accent);
-    width: 0%;
-    transition: width 0.1s ease-out;
-  }
-  a {
-    color: var(--accent);
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  a:hover {
-    color: #7fffd4;
-  }
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 4rem clamp(1rem, 5vw, 2rem);
-    width: 100%;
-  }
-  .mono {
-    font-family: 'Fira Code', monospace;
-    color: var(--accent);
-    font-size: 0.9rem;
-  }
-  h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
-    margin: 0 0 1rem;
-    line-height: 1.1;
-    transition: color 0.5s, text-shadow 0.5s;
-  }
-  h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 3rem 0 1.5rem;
-    color: var(--accent);
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  h2::after {
-    content: '';
-    display: block;
-    height: 1px;
-    width: 100%;
-    max-width: 300px;
-    background-color: var(--border);
-    margin-left: 20px;
-  }
-  p {
-    color: var(--muted);
-    max-width: 600px;
-  }
-  .lab-toggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 1000;
-    background: var(--light-navy);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    padding: 0.6rem 1rem;
-    border-radius: 30px;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 10px rgba(100, 255, 218, 0.1);
-  }
-  .lab-toggle:hover {
-    transform: translateY(-2px);
-  }
-  .lab-mode .lab-toggle {
-    background: rgba(0, 255, 255, 0.1);
-    color: #00ffff;
-    border-color: #00ffff;
-    animation: pulse 1.5s infinite;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-  }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.4); }
-    50% { box-shadow: 0 0 25px rgba(0, 255, 255, 0.7); }
-    100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.4); }
-  }
-  .sidebar {
-    position: fixed;
-    top: 50%;
-    left: 1.5rem;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    z-index: 1000;
-  }
-  .sidebar a {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.85rem;
-    color: var(--muted);
-    transition: var(--transition);
-  }
-  .sidebar a:hover {
-    color: var(--accent);
-  }
-  @media (max-width: 768px) {
-    .sidebar {
-      display: none;
-    }
-    .container {
-      padding-top: 6rem;
-    }
-  }
-  .section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-  .section.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  #projects {
-    overflow: hidden;
-    margin: 4rem 0;
-  }
-  .project-scroll-container {
-    display: flex;
-    flex-direction: column;
-    gap: 6rem;
-  }
-  .project-slide {
-    display: flex;
-    min-height: 80vh;
-    align-items: center;
-    gap: 3rem;
-    opacity: 0;
-    transform: translateX(-60px);
-    transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  .project-slide.show {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  .project-slide.reverse {
-    flex-direction: row-reverse;
-  }
-  .project-img-container {
-    flex: 1;
-    position: relative;
-    min-height: 250px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border);
-  }
-  @media (min-width: 769px) {
-     .project-img-container {
-        height: 400px;
-     }
-  }
-  .project-img-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-  }
-  .project-img-slide:first-child {
-      opacity: 1;
-  }
-  .project-img-slide.active {
-      opacity: 1;
-  }
-  .project-content {
-    flex: 1;
-    max-width: 500px;
-  }
-  .project-content h3 {
-    font-size: 1.8rem;
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
-  .view-btn {
-    display: inline-block;
-    color: var(--accent);
-    font-family: 'Fira Code', monospace;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-  }
-  .view-btn:hover {
-    transform: translateX(5px);
-  }
-  .skills-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-  .skill-category {
-    background: var(--light-navy);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: visible;
-    z-index: 10;
-    cursor: pointer;
-  }
-  .skill-category:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  }
-  .skill-category h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.8rem;
-    color: var(--accent);
-    text-align: center;
-  }
-  .skill-items {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .skill-item {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-    background: rgba(100, 255, 218, 0.05);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    position: relative;
-    cursor: pointer;
-  }
-  .skill-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(100, 255, 218, 0.2);
-  }
-  .skill-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    background: var(--navy);
-    border: 1px solid var(--accent);
-    border-radius: 8px;
-    padding: 2rem;
-    width: 90%;
-    max-width: 600px;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  }
-  .skill-popup.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  .skill-popup-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .skill-popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .skill-popup-header h3 {
-    color: var(--accent);
-    margin: 0;
-  }
-  .skill-popup-close {
-    background: none;
-    border: none;
-    color: var(--accent);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .skill-popup-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-  }
-  .skill-popup-description {
-    color: var(--muted);
-    line-height: 1.6;
-  }
-  .skill-popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-  }
-  .skill-popup-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-  #experience {
-    margin: 4rem 0;
-  }
-  .experience-item {
-    margin-bottom: 2.5rem;
-  }
-  #contact {
-    text-align: center;
-  }
-  #contact div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  #contact a {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    transition: var(--transition);
-  }
-  #contact a:hover {
-    background: var(--light-navy);
-    transform: translateY(-3px);
-  }
-  .subtitle {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 600px;
-  }
-  .subtitle span {
-    white-space: nowrap;
-  }
-  .lab-mode h1::after {
-    content: "_";
-    animation: blink 1s step-end infinite;
-    margin-left: 5px;
-    color: var(--accent);
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-  .rover-vehicle {
-    position: fixed;
-    bottom: 20px;
-    left: -100px;
-    width: 60px;
-    height: 30px;
-    background: url('assets/images/rover-icon.png') no-repeat center center;
-    background-size: contain;
-    z-index: 999;
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-  .rover-vehicle.active {
-    opacity: 1;
-    animation: driveRoverImproved 8s linear forwards;
-  }
-  @keyframes driveRoverImproved {
-    0% { left: -100px; opacity: 0; }
-    10% { opacity: 1; }
-    90% { left: calc(100vw - 100px); opacity: 1; }
-    100% { left: calc(50% - 30px); opacity: 1; }
-  }
-  .mobile-nav-toggle {
-      display: none;
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      z-index: 1002;
-      background: var(--light-navy);
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'Fira Code', monospace;
-  }
-  .mobile-nav-menu {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(10, 25, 47, 0.95);
-      z-index: 1001;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-  }
-  .mobile-nav-menu.active {
-      display: flex;
-  }
-  .mobile-nav-menu a {
-      font-size: 1.5rem;
-      color: var(--fg);
-      text-decoration: none;
-      padding: 1rem;
-      transition: color 0.3s ease;
-  }
-  .mobile-nav-menu a:hover {
-      color: var(--accent);
-  }
-  @media (max-width: 768px) {
-      .mobile-nav-toggle {
-          display: block;
-      }
-  }
-  .jarvis-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000;
-      color: #00ffff;
-      font-family: 'Fira Code', 'Courier New', monospace;
-      font-size: 1.2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-  }
-  .jarvis-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-  }
-  .jarvis-overlay-text {
-      text-align: center;
-      white-space: pre-wrap;
-      padding: 2rem;
-  }
-  /* === JARVIS SKILLS GLITCH ENHANCEMENT (Updated per request) === */
-  .lab-mode #skills {
-    position: relative;
-    overflow: hidden;
-  }
-  /* Scanline overlay */
-  .lab-mode #skills::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(0, 255, 255, 0.04),
-      rgba(0, 255, 255, 0.04) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-    animation: scanlines 6s linear infinite;
-    opacity: 0.4;
-    z-index: 0;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-  }
-  @keyframes scanlines {
-    from { background-position: 0 0; }
-    to { background-position: 0 10px; }
-  }
-  /* Glitch only on headings when category is hovered */
-  .lab-mode .skill-category {
-    background: rgba(0, 10, 20, 0.85);
-    border: 1px solid rgba(0, 255, 255, 0.35);
-    box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);
-    backdrop-filter: blur(3px);
-  }
-  .lab-mode .skill-category h3 {
-    color: #00ffff;
-    text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
-    position: relative;
-    display: inline-block;
-    z-index: 1;
-  }
-  /* Remove glitch from skill items */
-  .lab-mode .skill-item {
-    background: rgba(0, 15, 25, 0.7);
-    border: 1px solid rgba(0, 255, 255, 0.25);
-    color: #00ffff;
-    box-shadow: 0 0 8px rgba(0, 255, 255, 0.1);
-    /* No pseudo-elements, no animation */
-  }
-  .lab-mode .skill-item:hover {
-    background: rgba(0, 25, 35, 0.9);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-    /* Still allow subtle hover, but NO glitch */
-  }
-  /* Glitch ghosts ONLY for h3 */
-  .lab-mode .skill-category h3::before,
-  .lab-mode .skill-category h3::after {
-    content: attr(data-glitch);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    opacity: 0;
-    color: transparent;
-    z-index: -1;
-    pointer-events: none;
-  }
-  .lab-mode .skill-category h3::before {
-    color: rgba(255, 0, 64, 0.9);
-    transform: translate(-1px, -1px);
-  }
-  .lab-mode .skill-category h3::after {
-    color: rgba(0, 255, 255, 0.9);
-    transform: translate(1px, 1px);
-  }
-  /* Trigger glitch on category hover */
-  .lab-mode .skill-category:hover h3 {
-    animation: glitch 0.3s steps(2, end) infinite;
-  }
-  .lab-mode .skill-category:hover h3::before,
-  .lab-mode .skill-category:hover h3::after {
-    opacity: 1;
-  }
-  @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-0.5px, 0.5px); }
-    40% { transform: translate(0.5px, -0.5px); }
-    60% { transform: translate(-1px, 0); }
-    80% { transform: translate(1px, 0); }
-    100% { transform: translate(0); }
-  }
-  /* === END JARVIS SKILLS GLITCH ENHANCEMENT === */
-</style>
+    --bg:#000; --bg2:#040d0d; --bg3:#071212;
+    --fg:#b0fff0; --muted:#00ccbb;
+    --accent:#00ffee; --accent2:#00ccff;
+    --border:rgba(0,255,238,0.35); --border2:rgba(0,255,238,0.10);
+    --glow:rgba(0,255,238,0.30); --accent-dim:rgba(0,255,238,0.07);
+    background:#000; font-family:'Fira Code','Courier New',monospace;
+  }
+
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:'Space Grotesk',sans-serif;line-height:1.6;overflow-x:hidden;transition:background .6s,color .6s;}
+  a{color:var(--accent);text-decoration:none;transition:color .3s;}
+  a:hover{color:#7fffd4;}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  /* --- ambient orbs --- */
+  .bg-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:-2;filter:blur(120px);opacity:.07;}
+  .bg-orb-1{width:600px;height:600px;background:var(--accent);top:-200px;left:-200px;animation:orbDrift 18s ease-in-out infinite alternate;}
+  .bg-orb-2{width:500px;height:500px;background:var(--accent2);bottom:-150px;right:-150px;animation:orbDrift 22s ease-in-out infinite alternate-reverse;}
+  @keyframes orbDrift{from{transform:translate(0,0)}to{transform:translate(40px,30px)}}
+  .lab-mode .bg-orb{display:none;}
+
+  /* --- spotlight --- */
+  .spotlight{position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle 350px at var(--x,50vw) var(--y,50vh),rgba(100,255,218,.07),transparent 70%);transition:background .1s;}
+  .lab-mode .spotlight{display:none;}
+
+  /* --- jarvis canvas --- */
+  #gridCanvas{position:fixed;inset:0;z-index:-1;pointer-events:none;display:none;}
+  .lab-mode #gridCanvas{display:block;}
+
+  /* --- progress --- */
+  .progress-container{width:100%;height:2px;background:transparent;position:fixed;top:0;left:0;z-index:1001;}
+  .progress-bar{height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .1s;box-shadow:0 0 8px var(--glow);}
+
+  /* --- layout --- */
+  .container{max-width:960px;margin:0 auto;padding:5rem clamp(1.5rem,6vw,3rem);width:100%;}
+
+  /* --- sidebar --- */
+  .sidebar{position:fixed;top:50%;left:2rem;transform:translateY(-50%);display:flex;flex-direction:column;gap:.45rem;z-index:1000;}
+  .sidebar a{font-family:'Fira Code',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:var(--tr);padding:.25rem 0;position:relative;}
+  .sidebar a::before{content:'';position:absolute;left:-1rem;top:50%;transform:translateY(-50%);width:4px;height:4px;border-radius:50%;background:var(--muted);transition:var(--tr);}
+  .sidebar a:hover,.sidebar a.active{color:var(--accent);}
+  .sidebar a:hover::before,.sidebar a.active::before{background:var(--accent);box-shadow:0 0 8px var(--glow);width:6px;height:6px;left:-1.1rem;}
+  @media(max-width:900px){.sidebar{display:none;}.container{padding-top:7rem;}}
+
+  /* --- mobile nav --- */
+  .mobile-nav-toggle{display:none;position:fixed;top:1.2rem;right:1.2rem;z-index:1002;background:var(--bg2);border:1px solid var(--border);color:var(--accent);padding:.5rem 1rem;border-radius:6px;cursor:pointer;font-family:'Fira Code',monospace;font-size:.8rem;}
+  .mobile-nav-menu{display:none;position:fixed;inset:0;background:rgba(2,12,27,.97);z-index:1001;flex-direction:column;justify-content:center;align-items:center;gap:2.5rem;backdrop-filter:blur(12px);}
+  .mobile-nav-menu.active{display:flex;}
+  .mobile-nav-menu a{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--fg);}
+  .mobile-nav-menu a:hover{color:var(--accent);}
+  @media(max-width:900px){.mobile-nav-toggle{display:block;}}
+
+  /* --- lab toggle --- */
+  .lab-toggle{position:fixed;bottom:2rem;right:2rem;z-index:1000;background:var(--bg2);border:1px solid var(--accent);color:var(--accent);padding:.6rem 1.1rem;border-radius:30px;font-family:'Fira Code',monospace;font-size:.8rem;cursor:pointer;transition:var(--tr);letter-spacing:.04em;box-shadow:0 4px 14px rgba(100,255,218,.08);}
+  .lab-toggle:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);}
+  .lab-mode .lab-toggle{background:rgba(0,255,238,.06);animation:labPulse 2s ease-in-out infinite;}
+  @keyframes labPulse{0%,100%{box-shadow:0 0 8px var(--glow)}50%{box-shadow:0 0 24px var(--glow),0 0 48px rgba(0,255,238,.12)}}
+
+  /* --- sections --- */
+  .section{opacity:0;transform:translateY(36px);transition:opacity .8s cubic-bezier(.25,.8,.25,1),transform .8s cubic-bezier(.25,.8,.25,1);padding:5rem 0 2rem;}
+  .section.show{opacity:1;transform:translateY(0);}
+  .section-label{font-family:'Fira Code',monospace;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem;}
+  .section-label::before{content:'//';opacity:.4;}
+  h2{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,2.9rem);font-weight:800;letter-spacing:-.03em;color:var(--fg);margin-bottom:2.5rem;line-height:1.1;}
+  h2 .hl{color:var(--accent);}
+  .lab-mode h2{color:var(--accent);}
+  .section-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:1rem 0 0;}
+
+  /* --- hero --- */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:4rem;padding-bottom:3rem;}
+  .hero-eyebrow{font-family:'Fira Code',monospace;color:var(--accent);font-size:.88rem;letter-spacing:.08em;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;}
+  .hero-eyebrow::before{content:'';display:inline-block;width:36px;height:1px;background:var(--accent);}
+  h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weight:800;line-height:.95;letter-spacing:-.03em;margin-bottom:1.5rem;color:var(--fg);transition:all .5s;}
+  .lab-mode h1{color:var(--accent);text-shadow:0 0 30px rgba(0,255,238,.4);}
+  .lab-mode h1::after{content:'_';animation:blink 1s step-end infinite;}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  .hero-subtitle{font-size:clamp(.93rem,1.7vw,1.05rem);color:var(--muted);max-width:560px;margin-bottom:2.5rem;line-height:1.85;}
+  .hero-subtitle .hl{color:var(--accent);font-weight:600;}
+  .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;}
+  .btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.7rem;background:transparent;color:var(--accent);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.88rem;border-radius:6px;border:1px solid var(--accent);cursor:pointer;transition:var(--tr);letter-spacing:.02em;}
+  .btn-outline:hover{background:var(--accent-dim);transform:translateY(-3px);box-shadow:0 8px 24px var(--glow);color:var(--accent);}
+  .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.7rem;background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.88rem;border-radius:6px;border:1px solid var(--border2);cursor:pointer;transition:var(--tr);letter-spacing:.02em;}
+  .btn-ghost:hover{border-color:var(--border);color:var(--accent);transform:translateY(-3px);}
+
+  /* --- about --- */
+  #about .about-body{font-size:1.02rem;color:var(--muted);max-width:640px;line-height:1.9;}
+  .jarvis-terminal{font-family:'Fira Code',monospace;font-size:.88rem;color:var(--accent);max-width:520px;display:flex;flex-direction:column;gap:.35rem;}
+  .jarvis-terminal .t-line{opacity:0;transform:translateX(-8px);transition:opacity .4s,transform .4s;display:flex;align-items:center;gap:.6rem;}
+  .jarvis-terminal .t-line::before{content:'>';opacity:.5;}
+  .jarvis-terminal .t-line.show{opacity:1;transform:translateX(0);}
+
+  /* ============================================================
+     BENTO GRID
+  ============================================================ */
+  .bento-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:340px 260px;gap:1rem;}
+  .bento-card:first-child{grid-column:1;grid-row:1/3;}
+  .bento-card{position:relative;border-radius:14px;overflow:hidden;cursor:pointer;border:1px solid var(--border2);background:var(--bg2);transition:border-color .35s,box-shadow .35s,transform .35s;}
+  .bento-card:hover{border-color:var(--border);box-shadow:0 16px 48px rgba(0,0,0,.5),0 0 0 1px var(--border);transform:translateY(-3px);}
+  .bento-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s cubic-bezier(.25,.8,.25,1),opacity .4s;opacity:.55;}
+  .bento-card:hover .bento-bg{transform:scale(1.04);opacity:.7;}
+  .bento-card::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(2,12,27,.97) 0%,rgba(2,12,27,.55) 50%,rgba(2,12,27,.1) 100%);transition:background .4s;}
+  .bento-card:hover::before{background:linear-gradient(to top,rgba(2,12,27,.99) 0%,rgba(2,12,27,.65) 45%,rgba(2,12,27,.18) 100%);}
+  .bento-content{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:1.4rem;}
+  .bento-num{font-family:'Fira Code',monospace;font-size:.65rem;color:var(--accent);letter-spacing:.12em;opacity:.75;margin-bottom:.35rem;display:block;}
+  .bento-title{font-family:'Syne',sans-serif;font-weight:800;color:var(--fg);line-height:1.15;letter-spacing:-.02em;margin-bottom:.55rem;}
+  .bento-card:first-child .bento-title{font-size:1.45rem;}
+  .bento-card:not(:first-child) .bento-title{font-size:1.1rem;}
+  .bento-tags{display:flex;flex-wrap:wrap;gap:.35rem;max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.25,.8,.25,1),opacity .3s;opacity:0;}
+  .bento-card:hover .bento-tags{max-height:60px;opacity:1;}
+  .bento-tag{font-family:'Fira Code',monospace;font-size:.62rem;padding:.15rem .5rem;border-radius:20px;border:1px solid var(--border);color:var(--accent);background:var(--accent-dim);letter-spacing:.04em;white-space:nowrap;}
+  .bento-card::after{content:'';position:absolute;bottom:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:3;transition:width .5s cubic-bezier(.25,.8,.25,1);}
+  .bento-card:hover::after{width:100%;}
+  .bento-open-hint{position:absolute;top:1rem;right:1rem;z-index:3;width:30px;height:30px;border-radius:50%;background:rgba(100,255,218,.12);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.8rem;opacity:0;transform:scale(.7);transition:opacity .3s,transform .3s;}
+  .bento-card:hover .bento-open-hint{opacity:1;transform:scale(1);}
+  .bento-wide{margin-top:1rem;height:200px;}
+  .bento-wide .bento-content{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
+  .bento-wide .bento-tags{max-height:60px;opacity:1;}
+  @media(max-width:700px){
+    .bento-grid{grid-template-columns:1fr;grid-template-rows:auto;}
+    .bento-card:first-child{grid-column:1;grid-row:auto;}
+    .bento-card{height:260px;}
+    .bento-card:first-child{height:320px;}
+    .bento-tags{max-height:60px;opacity:1;}
+    .bento-wide{height:220px;}
+  }
+
+  /* ============================================================
+     PROJECT MODAL
+  ============================================================ */
+  .proj-modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(2,12,27,.9);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;padding:1.5rem;}
+  .proj-modal-overlay.open{opacity:1;visibility:visible;}
+  .proj-modal{background:var(--bg2);border:1px solid var(--border);border-radius:18px;width:100%;max-width:760px;max-height:90vh;overflow-y:auto;transform:translateY(24px) scale(.97);transition:transform .4s cubic-bezier(.25,.8,.25,1);box-shadow:0 40px 80px rgba(0,0,0,.6);position:relative;}
+  .proj-modal-overlay.open .proj-modal{transform:translateY(0) scale(1);}
+  .proj-modal-img-wrap{position:relative;width:100%;height:280px;overflow:hidden;border-radius:16px 16px 0 0;background:var(--bg3);}
+  .proj-modal-img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease-in-out;}
+  .proj-modal-img.active{opacity:1;}
+  .proj-modal-img-nav{position:absolute;bottom:.75rem;right:.75rem;z-index:2;display:flex;gap:.4rem;}
+  .proj-modal-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);border:none;padding:0;cursor:pointer;transition:all .25s;}
+  .proj-modal-dot.active{background:var(--accent);box-shadow:0 0 6px var(--glow);width:16px;border-radius:3px;}
+  .proj-modal-body{padding:1.75rem 2rem 2rem;}
+  .proj-modal-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1rem;}
+  .proj-modal-num{font-family:'Fira Code',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.1em;opacity:.65;display:block;margin-bottom:.3rem;}
+  .proj-modal-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--fg);letter-spacing:-.02em;line-height:1.15;}
+  .proj-modal-close{flex-shrink:0;width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border2);color:var(--muted);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+  .proj-modal-close:hover{background:rgba(255,255,255,.12);color:var(--fg);}
+  .proj-modal-desc{font-size:.94rem;color:var(--muted);line-height:1.8;margin-bottom:1.25rem;}
+  .proj-modal-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;}
+  .proj-modal-tag{font-family:'Fira Code',monospace;font-size:.68rem;padding:.22rem .6rem;border-radius:30px;border:1px solid var(--border);color:var(--accent);background:var(--accent-dim);letter-spacing:.05em;}
+  .proj-modal-link{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.4rem;border:1px solid var(--accent);border-radius:7px;color:var(--accent);font-family:'Fira Code',monospace;font-size:.83rem;transition:var(--tr);}
+  .proj-modal-link:hover{background:var(--accent-dim);transform:translateX(3px);color:var(--accent);}
+
+  /* ============================================================
+     CAD EXPLORER (SKILLS)
+  ============================================================ */
+  .cad-explorer{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);font-family:'Fira Code',monospace;}
+  .cad-titlebar{display:flex;align-items:center;gap:.75rem;padding:.65rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border2);}
+  .cad-dots{display:flex;gap:.4rem;}
+  .cad-dot{width:11px;height:11px;border-radius:50%;}
+  .cad-dot-r{background:#ff5f56;box-shadow:0 0 6px rgba(255,95,86,.5);}
+  .cad-dot-y{background:#ffbd2e;box-shadow:0 0 6px rgba(255,189,46,.5);}
+  .cad-dot-g{background:#27c93f;box-shadow:0 0 6px rgba(39,201,63,.5);}
+  .cad-title-text{font-size:.72rem;color:var(--muted);letter-spacing:.06em;margin:0 auto;}
+  .cad-toolbar{display:flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border-bottom:1px solid var(--border2);background:rgba(10,25,47,.6);}
+  .cad-tb-item{font-size:.65rem;color:var(--muted);letter-spacing:.05em;padding:.2rem .6rem;border-radius:3px;cursor:default;transition:background .2s,color .2s;user-select:none;}
+  .cad-tb-item:hover{background:var(--accent-dim);color:var(--accent);}
+  .cad-tb-sep{width:1px;height:12px;background:var(--border2);}
+  .cad-body{display:flex;min-height:320px;}
+  .cad-panel{width:240px;flex-shrink:0;border-right:1px solid var(--border2);overflow-y:auto;padding:.5rem 0;}
+  .cad-tree-item{display:flex;align-items:center;padding:.32rem .75rem;cursor:pointer;user-select:none;transition:background .2s;position:relative;}
+  .cad-tree-item:hover{background:var(--accent-dim);}
+  .cad-tree-item.selected{background:rgba(100,255,218,.12);border-left:2px solid var(--accent);}
+  .cad-tree-item.selected .cad-item-name{color:var(--accent);}
+  .cad-indent{flex-shrink:0;width:20px;height:100%;display:flex;align-items:center;justify-content:center;position:relative;}
+  .cad-indent::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:1px;background:var(--border2);}
+  .cad-indent.last::before{height:50%;}
+  .cad-indent::after{content:'';position:absolute;left:10px;top:50%;width:10px;height:1px;background:var(--border2);}
+  .cad-chevron{flex-shrink:0;width:14px;height:14px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform .25s;font-size:.6rem;margin-right:2px;}
+  .cad-tree-item.open > .cad-chevron{transform:rotate(90deg);}
+  .cad-tree-item.leaf > .cad-chevron{opacity:0;pointer-events:none;}
+  .cad-icon{flex-shrink:0;width:16px;height:16px;margin-right:6px;display:flex;align-items:center;justify-content:center;}
+  .cad-icon svg{width:14px;height:14px;}
+  .cad-item-name{font-size:.78rem;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cad-item-ext{font-size:.65rem;color:var(--muted);margin-left:3px;opacity:.6;}
+  .cad-children{display:none;}
+  .cad-children.open{display:block;}
+  .cad-detail{flex:1;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto;}
+  .cad-detail-empty{margin:auto;text-align:center;color:var(--muted);font-size:.8rem;opacity:.5;display:flex;flex-direction:column;align-items:center;gap:.75rem;}
+  .cad-detail-empty svg{opacity:.3;width:48px;height:48px;}
+  .cad-detail-header{display:flex;align-items:flex-start;gap:1rem;}
+  .cad-detail-icon{width:44px;height:44px;border-radius:8px;background:var(--accent-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.3rem;}
+  .cad-detail-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--fg);margin-bottom:.2rem;}
+  .cad-detail-meta{font-size:.72rem;color:var(--muted);letter-spacing:.05em;}
+  .cad-detail-desc{font-size:.87rem;color:var(--muted);line-height:1.75;border-top:1px solid var(--border2);padding-top:1rem;}
+  .cad-detail-img{width:100%;height:160px;object-fit:cover;border-radius:6px;border:1px solid var(--border2);display:none;}
+  .cad-status-bar{display:flex;align-items:center;gap:1rem;padding:.4rem .75rem;background:var(--bg3);border-top:1px solid var(--border2);font-size:.65rem;color:var(--muted);letter-spacing:.04em;}
+  .cad-status-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--glow);}
+  .lab-mode .cad-explorer{border-color:rgba(0,255,238,.2);}
+  .lab-mode .cad-titlebar,.lab-mode .cad-toolbar,.lab-mode .cad-status-bar{background:rgba(0,20,18,.9);}
+  .lab-mode .cad-tree-item:hover{background:rgba(0,255,238,.06);}
+  .lab-mode .cad-tree-item.selected{border-left-color:var(--accent);background:rgba(0,255,238,.08);}
+  @media(max-width:640px){.cad-panel{width:160px;}.cad-detail{padding:1rem;}}
+
+  /* ============================================================
+     EXPERIENCE
+  ============================================================ */
+  .experience-list{display:flex;flex-direction:column;position:relative;}
+  .experience-list::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),transparent);opacity:.25;}
+  .experience-item{padding:2rem 0 2rem 2rem;position:relative;border-bottom:1px solid var(--border2);}
+  .experience-item:last-child{border-bottom:none;}
+  .experience-item::before{content:'';position:absolute;left:-4px;top:2.4rem;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--glow);transition:var(--tr);}
+  .experience-item:hover::before{transform:scale(1.3);box-shadow:0 0 16px var(--glow);}
+  .exp-company{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--fg);margin-bottom:.3rem;}
+  .exp-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.85rem;}
+  .exp-role{font-size:.86rem;color:var(--accent);font-style:italic;font-weight:500;}
+  .exp-date{font-family:'Fira Code',monospace;font-size:.72rem;color:var(--muted);background:var(--accent-dim);padding:.18rem .55rem;border-radius:20px;border:1px solid var(--border);}
+  .experience-item ul{padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem;}
+  .experience-item li{font-size:.88rem;color:var(--muted);line-height:1.65;}
+  .experience-item li::marker{color:var(--accent);}
+
+  /* ============================================================
+     CONTACT
+  ============================================================ */
+  #contact{text-align:center;padding-bottom:6rem;}
+  #contact .section-label{justify-content:center;}
+  .contact-headline{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,5vw,3.2rem);font-weight:800;letter-spacing:-.03em;margin-bottom:1.2rem;color:var(--fg);}
+  .contact-headline span{color:var(--accent);}
+  #contact > p{color:var(--muted);max-width:460px;margin:0 auto 2.8rem;font-size:.98rem;line-height:1.75;}
+  .contact-links{display:flex;flex-wrap:wrap;gap:.85rem;justify-content:center;}
+  .contact-link{display:flex;align-items:center;gap:.55rem;padding:.7rem 1.4rem;border:1px solid var(--border2);border-radius:40px;color:var(--muted);font-size:.86rem;font-weight:500;transition:var(--tr);background:rgba(10,25,47,.5);}
+  .contact-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 24px var(--glow);}
+
+  /* --- rover + overlay --- */
+  .rover-vehicle{position:fixed;bottom:20px;left:-100px;width:60px;height:30px;background:url('assets/images/rover-icon.png') no-repeat center;background-size:contain;z-index:999;opacity:0;transition:opacity .5s;display:none;}
+  .rover-vehicle.active{opacity:1;animation:driveRover 8s linear forwards;}
+  @keyframes driveRover{0%{left:-100px;opacity:0}10%{opacity:1}90%{left:calc(100vw - 100px);opacity:1}100%{left:calc(50% - 30px);opacity:1}}
+  .jarvis-overlay{position:fixed;inset:0;background:#000;color:#00ffee;font-family:'Fira Code',monospace;font-size:1.1rem;display:flex;justify-content:center;align-items:center;z-index:10000;opacity:0;pointer-events:none;transition:opacity .5s;}
+  .jarvis-overlay.active{opacity:1;pointer-events:auto;}
+  .jarvis-overlay-text{text-align:center;white-space:pre-wrap;padding:2rem;line-height:1.8;}
+
+  /* --- footer --- */
+  .footer-line{text-align:center;padding:2rem;font-family:'Fira Code',monospace;font-size:.7rem;color:var(--muted);opacity:.35;border-top:1px solid var(--border2);}
+
+  /* --- skill popup overlay --- */
+  .skill-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;opacity:0;visibility:hidden;transition:all .3s;backdrop-filter:blur(4px);}
+  .skill-popup-overlay.active{opacity:1;visibility:visible;}
+  .skill-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:2rem;width:90%;max-width:500px;z-index:1000;opacity:0;visibility:hidden;transition:all .35s cubic-bezier(.25,.8,.25,1);box-shadow:0 30px 60px rgba(0,0,0,.5);}
+  .skill-popup.active{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
+  .skill-popup-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+  .skill-popup-header h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--fg);}
+  .skill-popup-close{background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:all .2s;}
+  .skill-popup-close:hover{background:rgba(255,255,255,.08);color:var(--fg);}
+  .skill-popup-image{width:100%;height:170px;object-fit:cover;border-radius:7px;border:1px solid var(--border2);margin-bottom:.9rem;}
+  .skill-popup-description{color:var(--muted);line-height:1.7;font-size:.91rem;}
+  </style>
 </head>
-<body class="">
-  <div id="jarvisOverlay" class="jarvis-overlay">
-    <pre id="jarvisOverlayText" class="jarvis-overlay-text"></pre>
-  </div>
-  <div class="spotlight"></div>
-  <canvas id="gridCanvas"></canvas>
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-  <button type="button" class="lab-toggle" id="labToggle">Activate JARVIS</button>
-  <nav class="sidebar">
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#experience">Experience</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <button type="button" class="mobile-nav-toggle" id="mobileNavToggle">Menu</button>
-  <nav class="mobile-nav-menu" id="mobileNavMenu">
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#experience">Experience</a>
-    <a href="#contact">Contact</a>
-    <a href="#" id="mobileCloseMenu">Close</a>
-  </nav>
-  <div class="rover-vehicle"></div>
-  <main class="container">
-    <p class="mono" style="color: var(--accent); margin-bottom: 1rem;">Hi, my name is</p>
-    <h1 id="heroName">Alif Ayman Mahin.</h1>
-    <div class="subtitle">
-      <span>My engineering approach: </span>
-      <span class="accent">Be like Tony Stark (on a budget)</span>
-      <span>, </span>
-      <span class="accent">coffee-powered CAD</span>
-      <span>, and believe that <span class="accent">g = 10 m/s²</span></span>
+<body>
+
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+
+<div id="jarvisOverlay" class="jarvis-overlay">
+  <pre id="jarvisOverlayText" class="jarvis-overlay-text"></pre>
+</div>
+
+<div class="spotlight"></div>
+<canvas id="gridCanvas"></canvas>
+<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+<button type="button" class="lab-toggle" id="labToggle">Activate JARVIS</button>
+<div class="rover-vehicle"></div>
+
+<nav class="sidebar">
+  <a href="#about">About</a>
+  <a href="#projects">Projects</a>
+  <a href="#skills">Skills</a>
+  <a href="#experience">Experience</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<button type="button" class="mobile-nav-toggle" id="mobileNavToggle">Menu</button>
+<nav class="mobile-nav-menu" id="mobileNavMenu">
+  <a href="#about"      onclick="closeMobileNav()">About</a>
+  <a href="#projects"   onclick="closeMobileNav()">Projects</a>
+  <a href="#skills"     onclick="closeMobileNav()">Skills</a>
+  <a href="#experience" onclick="closeMobileNav()">Experience</a>
+  <a href="#contact"    onclick="closeMobileNav()">Contact</a>
+  <a href="#" onclick="closeMobileNav();return false;" style="font-size:1rem;color:var(--muted);">✕ Close</a>
+</nav>
+
+<main class="container">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <p class="hero-eyebrow">Hi, my name is</p>
+    <h1 id="heroName">Alif Ayman<br>Mahin.</h1>
+    <p class="hero-subtitle">
+      Mechanical Engineering student at <span class="hl">Memorial University</span>.<br>
+      My approach: <span class="hl">Be like Tony Stark (on a budget)</span>,
+      coffee-powered CAD, and believe that <span class="hl">g&nbsp;=&nbsp;10&nbsp;m/s²</span>.
+    </p>
+    <div class="hero-cta">
+      <a href="assets/resume.pdf" download class="btn-outline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+      <a href="#contact" class="btn-ghost">Get In Touch →</a>
     </div>
-    <a href="assets/resume.pdf" download class="resume-btn">Download Resume</a>
-    <section class="section" id="about">
-      <h2>About Me</h2>
-      <p id="aboutContent">
-        As a third-year Mechanical Engineering student at Memorial University, I’m driven by a deep passion for designing, building, and improving technology. From high-performance vehicles to UAVs, robotics, and sustainable energy systems, I thrive on tackling diverse engineering challenges through a mix of hands-on prototyping, CAD modeling, and simulation. I enjoy blending creativity with technical precision to develop innovative and efficient solutions. When I’m not immersed in engineering projects, you’ll often find me playing musical instruments or getting lost in a great movie.
-      </p>
-    </section>
-    <section class="section" id="projects">
-      <h2>Projects</h2>
-      <div class="project-scroll-container">
-        <div class="project-slide">
-          <div class="project-img-container">
-            <img class="project-img-slide" src="assets/images/mars-rover.jpg" alt="Mars Rover Image 1">
-            <img class="project-img-slide" src="assets/images/mars-rover-2.jpg" alt="Mars Rover Image 2">
-            <img class="project-img-slide" src="assets/images/mars-rover-3.jpg" alt="Mars Rover Image 3">
-          </div>
-          <div class="project-content">
-            <h3>Sidus Robotics - Mars Rover</h3>
-            <p>Memorial University's first Mars rover design team preparing for the 2026 Canadian International Rover Challenge (CIRC). Designed mechanical subsystems with a focus on design-for-manufacturability, system integration, and field-tested suspension performance.</p>
-            <a href="https://sidusrobotics.ca/" target="_blank" class="view-btn">View Team Site →</a>
-          </div>
-        </div>
-        <div class="project-slide reverse">
-          <div class="project-img-container">
-            <img class="project-img-slide" src="assets/images/vtol-uav.jpg" alt="VTOL UAV Image 1">
-            <img class="project-img-slide" src="assets/images/vtol-uav-2.jpg" alt="VTOL UAV Image 2">
-            <img class="project-img-slide" src="assets/images/vtol-uav-3.jpg" alt="VTOL UAV Image 3">
-          </div>
-          <div class="project-content">
-            <h3>Valiant Aerotech - Firefighting UAV</h3>
-            <p>Engineered a composite frame and stability jig for a payload quadcopter UAV. Designed a surveillance drone using SolidWorks and Abaqus for structural validation.</p>
-            <a href="https://www.linkedin.com/company/valiant-aerotech/" target="_blank" class="view-btn">Learn More →</a>
-          </div>
-        </div>
-        <div class="project-slide">
-          <div class="project-img-container">
-            <img class="project-img-slide" src="assets/images/motor-mount.jpg" alt="Motor Mount Image 1">
-            <img class="project-img-slide" src="assets/images/motor-mount-2.jpg" alt="Motor Mount Image 2">
-            <img class="project-img-slide" src="assets/images/motor-mount-3.jpg" alt="Motor Mount Image 3">
-          </div>
-          <div class="project-content">
-            <h3>Emergency Outboard Motor Mount</h3>
-            <p>Designed a detachable motor mount in Onshape, applying fastening theory and stress analysis. Produced detailed GD&T part drawings and BOM; project earned 90% final score.</p>
-            <a href="#projects" class="view-btn">View Details →</a>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <p class="section-label">01 — about</p>
+    <h2>Who I <span class="hl">Am</span></h2>
+    <p class="about-body" id="aboutContent">As a third-year Mechanical Engineering student at Memorial University, I'm driven by a deep passion for designing, building, and improving technology. From high-performance vehicles to UAVs, robotics, and sustainable energy systems, I thrive on tackling diverse engineering challenges through a mix of hands-on prototyping, CAD modeling, and simulation. I enjoy blending creativity with technical precision to develop innovative and efficient solutions. When I'm not immersed in engineering projects, you'll often find me playing musical instruments or getting lost in a great movie.</p>
+    <div class="jarvis-terminal" id="jarvisTerminal" style="display:none;"></div>
+  </section>
+  <div class="section-divider"></div>
+
+  <!-- PROJECTS — BENTO -->
+  <section class="section" id="projects">
+    <p class="section-label">02 — projects</p>
+    <h2>Things I've <span class="hl">Built</span></h2>
+
+    <div class="bento-grid">
+      <div class="bento-card" data-project="0">
+        <div class="bento-bg" style="background-image:url('assets/images/mars-rover.jpg')"></div>
+        <div class="bento-open-hint">↗</div>
+        <div class="bento-content">
+          <span class="bento-num">01 / Robotics</span>
+          <div class="bento-title">Sidus Robotics —<br>Mars Rover</div>
+          <div class="bento-tags">
+            <span class="bento-tag">SolidWorks</span>
+            <span class="bento-tag">Suspension</span>
+            <span class="bento-tag">CIRC 2026</span>
           </div>
         </div>
       </div>
-    </section>
-    <section class="section" id="skills">
-      <h2>Skills</h2>
-      <div class="skills-container">
-        <div class="skill-category" data-skill="design">
-          <h3>Design & CAD</h3>
-          <div class="skill-items">
-            <span class="skill-item" data-skill="fusion360">Fusion 360</span>
-            <span class="skill-item" data-skill="solidworks">SolidWorks</span>
-            <span class="skill-item" data-skill="inventor">Inventor</span>
-          </div>
-        </div>
-        <div class="skill-category" data-skill="analysis">
-          <h3>Analysis & Simulation</h3>
-          <div class="skill-items">
-            <span class="skill-item" data-skill="ansys">ANSYS Fluent</span>
-            <span class="skill-item" data-skill="abaqus">Abaqus</span>
-            <span class="skill-item" data-skill="matlab">MATLAB</span>
-          </div>
-        </div>
-        <div class="skill-category" data-skill="prototyping">
-          <h3>Prototyping & Manufacturing</h3>
-          <div class="skill-items">
-            <span class="skill-item" data-skill="3dprinting">3D Printing</span>
-            <span class="skill-item" data-skill="cnc">CNC Machining</span>
-            <span class="skill-item" data-skill="cam">CAM Programming</span>
-          </div>
-        </div>
-        <div class="skill-category" data-skill="electronics">
-          <h3>Electronics & Embedded</h3>
-          <div class="skill-items">
-            <span class="skill-item" data-skill="arduino">Arduino</span>
-            <span class="skill-item" data-skill="sensors">Sensors & Actuators</span>
-            <span class="skill-item" data-skill="soldering">Soldering</span>
-          </div>
-        </div>
-        <div class="skill-category" data-skill="programming">
-          <h3>Programming</h3>
-          <div class="skill-items">
-            <span class="skill-item" data-skill="python">Python</span>
-            <span class="skill-item" data-skill="cpp">C++</span>
-            <span class="skill-item" data-skill="web">HTML/CSS</span>
-          </div>
-        </div>
-        <div class="skill-category" data-skill="tools">
-          <h3>General Tools</h3>
-          <div class="skill-items">
-            <span class="skill-item" data-skill="office">MS Office</span>
-            <span class="skill-item" data-skill="adobe">Adobe CC</span>
-            <span class="skill-item" data-skill="whmis">WHMIS Certified</span>
+
+      <div class="bento-card" data-project="1">
+        <div class="bento-bg" style="background-image:url('assets/images/vtol-uav.jpg')"></div>
+        <div class="bento-open-hint">↗</div>
+        <div class="bento-content">
+          <span class="bento-num">02 / Aerospace</span>
+          <div class="bento-title">VTOL UAV — Fixed Wing</div>
+          <div class="bento-tags">
+            <span class="bento-tag">ANSYS Fluent</span>
+            <span class="bento-tag">Abaqus</span>
+            <span class="bento-tag">CFD</span>
           </div>
         </div>
       </div>
-    </section>
-    <div class="skill-popup-overlay" id="skillPopupOverlay"></div>
-    <div class="skill-popup" id="skillPopup">
-      <div class="skill-popup-content">
-        <div class="skill-popup-header">
-          <h3 id="skillPopupTitle">Skill Title</h3>
-          <button class="skill-popup-close" id="skillPopupClose">&times;</button>
+
+      <div class="bento-card" data-project="2" style="grid-column:2;grid-row:2;">
+        <div class="bento-bg" style="background-image:url('assets/images/firefighting-uav.jpg')"></div>
+        <div class="bento-open-hint">↗</div>
+        <div class="bento-content">
+          <span class="bento-num">03 / Aerospace</span>
+          <div class="bento-title">Valiant Aerotech — Firefighting UAV</div>
+          <div class="bento-tags">
+            <span class="bento-tag">SolidWorks</span>
+            <span class="bento-tag">Composites</span>
+          </div>
         </div>
-        <img id="skillPopupImage" class="skill-popup-image" src="" alt="Skill Image">
-        <p id="skillPopupDescription" class="skill-popup-description">Skill description will appear here.</p>
       </div>
     </div>
-    <section class="section" id="experience">
-      <h2>Experience</h2>
+
+    <div class="bento-card bento-wide" data-project="3">
+      <div class="bento-bg" style="background-image:url('assets/images/motor-mount.jpg');background-position:center 40%;"></div>
+      <div class="bento-open-hint">↗</div>
+      <div class="bento-content">
+        <div>
+          <span class="bento-num">04 / Mechanical Design</span>
+          <div class="bento-title">Emergency Outboard Motor Mount</div>
+        </div>
+        <div class="bento-tags">
+          <span class="bento-tag">Onshape</span>
+          <span class="bento-tag">GD&amp;T</span>
+          <span class="bento-tag">Stress Analysis</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-family:'Fira Code',monospace;font-size:.72rem;color:var(--muted);margin-top:1rem;opacity:.5;text-align:right;">// click any card to expand</p>
+  </section>
+
+  <!-- PROJECT MODAL -->
+  <div class="proj-modal-overlay" id="projModalOverlay">
+    <div class="proj-modal" id="projModal">
+      <div class="proj-modal-img-wrap" id="projModalImgs"></div>
+      <div class="proj-modal-body">
+        <div class="proj-modal-header">
+          <div>
+            <span class="proj-modal-num" id="projModalNum"></span>
+            <div class="proj-modal-title" id="projModalTitle"></div>
+          </div>
+          <button class="proj-modal-close" id="projModalClose">✕</button>
+        </div>
+        <p class="proj-modal-desc" id="projModalDesc"></p>
+        <div class="proj-modal-tags" id="projModalTags"></div>
+        <a class="proj-modal-link" id="projModalLink" href="#" target="_blank">View Project →</a>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <!-- SKILLS — CAD EXPLORER -->
+  <section class="section" id="skills">
+    <p class="section-label">03 — skills</p>
+    <h2>What I <span class="hl">Know</span></h2>
+    <div class="cad-explorer">
+      <div class="cad-titlebar">
+        <div class="cad-dots">
+          <div class="cad-dot cad-dot-r"></div>
+          <div class="cad-dot cad-dot-y"></div>
+          <div class="cad-dot cad-dot-g"></div>
+        </div>
+        <span class="cad-title-text">skill_tree.sldasm — Alif Mahin</span>
+      </div>
+      <div class="cad-toolbar">
+        <span class="cad-tb-item">File</span>
+        <span class="cad-tb-item">Edit</span>
+        <span class="cad-tb-item">View</span>
+        <div class="cad-tb-sep"></div>
+        <span class="cad-tb-item">Collapse All</span>
+      </div>
+      <div class="cad-body">
+        <div class="cad-panel">
+          <!-- Root -->
+          <div class="cad-tree-item open" data-type="root" id="rootItem" onclick="toggleCadNode(this)">
+            <div class="cad-chevron">&#9658;</div>
+            <div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="var(--accent)" opacity=".8"/><rect x="9" y="1" width="6" height="6" rx="1" fill="var(--accent2)" opacity=".8"/><rect x="1" y="9" width="6" height="6" rx="1" fill="var(--accent2)" opacity=".8"/><rect x="9" y="9" width="6" height="6" rx="1" fill="var(--accent)" opacity=".6"/></svg></div>
+            <span class="cad-item-name">ALIF_MAHIN</span><span class="cad-item-ext">.sldasm</span>
+          </div>
+          <div class="cad-children open" id="children-root">
+
+            <!-- Design & CAD -->
+            <div class="cad-tree-item" data-type="folder" data-cat="design" onclick="toggleCadFolder(this,'design')">
+              <div class="cad-indent"></div><div class="cad-chevron">&#9658;</div>
+              <div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12l-1 9H3L2 4z" fill="var(--accent)" opacity=".3" stroke="var(--accent)" stroke-width="1"/><path d="M5 4V2h6v2" stroke="var(--accent)" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <span class="cad-item-name">Design &amp; CAD</span>
+            </div>
+            <div class="cad-children" id="folder-design">
+              <div class="cad-tree-item leaf" data-skill="fusion360" onclick="selectSkill(this,'fusion360')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--accent2)" opacity=".2" stroke="var(--accent2)" stroke-width="1"/><line x1="2" y1="6" x2="14" y2="6" stroke="var(--accent2)" stroke-width=".8"/></svg></div><span class="cad-item-name">Fusion 360</span><span class="cad-item-ext">.f3d</span></div>
+              <div class="cad-tree-item leaf" data-skill="solidworks" onclick="selectSkill(this,'solidworks')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--accent2)" opacity=".2" stroke="var(--accent2)" stroke-width="1"/><line x1="2" y1="6" x2="14" y2="6" stroke="var(--accent2)" stroke-width=".8"/></svg></div><span class="cad-item-name">SolidWorks</span><span class="cad-item-ext">.sldprt</span></div>
+              <div class="cad-tree-item leaf" data-skill="inventor" onclick="selectSkill(this,'inventor')"><div class="cad-indent"></div><div class="cad-indent last"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--accent2)" opacity=".2" stroke="var(--accent2)" stroke-width="1"/><line x1="2" y1="6" x2="14" y2="6" stroke="var(--accent2)" stroke-width=".8"/></svg></div><span class="cad-item-name">Inventor</span><span class="cad-item-ext">.ipt</span></div>
+            </div>
+
+            <!-- Analysis -->
+            <div class="cad-tree-item" data-type="folder" data-cat="analysis" onclick="toggleCadFolder(this,'analysis')">
+              <div class="cad-indent"></div><div class="cad-chevron">&#9658;</div>
+              <div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><polyline points="2,13 6,7 9,10 13,3" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" fill="none"/><circle cx="13" cy="3" r="1.5" fill="var(--accent)"/></svg></div>
+              <span class="cad-item-name">Analysis &amp; Simulation</span>
+            </div>
+            <div class="cad-children" id="folder-analysis">
+              <div class="cad-tree-item leaf" data-skill="ansys" onclick="selectSkill(this,'ansys')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--accent)" opacity=".15" stroke="var(--accent)" stroke-width="1"/><path d="M5 10 L8 6 L11 10" stroke="var(--accent)" stroke-width="1" fill="none"/></svg></div><span class="cad-item-name">ANSYS Fluent</span><span class="cad-item-ext">.cas</span></div>
+              <div class="cad-tree-item leaf" data-skill="abaqus" onclick="selectSkill(this,'abaqus')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--accent)" opacity=".15" stroke="var(--accent)" stroke-width="1"/><path d="M5 10 L8 6 L11 10" stroke="var(--accent)" stroke-width="1" fill="none"/></svg></div><span class="cad-item-name">Abaqus</span><span class="cad-item-ext">.inp</span></div>
+              <div class="cad-tree-item leaf" data-skill="matlab" onclick="selectSkill(this,'matlab')"><div class="cad-indent"></div><div class="cad-indent last"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--accent)" opacity=".15" stroke="var(--accent)" stroke-width="1"/><path d="M5 10 L8 6 L11 10" stroke="var(--accent)" stroke-width="1" fill="none"/></svg></div><span class="cad-item-name">MATLAB</span><span class="cad-item-ext">.m</span></div>
+            </div>
+
+            <!-- Prototyping -->
+            <div class="cad-tree-item" data-type="folder" data-cat="prototyping" onclick="toggleCadFolder(this,'prototyping')">
+              <div class="cad-indent"></div><div class="cad-chevron">&#9658;</div>
+              <div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" fill="none" stroke="var(--accent)" stroke-width="1"/><path d="M8 3 L8 8 L11 11" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+              <span class="cad-item-name">Prototyping</span>
+            </div>
+            <div class="cad-children" id="folder-prototyping">
+              <div class="cad-tree-item leaf" data-skill="3dprinting" onclick="selectSkill(this,'3dprinting')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="3" y="10" width="10" height="3" rx="1" fill="var(--accent2)" opacity=".3" stroke="var(--accent2)" stroke-width="1"/><path d="M5 10 L8 4 L11 10" fill="var(--accent2)" opacity=".2" stroke="var(--accent2)" stroke-width="1"/></svg></div><span class="cad-item-name">3D Printing</span><span class="cad-item-ext">.stl</span></div>
+              <div class="cad-tree-item leaf" data-skill="cnc" onclick="selectSkill(this,'cnc')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="3" y="10" width="10" height="3" rx="1" fill="var(--accent2)" opacity=".3" stroke="var(--accent2)" stroke-width="1"/><path d="M5 10 L8 4 L11 10" fill="var(--accent2)" opacity=".2" stroke="var(--accent2)" stroke-width="1"/></svg></div><span class="cad-item-name">CNC Machining</span><span class="cad-item-ext">.nc</span></div>
+              <div class="cad-tree-item leaf" data-skill="cam" onclick="selectSkill(this,'cam')"><div class="cad-indent"></div><div class="cad-indent last"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="3" y="10" width="10" height="3" rx="1" fill="var(--accent2)" opacity=".3" stroke="var(--accent2)" stroke-width="1"/><path d="M5 10 L8 4 L11 10" fill="var(--accent2)" opacity=".2" stroke="var(--accent2)" stroke-width="1"/></svg></div><span class="cad-item-name">CAM Programming</span><span class="cad-item-ext">.tap</span></div>
+            </div>
+
+            <!-- Electronics -->
+            <div class="cad-tree-item" data-type="folder" data-cat="electronics" onclick="toggleCadFolder(this,'electronics')">
+              <div class="cad-indent"></div><div class="cad-chevron">&#9658;</div>
+              <div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8 L6 5 L6 11 L9 8 L12 8" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" fill="none"/><circle cx="13" cy="8" r="1" fill="var(--accent)"/></svg></div>
+              <span class="cad-item-name">Electronics &amp; Embedded</span>
+            </div>
+            <div class="cad-children" id="folder-electronics">
+              <div class="cad-tree-item leaf" data-skill="arduino" onclick="selectSkill(this,'arduino')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="8" rx="2" fill="none" stroke="var(--accent)" stroke-width="1"/><circle cx="5" cy="8" r="1.5" fill="var(--accent)" opacity=".7"/><circle cx="11" cy="8" r="1.5" fill="var(--accent)" opacity=".7"/></svg></div><span class="cad-item-name">Arduino</span><span class="cad-item-ext">.ino</span></div>
+              <div class="cad-tree-item leaf" data-skill="sensors" onclick="selectSkill(this,'sensors')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="8" rx="2" fill="none" stroke="var(--accent)" stroke-width="1"/><circle cx="5" cy="8" r="1.5" fill="var(--accent)" opacity=".7"/><circle cx="11" cy="8" r="1.5" fill="var(--accent)" opacity=".7"/></svg></div><span class="cad-item-name">Sensors &amp; Actuators</span><span class="cad-item-ext">.h</span></div>
+              <div class="cad-tree-item leaf" data-skill="soldering" onclick="selectSkill(this,'soldering')"><div class="cad-indent"></div><div class="cad-indent last"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="8" rx="2" fill="none" stroke="var(--accent)" stroke-width="1"/><circle cx="5" cy="8" r="1.5" fill="var(--accent)" opacity=".7"/><circle cx="11" cy="8" r="1.5" fill="var(--accent)" opacity=".7"/></svg></div><span class="cad-item-name">Soldering</span><span class="cad-item-ext">.brd</span></div>
+            </div>
+
+            <!-- Programming -->
+            <div class="cad-tree-item" data-type="folder" data-cat="programming" onclick="toggleCadFolder(this,'programming')">
+              <div class="cad-indent"></div><div class="cad-chevron">&#9658;</div>
+              <div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><polyline points="4,5 2,8 4,11" stroke="var(--accent2)" stroke-width="1.2" stroke-linecap="round" fill="none"/><polyline points="12,5 14,8 12,11" stroke="var(--accent2)" stroke-width="1.2" stroke-linecap="round" fill="none"/><line x1="7" y1="3" x2="9" y2="13" stroke="var(--accent2)" stroke-width="1"/></svg></div>
+              <span class="cad-item-name">Programming</span>
+            </div>
+            <div class="cad-children" id="folder-programming">
+              <div class="cad-tree-item leaf" data-skill="python" onclick="selectSkill(this,'python')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--accent2)" opacity=".15" stroke="var(--accent2)" stroke-width="1"/><line x1="5" y1="6" x2="11" y2="6" stroke="var(--accent2)" stroke-width=".8"/><line x1="5" y1="8" x2="9" y2="8" stroke="var(--accent2)" stroke-width=".8"/><line x1="5" y1="10" x2="10" y2="10" stroke="var(--accent2)" stroke-width=".8"/></svg></div><span class="cad-item-name">Python</span><span class="cad-item-ext">.py</span></div>
+              <div class="cad-tree-item leaf" data-skill="cpp" onclick="selectSkill(this,'cpp')"><div class="cad-indent"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--accent2)" opacity=".15" stroke="var(--accent2)" stroke-width="1"/><line x1="5" y1="6" x2="11" y2="6" stroke="var(--accent2)" stroke-width=".8"/><line x1="5" y1="8" x2="9" y2="8" stroke="var(--accent2)" stroke-width=".8"/><line x1="5" y1="10" x2="10" y2="10" stroke="var(--accent2)" stroke-width=".8"/></svg></div><span class="cad-item-name">C++</span><span class="cad-item-ext">.cpp</span></div>
+              <div class="cad-tree-item leaf" data-skill="web" onclick="selectSkill(this,'web')"><div class="cad-indent"></div><div class="cad-indent last"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--accent2)" opacity=".15" stroke="var(--accent2)" stroke-width="1"/><line x1="5" y1="6" x2="11" y2="6" stroke="var(--accent2)" stroke-width=".8"/><line x1="5" y1="8" x2="9" y2="8" stroke="var(--accent2)" stroke-width=".8"/><line x1="5" y1="10" x2="10" y2="10" stroke="var(--accent2)" stroke-width=".8"/></svg></div><span class="cad-item-name">HTML / CSS</span><span class="cad-item-ext">.html</span></div>
+            </div>
+
+            <!-- General Tools -->
+            <div class="cad-tree-item" data-type="folder" data-cat="tools" onclick="toggleCadFolder(this,'tools')">
+              <div class="cad-indent last"></div><div class="cad-chevron">&#9658;</div>
+              <div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="none" stroke="var(--muted)" stroke-width="1.2"/><circle cx="8" cy="8" r="1" fill="var(--muted)"/><line x1="8" y1="1" x2="8" y2="4" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round"/><line x1="8" y1="12" x2="8" y2="15" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round"/><line x1="1" y1="8" x2="4" y2="8" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round"/><line x1="12" y1="8" x2="15" y2="8" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+              <span class="cad-item-name">General Tools</span>
+            </div>
+            <div class="cad-children" id="folder-tools">
+              <div class="cad-tree-item leaf" data-skill="office" onclick="selectSkill(this,'office')"><div class="cad-indent last"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--muted)" opacity=".15" stroke="var(--muted)" stroke-width="1"/><line x1="5" y1="6" x2="11" y2="6" stroke="var(--muted)" stroke-width=".8"/><line x1="5" y1="8" x2="9" y2="8" stroke="var(--muted)" stroke-width=".8"/></svg></div><span class="cad-item-name">MS Office</span><span class="cad-item-ext">.xlsx</span></div>
+              <div class="cad-tree-item leaf" data-skill="adobe" onclick="selectSkill(this,'adobe')"><div class="cad-indent last"></div><div class="cad-indent"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--muted)" opacity=".15" stroke="var(--muted)" stroke-width="1"/><line x1="5" y1="6" x2="11" y2="6" stroke="var(--muted)" stroke-width=".8"/><line x1="5" y1="8" x2="9" y2="8" stroke="var(--muted)" stroke-width=".8"/></svg></div><span class="cad-item-name">Adobe CC</span><span class="cad-item-ext">.psd</span></div>
+              <div class="cad-tree-item leaf" data-skill="whmis" onclick="selectSkill(this,'whmis')"><div class="cad-indent last"></div><div class="cad-indent last"></div><div class="cad-chevron"></div><div class="cad-icon"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1" fill="var(--muted)" opacity=".15" stroke="var(--muted)" stroke-width="1"/><line x1="5" y1="6" x2="11" y2="6" stroke="var(--muted)" stroke-width=".8"/><line x1="5" y1="8" x2="9" y2="8" stroke="var(--muted)" stroke-width=".8"/></svg></div><span class="cad-item-name">WHMIS Certified</span><span class="cad-item-ext">.cert</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="cad-detail" id="cadDetail">
+          <div class="cad-detail-empty" id="cadDetailEmpty">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+            <span>Select a file to view details</span>
+          </div>
+          <div id="cadDetailContent" style="display:none;flex-direction:column;gap:1rem;">
+            <div class="cad-detail-header">
+              <div class="cad-detail-icon" id="cadDetailIcon"></div>
+              <div>
+                <div class="cad-detail-title" id="cadDetailTitle"></div>
+                <div class="cad-detail-meta" id="cadDetailMeta"></div>
+              </div>
+            </div>
+            <img id="cadDetailImg" class="cad-detail-img" src="" alt="">
+            <p class="cad-detail-desc" id="cadDetailDesc"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cad-status-bar">
+        <div class="cad-status-dot"></div>
+        <span id="cadStatus">18 items · 6 categories</span>
+        <span style="margin-left:auto;opacity:.5;">Mechanical Engineering</span>
+      </div>
+    </div>
+  </section>
+  <div class="section-divider"></div>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+    <p class="section-label">04 — experience</p>
+    <h2>Where I've <span class="hl">Worked</span></h2>
+    <div class="experience-list">
       <div class="experience-item">
-        <p style="color: var(--accent); font-weight: 600;">Student Design Hub, Memorial University</p>
-        <div style="display: flex; justify-content: space-between; align-items: baseline;">
-          <p style="font-style: italic;">Innovation and Prototyping Co-op</p>
-          <p style="color: var(--muted); font-size: 0.9rem;">Sept 2025 – Dec 2025</p>
+        <p class="exp-company">Student Design Hub — Memorial University</p>
+        <div class="exp-meta">
+          <span class="exp-role">Innovation &amp; Prototyping Co-op</span>
+          <span class="exp-date">Sept 2025 – Dec 2025</span>
         </div>
-        <ul style="padding-left: 1.5rem;">
+        <ul>
           <li>Designed and prototyped parts using tolerance analysis to enhance manufacturability.</li>
           <li>Partnered with CoLab Software to implement a digital CAD review system and optimize lab workflow.</li>
           <li>Supported 15+ student design teams with CNC machining, composites, 3D printing, and laser cutting.</li>
         </ul>
       </div>
       <div class="experience-item">
-        <p style="color: var(--accent); font-weight: 600;">The Commons, Memorial University</p>
-        <div style="display: flex; justify-content: space-between; align-items: baseline;">
-          <p style="font-style: italic;">Engineering Co-op Student</p>
-          <p style="color: var(--muted); font-size: 0.9rem;">Jan 2025 – Apr 2025</p>
+        <p class="exp-company">The Commons — Memorial University</p>
+        <div class="exp-meta">
+          <span class="exp-role">Engineering Co-op Student</span>
+          <span class="exp-date">Jan 2025 – Apr 2025</span>
         </div>
-        <ul style="padding-left: 1.5rem;">
+        <ul>
           <li>Supported 50+ students weekly with 3D printing, CAD, and electronics.</li>
           <li>Organized and led workshops on Arduino and 3D printing.</li>
           <li>Redesigned service pricing model to improve access and efficiency.</li>
         </ul>
       </div>
-    </section>
-    <section class="section" id="contact">
-      <h2>Get In Touch</h2>
-      <p>
-        I'm currently looking for new opportunities! Whether you have a question or just want to say hi, I'll do my best to get back to you.
-      </p>
-      <div style="margin-top: 2rem;">
-        <a href="mailto:aamahin@mun.ca" style="font-size: 0.9rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
-          </svg>
-          aamahin@mun.ca
-        </a>
-        <a href="https://www.linkedin.com/in/aamahin" target="_blank" style="font-size: 0.9rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-            <rect x="2" y="9" width="4" height="12"/>
-            <circle cx="4" cy="4" r="2"/>
-          </svg>
-          linkedin.com/in/aamahin
-        </a>
-        <a href="https://www.instagram.com/alifayman__" target="_blank" style="font-size: 0.9rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-          </svg>
-          @alifayman__
-        </a>
-      </div>
-    </section>
-  </main>
-  <script>
-    const spotlight = document.querySelector('.spotlight');
-    document.addEventListener('mousemove', e => {
-      const { clientX, clientY } = e;
-      spotlight.style.setProperty('--x', `${clientX}px`);
-      spotlight.style.setProperty('--y', `${clientY}px`);
+    </div>
+  </section>
+  <div class="section-divider"></div>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <p class="section-label">05 — contact</p>
+    <p class="contact-headline">Let's Build<br><span>Something Cool</span></p>
+    <p>I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll do my best to get back to you.</p>
+    <div class="contact-links">
+      <a href="mailto:alif.mahin@mun.ca" class="contact-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email Me
+      </a>
+      <a href="https://www.linkedin.com/in/aamahin" target="_blank" class="contact-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://www.instagram.com/alifayman__" target="_blank" class="contact-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+      <a href="assets/resume.pdf" download class="contact-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Resume
+      </a>
+    </div>
+  </section>
+
+</main>
+<footer class="footer-line">built by alif ayman mahin · 2025</footer>
+
+<!-- Skill popup fallback -->
+<div class="skill-popup-overlay" id="skillPopupOverlay"></div>
+<div class="skill-popup" id="skillPopup">
+  <div class="skill-popup-header">
+    <h3 id="skillPopupTitle"></h3>
+    <button class="skill-popup-close" id="skillPopupClose">✕</button>
+  </div>
+  <img id="skillPopupImage" class="skill-popup-image" src="" alt="">
+  <p id="skillPopupDescription" class="skill-popup-description"></p>
+</div>
+
+<script>
+/* ── SKILL DATA ─────────────────────────────────────── */
+const SKILL_DATA = {
+  fusion360:   {icon:'✏️',title:'Autodesk Fusion 360',ext:'.f3d',  type:'CAD Part',   desc:'Experienced in 3D modeling, assemblies, and rendering for mechanical components and prototypes.',img:'assets/images/fusion360.png'},
+  solidworks:  {icon:'🔩',title:'SolidWorks',         ext:'.sldprt',type:'CAD Part',   desc:'Skilled in part design, motion studies, and creating detailed engineering drawings.',img:'assets/images/solidworks.png'},
+  inventor:    {icon:'⚙️',title:'Autodesk Inventor',  ext:'.ipt',  type:'CAD Part',   desc:'Used for complex assemblies and simulation-driven mechanical design optimization.',img:'assets/images/inventor.png'},
+  ansys:       {icon:'🌊',title:'ANSYS Fluent',        ext:'.cas',  type:'CFD File',   desc:'Performed CFD simulations to analyze fluid flow and heat transfer in mechanical systems.',img:'assets/images/ansys.png'},
+  abaqus:      {icon:'📐',title:'Abaqus',             ext:'.inp',  type:'FEA Input',  desc:'Conducted Finite Element Analysis for stress, strain, and material performance evaluation.',img:'assets/images/abaqus.png'},
+  matlab:      {icon:'📊',title:'MATLAB',             ext:'.m',    type:'Script',     desc:'Applied for data analysis, numerical modeling, and automation of engineering calculations.',img:'assets/images/matlab.png'},
+  '3dprinting':{icon:'🖨️',title:'3D Printing',        ext:'.stl',  type:'Mesh File',  desc:'Hands-on experience with FDM printers for rapid prototyping and design validation.',img:'assets/images/3dprinting.jpg'},
+  cnc:         {icon:'🔧',title:'CNC Machining',      ext:'.nc',   type:'G-Code',     desc:'Familiar with G-code generation and setup for precision part manufacturing.',img:'assets/images/cnc.jpg'},
+  cam:         {icon:'🛠️',title:'CAM Programming',    ext:'.tap',  type:'Toolpath',   desc:'Created toolpaths and machining strategies for efficient part fabrication.',img:'assets/images/cam.png'},
+  arduino:     {icon:'⚡',title:'Arduino',            ext:'.ino',  type:'Sketch',     desc:'Developed sensor-based and robotic systems integrating hardware and software control.',img:'assets/images/arduino.jpg'},
+  sensors:     {icon:'📡',title:'Sensors & Actuators',ext:'.h',    type:'Header',     desc:'Implemented real-time feedback and automation through sensor-actuator networks.',img:'assets/images/sensors.jpg'},
+  soldering:   {icon:'🔌',title:'Soldering',          ext:'.brd',  type:'PCB File',   desc:'Proficient in assembling and repairing electronic circuits and prototypes.',img:'assets/images/soldering.jpg'},
+  python:      {icon:'🐍',title:'Python',             ext:'.py',   type:'Script',     desc:'Used for automation, data analysis, and control systems in engineering applications.',img:'assets/images/python.jpg'},
+  cpp:         {icon:'💻',title:'C++',                ext:'.cpp',  type:'Source',     desc:'Applied in robotics and embedded systems for performance-critical programming.',img:'assets/images/cpp.jpg'},
+  web:         {icon:'🌐',title:'HTML / CSS',         ext:'.html', type:'Markup',     desc:'Designed and maintained technical websites and digital portfolios.',img:'assets/images/web.jpg'},
+  office:      {icon:'📄',title:'Microsoft Office',   ext:'.xlsx', type:'Document',   desc:'Proficient in Excel, PowerPoint, and Word for engineering documentation.',img:'assets/images/office.jpg'},
+  adobe:       {icon:'🎨',title:'Adobe Creative Suite',ext:'.psd', type:'Project',    desc:'Experienced with Photoshop and Illustrator for design and visualization.',img:'assets/images/adobe.jpg'},
+  whmis:       {icon:'⚠️',title:'WHMIS Certification',ext:'.cert', type:'Certificate',desc:'Trained in safe workplace practices and proper handling of hazardous materials.',img:'assets/images/whmis.jpg'},
+};
+
+/* ── PROJECT DATA ───────────────────────────────────── */
+const PROJECTS = [
+  {num:'01 / Robotics',title:"Sidus Robotics — Mars Rover",desc:"Memorial University's first Mars rover design team preparing for the 2026 Canadian International Rover Challenge (CIRC). Designed mechanical subsystems with a focus on design-for-manufacturability, system integration, and field-tested suspension performance.",tags:['SolidWorks','Suspension Design','CIRC 2026','Structural Analysis'],imgs:['assets/images/mars-rover.jpg','assets/images/mars-rover-2.jpg','assets/images/mars-rover-3.jpg'],link:'https://sidusrobotics.ca/',linkLabel:'View Team Site →'},
+  {num:'02 / Aerospace',title:'VTOL UAV — Fixed Wing',desc:'Led aerodynamic analysis and structural design of a fixed-wing VTOL UAV. Performed CFD and FEA simulations to validate airframe integrity and optimize lift-to-drag performance under various load conditions.',tags:['ANSYS Fluent','Abaqus','CFD','FEA','Aerodynamics'],imgs:['assets/images/vtol-uav.jpg','assets/images/vtol-uav-2.jpg','assets/images/vtol-uav-3.jpg'],link:'#',linkLabel:''},
+  {num:'03 / Aerospace',title:'Valiant Aerotech — Firefighting UAV',desc:'Engineered a composite frame and stability jig for a payload quadcopter UAV. Designed a surveillance drone using SolidWorks and Abaqus for structural validation.',tags:['SolidWorks','Abaqus','Composites','UAV Design'],imgs:['assets/images/firefighting-uav.jpg','assets/images/firefighting-uav-2.jpg','assets/images/firefighting-uav-3.jpg'],link:'https://www.linkedin.com/company/valiant-aerotech/',linkLabel:'Learn More →'},
+  {num:'04 / Mechanical Design',title:'Emergency Outboard Motor Mount',desc:'Designed a detachable motor mount in Onshape, applying fastening theory and stress analysis. Produced detailed GD&T part drawings and BOM; project earned 90% final score.',tags:['Onshape','GD&T','Stress Analysis','Fastening Theory'],imgs:['assets/images/motor-mount.jpg','assets/images/motor-mount-2.jpg','assets/images/motor-mount-3.jpg'],link:'#',linkLabel:''},
+];
+
+/* ── SPOTLIGHT ──────────────────────────────────────── */
+const spotlight = document.querySelector('.spotlight');
+document.addEventListener('mousemove', e => {
+  spotlight.style.setProperty('--x', e.clientX + 'px');
+  spotlight.style.setProperty('--y', e.clientY + 'px');
+});
+
+/* ── JARVIS CANVAS ──────────────────────────────────── */
+const canvas = document.getElementById('gridCanvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resizeCanvas() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+window.addEventListener('resize', resizeCanvas); resizeCanvas();
+let ripples = [];
+document.addEventListener('mousemove', e => {
+  if (document.body.classList.contains('lab-mode')) ripples.push({ x: e.clientX, y: e.clientY, r: 0 });
+});
+(function loop() {
+  if (document.body.classList.contains('lab-mode')) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(0,255,238,0.25)'; ctx.lineWidth = 1;
+    for (let x = 0; x <= W; x += 50) for (let y = 0; y <= H; y += 50) {
+      let ox = 0, oy = 0;
+      ripples.forEach(r => {
+        const dx = x - r.x, dy = y - r.y, d = Math.sqrt(dx*dx+dy*dy);
+        if (d < 1) return;
+        const w = Math.sin(d/20 - r.r*0.03) * (12/(1+d*0.012));
+        const n = Math.min(Math.abs(w), 8) * (w >= 0 ? 1 : -1);
+        ox += (dx/d)*n; oy += (dy/d)*n;
+      });
+      ctx.beginPath();
+      ctx.arc(x+ox+(Math.random()-.5)*.4, y+oy+(Math.random()-.5)*.4, 1, 0, Math.PI*2);
+      ctx.stroke();
+    }
+    ripples.forEach(r => r.r += 0.25);
+    ripples = ripples.filter(r => r.r < 400);
+  } else {
+    ctx.clearRect(0, 0, W, H);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* ── PROGRESS BAR ───────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  const s = document.body.scrollTop || document.documentElement.scrollTop;
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progressBar').style.width = (s/h*100) + '%';
+});
+
+/* ── SCROLL REVEAL ──────────────────────────────────── */
+function initObservers() {
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); }), { threshold: 0.06 });
+  document.querySelectorAll('.section').forEach(s => obs.observe(s));
+}
+function resetAnimations() { document.querySelectorAll('.section').forEach(el => el.classList.remove('show')); initObservers(); }
+initObservers();
+
+/* ── SIDEBAR ACTIVE ─────────────────────────────────── */
+const sLinks = document.querySelectorAll('.sidebar a');
+const allSecs = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  allSecs.forEach(s => { if (window.scrollY >= s.offsetTop - 220) cur = s.id; });
+  sLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+});
+
+/* ── MOBILE NAV ─────────────────────────────────────── */
+function closeMobileNav() { document.getElementById('mobileNavMenu').classList.remove('active'); }
+document.getElementById('mobileNavToggle').addEventListener('click', () => document.getElementById('mobileNavMenu').classList.add('active'));
+
+/* ── BENTO GRID + MODAL ─────────────────────────────── */
+(function () {
+  const overlay  = document.getElementById('projModalOverlay');
+  const imgWrap  = document.getElementById('projModalImgs');
+  const closeBtn = document.getElementById('projModalClose');
+  let imgTimer   = null;
+
+  function openModal(idx) {
+    const p = PROJECTS[idx];
+    imgWrap.innerHTML = '';
+
+    // images
+    p.imgs.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.className = 'proj-modal-img' + (i === 0 ? ' active' : '');
+      img.src = src; img.alt = p.title;
+      imgWrap.appendChild(img);
     });
-    const canvas = document.getElementById('gridCanvas');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    function resizeCanvas() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    const spacing = 50;
-    const rippleExpansionSpeed = 0.25;
-    const waveSpeed = 0.03;
-    const waveSize = 12;
-    const rippleFadeDistance = 400;
-    const maxWaveContribution = 8;
-    const baseOpacity = 0.3;
-    const lineWidth = 1.1;
-    let ripples = [];
-    document.addEventListener('mousemove', e => {
-      if (document.body.classList.contains('lab-mode')) {
-        ripples.push({ x: e.clientX, y: e.clientY, radius: 0 });
-      }
+
+    // dot nav
+    const dotBar = document.createElement('div');
+    dotBar.className = 'proj-modal-img-nav';
+    let curImg = 0;
+    p.imgs.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'proj-modal-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => switchImg(i));
+      dotBar.appendChild(d);
     });
-    function drawGrid() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = `rgba(0, 255, 255, ${baseOpacity})`;
-      ctx.lineWidth = lineWidth;
-      for (let x = 0; x <= width; x += spacing) {
-        for (let y = 0; y <= height; y += spacing) {
-          let offsetX = 0;
-          let offsetY = 0;
-          ripples.forEach(r => {
-            const dx = x - r.x;
-            const dy = y - r.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 1) return;
-            const waveInfluence = dist / 20;
-            const waveTime = r.radius * waveSpeed;
-            const waveAmplitude = (waveSize / (1 + dist * 0.012));
-            const wave = Math.sin(waveInfluence - waveTime) * waveAmplitude;
-            const ndx = dx / dist;
-            const ndy = dy / dist;
-            const contributionX = ndx * Math.min(Math.abs(wave), maxWaveContribution) * (wave >= 0 ? 1 : -1);
-            const contributionY = ndy * Math.min(Math.abs(wave), maxWaveContribution) * (wave >= 0 ? 1 : -1);
-            offsetX += contributionX;
-            offsetY += contributionY;
-          });
-          const jitterX = (Math.random() - 0.5) * 0.5;
-          const jitterY = (Math.random() - 0.5) * 0.5;
-          ctx.beginPath();
-          ctx.arc(x + offsetX + jitterX, y + offsetY + jitterY, 1, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-      }
-      ripples.forEach(r => r.radius += rippleExpansionSpeed);
-      ripples = ripples.filter(r => r.radius < rippleFadeDistance);
+    imgWrap.appendChild(dotBar);
+
+    function switchImg(n) {
+      const imgs = imgWrap.querySelectorAll('.proj-modal-img');
+      const dots = dotBar.querySelectorAll('.proj-modal-dot');
+      imgs[curImg].classList.remove('active'); dots[curImg].classList.remove('active');
+      curImg = n % imgs.length;
+      imgs[curImg].classList.add('active'); dots[curImg].classList.add('active');
     }
-    function animate() {
-      if (document.body.classList.contains('lab-mode')) {
-        drawGrid();
-      } else {
-        ctx.clearRect(0, 0, width, height);
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-    window.addEventListener('scroll', () => {
-      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      document.getElementById("progressBar").style.width = scrolled + "%";
+    if (imgTimer) clearInterval(imgTimer);
+    if (p.imgs.length > 1) imgTimer = setInterval(() => switchImg(curImg + 1), 3000);
+
+    document.getElementById('projModalNum').textContent   = p.num;
+    document.getElementById('projModalTitle').textContent = p.title;
+    document.getElementById('projModalDesc').textContent  = p.desc;
+
+    const tagsEl = document.getElementById('projModalTags');
+    tagsEl.innerHTML = '';
+    p.tags.forEach(t => { const s = document.createElement('span'); s.className = 'proj-modal-tag'; s.textContent = t; tagsEl.appendChild(s); });
+
+    const link = document.getElementById('projModalLink');
+    if (p.link && p.link !== '#') { link.href = p.link; link.textContent = p.linkLabel; link.style.display = ''; }
+    else { link.style.display = 'none'; }
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if (imgTimer) { clearInterval(imgTimer); imgTimer = null; }
+  }
+
+  document.querySelectorAll('.bento-card').forEach(card => {
+    card.addEventListener('click', () => openModal(+card.dataset.project));
+  });
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+})();
+
+/* ── CAD EXPLORER ───────────────────────────────────── */
+function toggleCadNode(el) {
+  el.classList.toggle('open');
+  const ch = document.getElementById('children-root');
+  if (ch) ch.classList.toggle('open');
+}
+function toggleCadFolder(el, cat) {
+  const isOpen = el.classList.contains('open');
+  el.classList.toggle('open', !isOpen);
+  const ch = document.getElementById('folder-' + cat);
+  if (ch) ch.classList.toggle('open', !isOpen);
+}
+let selectedLeaf = null;
+function selectSkill(el, key) {
+  const d = SKILL_DATA[key]; if (!d) return;
+  if (selectedLeaf) selectedLeaf.classList.remove('selected');
+  el.classList.add('selected'); selectedLeaf = el;
+  document.getElementById('cadDetailEmpty').style.display = 'none';
+  const content = document.getElementById('cadDetailContent');
+  content.style.display = 'flex';
+  document.getElementById('cadDetailIcon').textContent  = d.icon;
+  document.getElementById('cadDetailTitle').textContent = d.title;
+  document.getElementById('cadDetailMeta').textContent  = d.type + '  ·  ' + d.ext;
+  document.getElementById('cadDetailDesc').textContent  = d.desc;
+  document.getElementById('cadStatus').textContent      = d.title + ' · ' + d.type;
+  const img = document.getElementById('cadDetailImg');
+  img.src = d.img; img.style.display = 'block';
+  img.onerror = () => { img.style.display = 'none'; };
+}
+
+/* ── JARVIS MODE ────────────────────────────────────── */
+const labToggle      = document.getElementById('labToggle');
+const rover          = document.querySelector('.rover-vehicle');
+const aboutContent   = document.getElementById('aboutContent');
+const jarvisTerminal = document.getElementById('jarvisTerminal');
+const origBio        = aboutContent.textContent;
+const BOOT_LINES     = ['INITIALIZING SYSTEMS...','LOADING PROFILE: ALIF_MAHIN','ACCESSING PROJECTS DATABASE...','RUNNING DIAGNOSTICS: PASSED','JARVIS INTERFACE READY'];
+let bootTimeout      = null;
+
+labToggle.addEventListener('click', () => {
+  const isLab = !document.body.classList.contains('lab-mode');
+  isLab ? activateJarvis() : shutdownJarvis();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(resetAnimations, 500);
+});
+
+function activateJarvis() {
+  const ov = document.getElementById('jarvisOverlay');
+  document.getElementById('jarvisOverlayText').textContent = 'SYSTEM BOOTING UP...\n[====================] 100%';
+  ov.classList.add('active');
+  setTimeout(() => {
+    document.body.classList.add('lab-mode');
+    labToggle.textContent = 'JARVIS: ONLINE';
+    spotlight.style.display = 'none';
+    aboutContent.style.display = 'none';
+    jarvisTerminal.style.display = 'flex';
+    jarvisTerminal.innerHTML = '';
+    BOOT_LINES.forEach((line, i) => {
+      const el = document.createElement('span');
+      el.className = 't-line'; el.textContent = line;
+      jarvisTerminal.appendChild(el);
+      setTimeout(() => el.classList.add('show'), i * 600 + 200);
     });
-    function resetAnimations() {
-      const sections = document.querySelectorAll('.section');
-      const projectSlides = document.querySelectorAll('.project-slide');
-      sections.forEach(section => section.classList.remove('show'));
-      projectSlides.forEach(slide => slide.classList.remove('show'));
-      // Re-initialize observers
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('show');
-        });
-      }, { threshold: 0.1 });
-      const slideObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('show');
-        });
-      }, { threshold: 0.2 });
-      sections.forEach(s => observer.observe(s));
-      projectSlides.forEach(s => slideObserver.observe(s));
-    }
-    // Initialize animations on first load
-    resetAnimations();
-    const labToggle = document.getElementById('labToggle');
-    const rover = document.querySelector('.rover-vehicle');
-    const heroName = document.getElementById('heroName');
-    const aboutSection = document.getElementById('about');
-    const aboutContentElement = document.getElementById('aboutContent');
-    const originalAboutText = aboutContentElement.textContent;
-    labToggle.addEventListener('click', () => {
-      const isLabMode = !document.body.classList.contains('lab-mode');
-      if (isLabMode) {
-        activateJarvis();
-      } else {
-        shutdownJarvis();
-      }
-      // Scroll to top and reset animations
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(resetAnimations, 500);
-    });
-    function activateJarvis() {
-        const overlay = document.getElementById('jarvisOverlay');
-        const overlayText = document.getElementById('jarvisOverlayText');
-        overlay.classList.add('active');
-        overlayText.textContent = "SYSTEM BOOTING UP...\n[====================] 100%";
-        setTimeout(() => {
-            document.body.classList.add('lab-mode');
-            labToggle.textContent = 'JARVIS: ONLINE';
-            spotlight.style.display = 'none';
-            heroName.style.color = '#00ffff';
-            heroName.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.7)';
-            typeBootSequence();
-            setTimeout(() => {
-                rover.style.display = 'block';
-                setTimeout(() => rover.classList.add('active'), 100);
-            }, 3000);
-            setTimeout(() => {
-                overlay.classList.remove('active');
-            }, 2000);
-        }, 1500);
-    }
-    function shutdownJarvis() {
-        const overlay = document.getElementById('jarvisOverlay');
-        const overlayText = document.getElementById('jarvisOverlayText');
-        overlay.classList.add('active');
-        overlayText.textContent = "SYSTEM SHUTTING DOWN...\n[====================] 100%";
-        setTimeout(() => {
-            document.body.classList.remove('lab-mode');
-            labToggle.textContent = 'Activate JARVIS';
-            spotlight.style.display = 'block';
-            heroName.style.color = '';
-            heroName.style.textShadow = '';
-            aboutSection.innerHTML = '';
-            const title = document.createElement('h2');
-            title.textContent = 'About Me';
-            const content = document.createElement('p');
-            content.id = 'aboutContent';
-            content.textContent = originalAboutText;
-            aboutSection.appendChild(title);
-            aboutSection.appendChild(content);
-            rover.style.display = 'none';
-            rover.classList.remove('active');
-            setTimeout(() => {
-                 overlay.classList.remove('active');
-            }, 1000);
-        }, 1500);
-    }
-    function typeBootSequence() {
-      const aboutContent = document.getElementById('aboutContent');
-      if (aboutContent) aboutContent.remove();
-      const aboutTitle = aboutSection.querySelector('h2');
-      if (aboutTitle) aboutTitle.remove();
-      const lines = [
-        "INITIALIZING SYSTEMS...",
-        "LOADING PROFILE: ALIF_MAHIN",
-        "ACCESSING PROJECTS DATABASE...",
-        "RUNNING DIAGNOSTICS: PASSED",
-        "JARVIS INTERFACE READY"
-      ];
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i < lines.length) {
-          const p = document.createElement('p');
-          p.style.color = '#00ffff';
-          p.style.fontFamily = "'Fira Code', monospace";
-          p.style.margin = '0.5rem 0';
-          p.textContent = lines[i];
-          aboutSection.appendChild(p);
-          i++;
-        } else {
-          clearInterval(interval);
-        }
+    if (bootTimeout) clearTimeout(bootTimeout);
+    bootTimeout = setTimeout(() => {
+      jarvisTerminal.style.transition = 'opacity 0.8s';
+      jarvisTerminal.style.opacity = '0';
+      setTimeout(() => {
+        jarvisTerminal.style.display = 'none';
+        jarvisTerminal.style.opacity = '1';
+        jarvisTerminal.style.transition = '';
+        aboutContent.style.display = '';
       }, 800);
-    }
-    const mobileNavToggle = document.getElementById('mobileNavToggle');
-    const mobileNavMenu = document.getElementById('mobileNavMenu');
-    const mobileCloseMenu = document.getElementById('mobileCloseMenu');
-    if (mobileNavToggle && mobileNavMenu) {
-        mobileNavToggle.addEventListener('click', () => {
-            mobileNavMenu.classList.add('active');
-        });
-        const closeMenu = () => {
-            mobileNavMenu.classList.remove('active');
-        };
-        if (mobileCloseMenu) {
-            mobileCloseMenu.addEventListener('click', closeMenu);
-        }
-    }
-    const skillPopup = document.getElementById('skillPopup');
-    const skillPopupOverlay = document.getElementById('skillPopupOverlay');
-    const skillPopupClose = document.getElementById('skillPopupClose');
-    const skillPopupTitle = document.getElementById('skillPopupTitle');
-    const skillPopupImage = document.getElementById('skillPopupImage');
-    const skillPopupDescription = document.getElementById('skillPopupDescription');
-    const skillData = {
-      fusion360: { title: "Autodesk Fusion 360", image: "assets/images/fusion360.png", description: "Experienced in 3D modeling, assemblies, and rendering for mechanical components and prototypes." },
-      solidworks: { title: "SolidWorks", image: "assets/images/solidworks.png", description: "Skilled in part design, motion studies, and creating detailed engineering drawings." },
-      inventor: { title: "Autodesk Inventor", image: "assets/images/inventor.png", description: "Used for complex assemblies and simulation-driven mechanical design optimization." },
-      ansys: { title: "ANSYS Fluent", image: "assets/images/ansys.png", description: "Performed CFD simulations to analyze fluid flow and heat transfer in mechanical systems." },
-      abaqus: { title: "Abaqus", image: "assets/images/abaqus.png", description: "Conducted Finite Element Analysis for stress, strain, and material performance evaluation." },
-      matlab: { title: "MATLAB", image: "assets/images/matlab.png", description: "Applied for data analysis, numerical modeling, and automation of engineering calculations." },
-      "3dprinting": { title: "3D Printing", image: "assets/images/3dprinting.jpg", description: "Hands-on experience with FDM printers for rapid prototyping and design validation." },
-      cnc: { title: "CNC Machining", image: "assets/images/cnc.jpg", description: "Familiar with G-code generation and setup for precision part manufacturing." },
-      cam: { title: "CAM Programming", image: "assets/images/cam.png", description: "Created toolpaths and machining strategies for efficient part fabrication." },
-      arduino: { title: "Arduino", image: "assets/images/arduino.jpg", description: "Developed sensor-based and robotic systems integrating hardware and software control." },
-      sensors: { title: "Sensors & Actuators", image: "assets/images/sensors.jpg", description: "Implemented real-time feedback and automation through sensor-actuator networks." },
-      soldering: { title: "Soldering", image: "assets/images/soldering.jpg", description: "Proficient in assembling and repairing electronic circuits and prototypes." },
-      python: { title: "Python", image: "assets/images/python.jpg", description: "Used for automation, data analysis, and control systems in engineering applications." },
-      cpp: { title: "C++", image: "assets/images/cpp.jpg", description: "Applied in robotics and embedded systems for performance-critical programming." },
-      web: { title: "Web Development (HTML/CSS)", image: "assets/images/web.jpg", description: "Designed and maintained simple technical websites and digital portfolios." },
-      office: { title: "Microsoft Office Suite", image: "assets/images/office.jpg", description: "Proficient in Excel data analysis, PowerPoint presentations, and Word documentation." },
-      adobe: { title: "Adobe Creative Suite", image: "assets/images/adobe.jpg", description: "Experienced with Photoshop and Illustrator for design, visualization, and reports." },
-      whmis: { title: "WHMIS Certification", image: "assets/images/whmis.jpg", description: "Trained in safe workplace practices and proper handling of hazardous materials." }
-    };
-    function addGlitchAttributes() {
-      document.querySelectorAll('#skills .skill-category h3, #skills .skill-item').forEach(el => {
-        if (!el.hasAttribute('data-glitch')) {
-          el.setAttribute('data-glitch', el.textContent);
-        }
-      });
-    }
-    addGlitchAttributes();
-    const glitchObserver = new MutationObserver(() => {
-      if (document.body.classList.contains('lab-mode')) {
-        addGlitchAttributes();
-      }
-    });
-    glitchObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    document.querySelectorAll('.skill-item, .skill-category').forEach(element => {
-      element.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const skillKey = element.dataset.skill;
-        if (element.classList.contains('skill-category')) {
-          const categoryName = element.querySelector('h3').textContent;
-          skillPopupTitle.textContent = categoryName;
-          skillPopupImage.src = `assets/images/${skillKey}.jpg`;
-          skillPopupDescription.textContent = `This category includes various skills and tools related to ${categoryName.toLowerCase()}. Hover over individual skills to see detailed information.`;
-        } else if (skillData[skillKey]) {
-          const skill = skillData[skillKey];
-          skillPopupTitle.textContent = skill.title;
-          skillPopupImage.src = skill.image;
-          skillPopupDescription.textContent = skill.description;
-        }
-        skillPopup.classList.add('active');
-        skillPopupOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-    function closeSkillPopup() {
-      skillPopup.classList.remove('active');
-      skillPopupOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    skillPopupClose.addEventListener('click', closeSkillPopup);
-    skillPopupOverlay.addEventListener('click', closeSkillPopup);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && skillPopup.classList.contains('active')) {
-        closeSkillPopup();
-      }
-    });
-  </script>
+    }, BOOT_LINES.length * 600 + 1800);
+    setTimeout(() => { rover.style.display = 'block'; setTimeout(() => rover.classList.add('active'), 100); }, 3000);
+    setTimeout(() => ov.classList.remove('active'), 2000);
+  }, 1500);
+}
+
+function shutdownJarvis() {
+  if (bootTimeout) { clearTimeout(bootTimeout); bootTimeout = null; }
+  const ov = document.getElementById('jarvisOverlay');
+  document.getElementById('jarvisOverlayText').textContent = 'SYSTEM SHUTTING DOWN...\n[====================] 100%';
+  ov.classList.add('active');
+  setTimeout(() => {
+    document.body.classList.remove('lab-mode');
+    labToggle.textContent = 'Activate JARVIS';
+    spotlight.style.display = 'block';
+    jarvisTerminal.style.display = 'none';
+    jarvisTerminal.style.opacity = '1';
+    jarvisTerminal.style.transition = '';
+    jarvisTerminal.innerHTML = '';
+    aboutContent.style.display = '';
+    aboutContent.textContent = origBio;
+    rover.style.display = 'none'; rover.classList.remove('active');
+    setTimeout(() => ov.classList.remove('active'), 1000);
+  }, 1500);
+}
+
+/* ── GLITCH ATTRS FOR JARVIS ────────────────────────── */
+function addGlitchAttrs() {
+  document.querySelectorAll('.cad-tree-item[data-type="folder"] .cad-item-name').forEach(el => {
+    if (!el.hasAttribute('data-glitch')) el.setAttribute('data-glitch', el.textContent);
+  });
+}
+addGlitchAttrs();
+new MutationObserver(() => { if (document.body.classList.contains('lab-mode')) addGlitchAttrs(); })
+  .observe(document.body, { attributes: true, attributeFilter: ['class'] });
+</script>
 </body>
 </html>
