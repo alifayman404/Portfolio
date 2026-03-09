@@ -124,7 +124,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 .bento-card.featured .bento-title{font-size:1.45rem;}
 .bento-card:not(.featured) .bento-title{font-size:1.05rem;}
 .bento-tags{display:flex;flex-wrap:wrap;gap:.35rem;max-height:0;overflow:hidden;transition:max-height .4s,opacity .3s;opacity:0;}
-.bento-card:hover .bento-tags,.bento-card.featured .bento-tags{max-height:60px;opacity:1;}
+.bento-card:hover .bento-tags{max-height:60px;opacity:1;}
 .bento-tag{font-family:'Fira Code',monospace;font-size:.62rem;padding:.15rem .5rem;border-radius:20px;border:1px solid var(--border);color:var(--accent);background:var(--accent-dim);white-space:nowrap;}
 .bento-card::after{content:'';position:absolute;bottom:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:3;transition:width .5s cubic-bezier(.25,.8,.25,1);}
 .bento-card:hover::after,.bento-card.featured::after{width:100%;}
@@ -132,12 +132,10 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 .bento-card:hover .bento-open-hint{opacity:1;transform:scale(1);}
 .bento-wide{margin-top:1rem;height:200px;border-radius:14px;}
 .bento-wide .bento-content{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
-.bento-wide .bento-tags{max-height:60px;opacity:1;}
 @media(max-width:700px){
   .bento-grid{grid-template-columns:1fr;grid-template-rows:auto;}
   .bento-card.featured,.bento-card.slot-tr,.bento-card.slot-br{grid-column:1;grid-row:auto;height:260px;}
   .bento-card.featured{height:320px;}
-  .bento-tags{max-height:60px;opacity:1;}
   .bento-wide{height:220px;}
 }
 
@@ -148,6 +146,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 .proj-modal-overlay.open .proj-modal{transform:translateY(0) scale(1);}
 .proj-modal-img-wrap{position:relative;width:100%;height:280px;overflow:hidden;border-radius:16px 16px 0 0;background:var(--bg3);}
 .proj-modal-img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease-in-out;}
+.proj-modal-img.active{opacity:1;}
 .proj-modal-img.active{opacity:1;}
 .proj-modal-img-nav{position:absolute;bottom:.75rem;right:.75rem;z-index:2;display:flex;gap:.4rem;}
 .proj-modal-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);border:none;padding:0;cursor:pointer;transition:all .25s;}
@@ -459,9 +458,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 .contact-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 24px var(--glow);}
 
 /* JARVIS / ROVER */
-.rover-vehicle{position:fixed;bottom:20px;left:-100px;width:60px;height:30px;background:url('assets/images/rover-icon.png') no-repeat center;background-size:contain;z-index:999;opacity:0;transition:opacity .5s;display:none;}
-.rover-vehicle.active{opacity:1;animation:driveRover 8s linear forwards;}
-@keyframes driveRover{0%{left:-100px;opacity:0}10%{opacity:1}90%{left:calc(100vw - 100px);opacity:1}100%{left:calc(50% - 30px);opacity:1}}
+
 .jarvis-overlay{position:fixed;inset:0;background:#000;color:#00ffee;font-family:'Fira Code',monospace;font-size:1.1rem;display:flex;justify-content:center;align-items:center;z-index:10000;opacity:0;pointer-events:none;transition:opacity .5s;}
 .jarvis-overlay.active{opacity:1;pointer-events:auto;}
 .jarvis-overlay-text{text-align:center;white-space:pre-wrap;padding:2rem;line-height:1.8;}
@@ -478,7 +475,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 <canvas id="gridCanvas"></canvas>
 <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 <button type="button" class="lab-toggle" id="labToggle">Activate JARVIS</button>
-<div class="rover-vehicle"></div>
+
 
 <nav class="sidebar">
   <a href="#about">About</a><a href="#projects">Projects</a>
@@ -534,7 +531,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       <div class="bento-content">
         <span class="bento-num">Robotics</span>
         <div class="bento-title">Sidus Robotics<br>Mars Rover</div>
-        <div class="bento-tags"><span class="bento-tag">SolidWorks</span><span class="bento-tag">Abaqus FEA</span><span class="bento-tag">CIRC 2026</span></div>
+        <div class="bento-tags"><span class="bento-tag">Fusion 360</span><span class="bento-tag">Abaqus FEA</span><span class="bento-tag">3D Printing</span></div>
       </div>
     </div>
     <div class="bento-card slot-tr" data-project="1">
@@ -543,7 +540,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       <div class="bento-content">
         <span class="bento-num">Aerospace</span>
         <div class="bento-title">Valiant Aerotech: Firefighting UAV</div>
-        <div class="bento-tags"><span class="bento-tag">SolidWorks</span><span class="bento-tag">Composites</span></div>
+        <div class="bento-tags"><span class="bento-tag">SolidWorks</span><span class="bento-tag">CNC Machining</span><span class="bento-tag">Composites</span></div>
       </div>
     </div>
     <div class="bento-card slot-br" data-project="2">
@@ -552,7 +549,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       <div class="bento-content">
         <span class="bento-num">Academic · Year 1</span>
         <div class="bento-title">Emergency Motor Mount</div>
-        <div class="bento-tags"><span class="bento-tag">Onshape</span><span class="bento-tag">GD&amp;T</span></div>
+        <div class="bento-tags"><span class="bento-tag">Onshape</span><span class="bento-tag">GD&amp;T</span><span class="bento-tag">Stress Analysis</span></div>
       </div>
     </div>
   </div>
@@ -765,9 +762,9 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 <script>
 /* ───────────────── DATA ───────────────── */
 const PROJECTS = [
-  {num:'Robotics',title:"Sidus Robotics: Mars Rover",desc:"Part of Memorial University's first Mars rover team competing at the 2026 Canadian International Rover Challenge (CIRC). Working on the robotic arm and suspension, reduced arm mass by 20% using Abaqus FEA, designed rocker-bogie suspension capable of traversing 15cm obstacles, and CNC-machined linkages and housings for subsystem validation.",tags:['SolidWorks','Abaqus FEA','CNC Machining','Suspension Design','CIRC 2026'],imgs:['assets/images/mars-rover.jpg','assets/images/mars-rover-2.jpg','assets/images/mars-rover-3.jpg'],link:'https://sidusrobotics.ca/',linkLabel:'View Team Site →'},
-  {num:'Aerospace',title:'Valiant Aerotech: Firefighting UAV',desc:'Mechanical Team Lead for a quadcopter fire-surveillance UAV competing in AEAC. Designed a composite airframe in SolidWorks using DFM/DFA principles to minimize weight while enabling rapid assembly. Manufactured carbon-fiber and metal AM components in-house and built a stability-calibration jig to validate frame symmetry and motor alignment.',tags:['SolidWorks','Composites','DFM/DFA','UAV Design','Carbon Fibre'],imgs:['assets/images/firefighting-uav.jpg','assets/images/firefighting-uav-2.jpg','assets/images/firefighting-uav-3.jpg'],link:'https://www.linkedin.com/company/valiant-aerotech/',linkLabel:'Learn More →'},
-  {num:'Academic · Year 1',title:'Emergency Outboard Motor Mount',desc:"First-year CAD design project. Conceived and modelled a detachable emergency motor mount for a small watercraft. Applied basic fastening theory, stress analysis, and produced GD&T part drawings with a full BOM.",tags:['Onshape','GD&T','Stress Analysis','Fastening Theory'],imgs:['assets/images/motor-mount.jpg','assets/images/motor-mount-2.jpg','assets/images/motor-mount-3.jpg'],link:'',linkLabel:''},
+  {num:'Robotics',title:"Sidus Robotics: Mars Rover",desc:"Part of Memorial University's first Mars rover team competing at the 2026 Canadian International Rover Challenge (CIRC). Working on the robotic arm and suspension, reduced arm mass by 20% using Abaqus FEA, designed rocker-bogie suspension capable of traversing 15cm obstacles, and CNC-machined linkages and housings for subsystem validation.",tags:['Fusion 360','Abaqus FEA','3D Printing','Robotic Arm'],imgs:['assets/images/mars-rover.jpg','assets/images/mars-rover-2.jpg','assets/images/mars-rover-3.jpg'],link:'https://sidusrobotics.ca/',linkLabel:'View Team Site →'},
+  {num:'Aerospace',title:'Valiant Aerotech: Firefighting UAV',desc:'Mechanical Team Lead for a quadcopter fire-surveillance UAV competing in AEAC. Designed a composite airframe in SolidWorks using DFM/DFA principles to minimize weight while enabling rapid assembly. Manufactured carbon-fiber and metal AM components in-house and built a stability-calibration jig to validate frame symmetry and motor alignment.',tags:['SolidWorks','Abaqus FEA','CNC Machining','Composites'],imgs:['assets/images/firefighting-uav.jpg','assets/images/firefighting-uav-2.jpg','assets/images/firefighting-uav-3.jpg'],link:'https://www.linkedin.com/company/valiant-aerotech/',linkLabel:'Learn More →'},
+  {num:'Academic · Year 1',title:'Emergency Outboard Motor Mount',desc:"First-year CAD design project. Conceived and modelled a detachable emergency motor mount for a small watercraft. Applied basic fastening theory, stress analysis, and produced GD&T part drawings with a full BOM.",tags:['Onshape','GD&T','Stress Analysis'],imgs:['assets/images/motor-mount.jpg'],link:'',linkLabel:''},
 ];
 
 const ENG_CATS = {
@@ -887,21 +884,38 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   let currentFeatured = 0;
   let rotating = true;
 
+  // per-card background image cycling
+  cards.forEach(card => {
+    const idx = +card.dataset.project;
+    const p = PROJECTS[idx];
+    if(!p || p.imgs.length <= 1) return;
+    let ci = 0;
+    const bg = card.querySelector('.bento-bg');
+    // preload images
+    p.imgs.forEach(src => { const i = new Image(); i.src = src; });
+    setInterval(() => {
+      ci = (ci + 1) % p.imgs.length;
+      // crossfade: fade out, swap, fade in
+      bg.style.transition = 'opacity .8s ease, transform .6s cubic-bezier(.25,.8,.25,1)';
+      bg.style.opacity = '0';
+      setTimeout(() => {
+        bg.style.backgroundImage = "url('" + p.imgs[ci] + "')";
+        bg.style.opacity = card.classList.contains('featured') ? '0.7' : '0.55';
+      }, 800);
+    }, 4000);
+  });
+
   function rotateBento(){
     if(!rotating) return;
-    // pick next featured (cycle through 0,1,2)
     const next = (currentFeatured + 1) % cards.length;
     currentFeatured = next;
-    // reassign slot classes
     cards.forEach((card, i) => {
       card.classList.remove('featured','slot-tr','slot-br');
-      // figure out relative position from featured
       const rel = (i - currentFeatured + cards.length) % cards.length;
       card.classList.add(slots[rel]);
     });
   }
 
-  // pause rotation on hover
   grid.addEventListener('mouseenter', () => rotating = false);
   grid.addEventListener('mouseleave', () => rotating = true);
 
@@ -942,11 +956,10 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
     const te=document.getElementById('projModalTags');te.innerHTML='';
     // map tag names to CATS category index for navigation
     const TAG_CAT = {
-      'SolidWorks':0,'Autodesk Fusion 360':0,'Fusion 360':0,'Inventor':0,'DFM/DFA':0,
-      'ANSYS Fluent':1,'Abaqus FEA':1,'Abaqus':1,'MATLAB':1,'CFD':1,'FEA':1,
-      '3D Printing':2,'CNC Machining':2,'CAM Programming':2,'Composites':2,
+      'SolidWorks':0,'Fusion 360':0,'Autodesk Fusion 360':0,'Inventor':0,'Onshape':0,'GD&T':0,'DFM/DFA':0,
+      'Abaqus FEA':1,'Abaqus':1,'ANSYS Fluent':1,'MATLAB':1,'Stress Analysis':1,
+      'CNC Machining':2,'3D Printing':2,'Composites':2,'Carbon Fibre':2,
       'Arduino':3,
-      'Onshape':0,'GD&T':0,
     };
     p.tags.forEach(t=>{
       const s=document.createElement('span');
@@ -1334,7 +1347,6 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
 
 /* ───────────────── JARVIS ───────────────── */
 const labToggle      = document.getElementById('labToggle');
-const rover          = document.querySelector('.rover-vehicle');
 const aboutContent   = document.getElementById('aboutContent');
 const jarvisTerm     = document.getElementById('jarvisTerminal');
 const origBio        = aboutContent.textContent;
@@ -1372,7 +1384,6 @@ function activateJarvis(){
         jarvisTerm.style.transition='';aboutContent.style.display='';
       },800);
     },BOOT.length*600+1800);
-    setTimeout(()=>{rover.style.display='block';setTimeout(()=>rover.classList.add('active'),100);},3000);
     setTimeout(()=>ov.classList.remove('active'),2000);
   },1500);
 }
@@ -1392,7 +1403,6 @@ function shutdownJarvis(){
     jarvisTerm.innerHTML='';
     aboutContent.style.display='';
     aboutContent.textContent=origBio;
-    rover.style.display='none';rover.classList.remove('active');
     setTimeout(()=>ov.classList.remove('active'),1000);
   },1500);
 }
