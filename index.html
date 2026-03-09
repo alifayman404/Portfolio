@@ -284,8 +284,9 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
   display:flex;align-items:center;justify-content:center;
   font-size:.9rem;flex-shrink:0;overflow:hidden;padding:4px;
 }
-.ji-skill-icon img{width:100%;height:100%;object-fit:contain;display:block;filter:brightness(0) invert(1);opacity:.85;}
+.ji-skill-icon img{width:100%;height:100%;object-fit:contain;display:block;opacity:.9;}
 .ji-skill-icon.color-icon img{filter:none;opacity:1;}
+.ji-skill-icon.invert-icon img{filter:invert(1);opacity:.85;}
 .ji-skill-icon.monogram{font-family:'Fira Code',monospace;font-size:.55rem;font-weight:700;color:var(--accent);letter-spacing:-.02em;padding:2px;text-align:center;line-height:1.1;}
 .ji-skill-label{font-size:.8rem;color:var(--fg);flex:1;}
 .ji-skill-type{font-size:.62rem;color:var(--muted);opacity:.6;white-space:nowrap;}
@@ -340,6 +341,15 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
   opacity:.6;letter-spacing:.05em;display:flex;align-items:center;gap:.5rem;
 }
 .ji-skill-footer::before{content:'⬡';font-size:.5rem;}
+
+/* code snippet block */
+.ji-code-wrap{border-bottom:1px solid var(--border2);}
+.ji-code-bar{display:flex;align-items:center;gap:.35rem;padding:.4rem .7rem;background:var(--bg3);border-bottom:1px solid var(--border2);}
+.ji-code-dot{width:8px;height:8px;border-radius:50%;}
+.ji-code-dot.r{background:#ff5f57;}.ji-code-dot.y{background:#febc2e;}.ji-code-dot.g{background:#28c840;}
+.ji-code-lang{font-family:'Fira Code',monospace;font-size:.6rem;color:var(--muted);margin-left:auto;letter-spacing:.08em;}
+.ji-code-pre{margin:0;padding:.75rem .9rem;background:var(--bg);font-family:'Fira Code',monospace;font-size:.75rem;line-height:1.7;overflow-x:auto;white-space:pre;}
+.cs-k{color:#c084fc;}.cs-f{color:#64ffda;}.cs-c{color:#8892b0;font-style:italic;}.cs-s{color:#ffbd2e;}.cs-n{color:#ff9f57;}
 
 /* statusbar */
 .ji-statusbar{
@@ -475,6 +485,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 .contact-links{display:flex;flex-wrap:wrap;gap:.85rem;justify-content:center;}
 .contact-link{display:flex;align-items:center;gap:.55rem;padding:.7rem 1.4rem;border:1px solid var(--border2);border-radius:40px;color:var(--muted);font-size:.86rem;font-weight:500;transition:var(--tr);background:rgba(10,25,47,.5);}
 .contact-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 24px var(--glow);}
+.contact-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;}
 
 /* JARVIS / ROVER */
 
@@ -545,7 +556,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
   <h2>Things I've <span class="hl">Built</span></h2>
   <div class="bento-grid" id="bentoGrid">
     <div class="bento-card featured" data-project="0">
-      <div class="bento-bg" style="background-image:url('assets/images/mars-rover.jpg')"></div>
+      <div class="bento-bg" style="background-image:url('assets/images/projects/mars-rover.jpg')"></div>
       <div class="bento-open-hint">↗</div>
       <div class="bento-content">
         <span class="bento-num">Robotics</span>
@@ -554,7 +565,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       </div>
     </div>
     <div class="bento-card slot-tr" data-project="1">
-      <div class="bento-bg" style="background-image:url('assets/images/firefighting-uav.jpg')"></div>
+      <div class="bento-bg" style="background-image:url('assets/images/projects/firefighting-uav.jpg')"></div>
       <div class="bento-open-hint">↗</div>
       <div class="bento-content">
         <span class="bento-num">Aerospace</span>
@@ -563,7 +574,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       </div>
     </div>
     <div class="bento-card slot-br" data-project="2">
-      <div class="bento-bg" style="background-image:url('assets/images/motor-mount.jpg')"></div>
+      <div class="bento-bg" style="background-image:url('assets/images/projects/motor-mount.jpg')"></div>
       <div class="bento-open-hint">↗</div>
       <div class="bento-content">
         <span class="bento-num">Academic · Year 1</span>
@@ -662,7 +673,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       <span class="bp-corner-tr"></span>
       <span class="bp-corner-bl"></span>
       <div class="bp-letterhead">
-        <img class="bp-letterhead-logo invert" src="assets/images/logo-sdh.png" alt="SDH">
+        <img class="bp-letterhead-logo invert" src="assets/images/logos/logo-sdh.png" alt="SDH">
         <div class="bp-letterhead-text">
           <span class="bp-letterhead-org">Student Design Hub</span>
           <span class="bp-letterhead-sub">Memorial University</span>
@@ -696,7 +707,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       <span class="bp-corner-tr"></span>
       <span class="bp-corner-bl"></span>
       <div class="bp-letterhead">
-        <img class="bp-letterhead-logo" src="assets/images/logo-commons.png" alt="The Commons">
+        <img class="bp-letterhead-logo" src="assets/images/logos/logo-commons.png" alt="The Commons">
         <div class="bp-letterhead-text">
           <span class="bp-letterhead-org">The Commons</span>
           <span class="bp-letterhead-sub">Memorial University</span>
@@ -728,7 +739,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       <span class="bp-corner-tr"></span>
       <span class="bp-corner-bl"></span>
       <div class="bp-letterhead">
-        <img class="bp-letterhead-logo invert" src="assets/images/logo-kraken.png" alt="Kraken Robotics">
+        <img class="bp-letterhead-logo invert" src="assets/images/logos/logo-kraken.png" alt="Kraken Robotics">
         <div class="bp-letterhead-text">
           <span class="bp-letterhead-org">Kraken Robotics</span>
           <span class="bp-letterhead-sub">Incoming Co-op</span>
@@ -758,7 +769,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
       <span class="bp-corner-tr"></span>
       <span class="bp-corner-bl"></span>
       <div class="bp-letterhead">
-        <img class="bp-letterhead-logo" src="assets/images/logo-firstrobotics.png" alt="First Robotics NL">
+        <img class="bp-letterhead-logo" src="assets/images/logos/logo-firstrobotics.png" alt="First Robotics NL">
         <div class="bp-letterhead-text">
           <span class="bp-letterhead-org">First Robotics NL</span>
           <span class="bp-letterhead-sub">Volunteer</span>
@@ -792,17 +803,14 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
   <p class="contact-headline">Let's Build<br><span>Something Cool</span></p>
   <p>I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll do my best to get back to you.</p>
   <div class="contact-links">
-    <a href="/cdn-cgi/l/email-protection#20414c49460e4d4148494e604d554e0e4341" class="contact-link">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email Me
+    <a href="https://mail.google.com/mail/?view=cm&to=aamahin@mun.ca" target="_blank" class="contact-link">
+      <img src="assets/images/logos/logo-email.png" alt="Email" class="contact-logo">Email Me
     </a>
     <a href="https://www.linkedin.com/in/aamahin" target="_blank" class="contact-link">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn
+      <img src="assets/images/logos/logo-linkedin.png" alt="LinkedIn" class="contact-logo">LinkedIn
     </a>
     <a href="https://www.instagram.com/alifayman__" target="_blank" class="contact-link">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram
-    </a>
-    <a href="assets/resume.pdf" download class="contact-link">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Resume
+      <img src="assets/images/logos/logo-instagram.png" alt="Instagram" class="contact-logo">Instagram
     </a>
   </div>
 </section>
@@ -813,47 +821,47 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 <script>
 /* ───────────────── DATA ───────────────── */
 const PROJECTS = [
-  {num:'Robotics',title:"Sidus Robotics: Mars Rover",desc:"Part of Memorial University's first Mars rover team competing at the 2026 Canadian International Rover Challenge (CIRC). Working on the robotic arm and suspension, reduced arm mass by 20% using Abaqus FEA, designed rocker-bogie suspension capable of traversing 15cm obstacles, and CNC-machined linkages and housings for subsystem validation.",tags:['Fusion 360','Abaqus FEA','3D Printing','Robotic Arm'],imgs:['assets/images/mars-rover.jpg','assets/images/mars-rover-2.jpg','assets/images/mars-rover-3.jpg'],link:'https://sidusrobotics.ca/',linkLabel:'View Team Site →'},
-  {num:'Aerospace',title:'Valiant Aerotech: Firefighting UAV',desc:'Mechanical Team Lead for a quadcopter fire-surveillance UAV competing in AEAC. Designed a composite airframe in SolidWorks using DFM/DFA principles to minimize weight while enabling rapid assembly. Manufactured carbon-fiber and metal AM components in-house and built a stability-calibration jig to validate frame symmetry and motor alignment.',tags:['SolidWorks','Abaqus FEA','CNC Machining','Composites'],imgs:['assets/images/firefighting-uav.jpg','assets/images/firefighting-uav-2.jpg','assets/images/firefighting-uav-3.jpg'],link:'https://www.linkedin.com/company/valiant-aerotech/',linkLabel:'Learn More →'},
-  {num:'Academic · Year 1',title:'Emergency Outboard Motor Mount',desc:"First-year CAD design project. Conceived and modelled a detachable emergency motor mount for a small watercraft. Applied basic fastening theory, stress analysis, and produced GD&T part drawings with a full BOM.",tags:['Onshape','GD&T','Stress Analysis'],imgs:['assets/images/motor-mount.jpg'],link:'',linkLabel:''},
+  {num:'Robotics',title:"Sidus Robotics: Mars Rover",desc:"Part of Memorial University's first Mars rover team competing at the 2026 Canadian International Rover Challenge (CIRC). Working on the robotic arm and suspension, reduced arm mass by 20% using Abaqus FEA, designed rocker-bogie suspension capable of traversing 15cm obstacles, and CNC-machined linkages and housings for subsystem validation.",tags:['Fusion 360','Abaqus FEA','3D Printing','Robotic Arm'],imgs:['assets/images/projects/mars-rover.jpg','assets/images/projects/mars-rover-2.jpg','assets/images/projects/mars-rover-3.jpg'],link:'https://sidusrobotics.ca/',linkLabel:'View Team Site →'},
+  {num:'Aerospace',title:'Valiant Aerotech: Firefighting UAV',desc:'Mechanical Team Lead for a quadcopter fire-surveillance UAV competing in AEAC. Designed a composite airframe in SolidWorks using DFM/DFA principles to minimize weight while enabling rapid assembly. Manufactured carbon-fiber and metal AM components in-house and built a stability-calibration jig to validate frame symmetry and motor alignment.',tags:['SolidWorks','Abaqus FEA','CNC Machining','Composites'],imgs:['assets/images/projects/firefighting-uav.jpg','assets/images/projects/firefighting-uav-2.jpg','assets/images/projects/firefighting-uav-3.jpg'],link:'https://www.linkedin.com/company/valiant-aerotech/',linkLabel:'Learn More →'},
+  {num:'Academic · Year 1',title:'Emergency Outboard Motor Mount',desc:"First-year CAD design project. Conceived and modelled a detachable emergency motor mount for a small watercraft. Applied basic fastening theory, stress analysis, and produced GD&T part drawings with a full BOM.",tags:['Onshape','GD&T','Stress Analysis'],imgs:['assets/images/projects/motor-mount.jpg'],link:'',linkLabel:''},
 ];
 
 const ENG_CATS = {
   design:      {label:'Design & CAD',     node:'CAD', color:'#57cbff',
     skills:[
-      {key:'fusion360',  name:'Autodesk Fusion 360',type:'CAD Part .f3d',  desc:'3D modeling, assemblies, and rendering for mechanical components and prototypes.',img:'assets/images/fusion360.png'},
-      {key:'solidworks', name:'SolidWorks',          type:'CAD Part .sldprt',desc:'Part design, motion studies, and detailed engineering drawings.',img:'assets/images/solidworks.png'},
-      {key:'inventor',   name:'Autodesk Inventor',   type:'CAD Part .ipt',  desc:'Complex assemblies and simulation-driven mechanical design.',img:'assets/images/inventor.png'},
+      {key:'fusion360',  name:'Autodesk Fusion 360',type:'CAD Part .f3d',  desc:'3D modeling, assemblies, and rendering for mechanical components and prototypes.',img:'assets/images/skills/fusion360.png'},
+      {key:'solidworks', name:'SolidWorks',          type:'CAD Part .sldprt',desc:'Part design, motion studies, and detailed engineering drawings.',img:'assets/images/skills/solidworks.png'},
+      {key:'inventor',   name:'Autodesk Inventor',   type:'CAD Part .ipt',  desc:'Complex assemblies and simulation-driven mechanical design.',img:'assets/images/skills/inventor.png'},
     ]},
   analysis:    {label:'Analysis & Sim',   node:'SIM', color:'#64ffda',
     skills:[
-      {key:'ansys',  name:'ANSYS Fluent',type:'CFD File .cas',  desc:'CFD simulations for fluid flow and heat transfer analysis.',img:'assets/images/ansys.png'},
-      {key:'abaqus', name:'Abaqus',      type:'FEA Input .inp', desc:'Finite Element Analysis for stress, strain, and material performance.',img:'assets/images/abaqus.png'},
-      {key:'matlab', name:'MATLAB',      type:'Script .m',      desc:'Data analysis, numerical modeling, and engineering automation.',img:'assets/images/matlab.png'},
+      {key:'ansys',  name:'ANSYS Fluent',type:'CFD File .cas',  desc:'CFD simulations for fluid flow and heat transfer analysis.',img:'assets/images/skills/ansys.png'},
+      {key:'abaqus', name:'Abaqus',      type:'FEA Input .inp', desc:'Finite Element Analysis for stress, strain, and material performance.',img:'assets/images/skills/abaqus.png'},
+      {key:'matlab', name:'MATLAB',      type:'Script .m',      desc:'Data analysis, numerical modeling, and engineering automation.',img:'assets/images/skills/matlab.png'},
     ]},
   prototyping: {label:'Prototyping',      node:'MFG', color:'#ffbd2e',
     skills:[
-      {key:'3dprinting',name:'3D Printing',     type:'Mesh .stl',    desc:'FDM printers for rapid prototyping and design validation.',img:'assets/images/3dprinting.jpg'},
-      {key:'cnc',       name:'CNC Machining',   type:'G-Code .nc',   desc:'G-code generation and setup for precision part manufacturing.',img:'assets/images/cnc.jpg'},
-      {key:'cam',       name:'CAM Programming', type:'Toolpath .tap', desc:'Toolpaths and machining strategies for efficient fabrication.',img:'assets/images/cam.png'},
+      {key:'3dprinting',name:'3D Printing',     type:'Mesh .stl',    desc:'FDM printers for rapid prototyping and design validation.',img:'assets/images/skills/3dprinting.jpg'},
+      {key:'cnc',       name:'CNC Machining',   type:'G-Code .nc',   desc:'G-code generation and setup for precision part manufacturing.',img:'assets/images/skills/cnc.jpg'},
+      {key:'cam',       name:'CAM Programming', type:'Toolpath .tap', desc:'Toolpaths and machining strategies for efficient fabrication.',img:'assets/images/skills/cam.png'},
     ]},
   electronics: {label:'Electronics',      node:'SYS', color:'#ff9f57',
     skills:[
-      {key:'arduino',   name:'Arduino',           type:'Sketch .ino', desc:'Sensor-based and robotic systems with hardware-software integration.',img:'assets/images/arduino.jpg'},
-      {key:'sensors',   name:'Sensors & Actuators',type:'Header .h',  desc:'Real-time feedback and automation through sensor-actuator networks.',img:'assets/images/sensors.jpg'},
-      {key:'soldering', name:'Soldering',          type:'PCB .brd',   desc:'Assembling and repairing electronic circuits and prototypes.',img:'assets/images/soldering.jpg'},
+      {key:'arduino',   name:'Arduino',           type:'Sketch .ino', desc:'Sensor-based and robotic systems with hardware-software integration.',img:'assets/images/skills/arduino.jpg'},
+      {key:'sensors',   name:'Sensors & Actuators',type:'Header .h',  desc:'Real-time feedback and automation through sensor-actuator networks.',img:'assets/images/skills/arduino.jpg'},
+      {key:'soldering', name:'Soldering',          type:'PCB .brd',   desc:'Assembling and repairing electronic circuits and prototypes.',img:'assets/images/skills/arduino.jpg'},
     ]},
   programming: {label:'Programming',      node:'CODE',color:'#c084fc',
     skills:[
-      {key:'python',name:'Python',    type:'Script .py',  desc:'Automation, data analysis, and control systems.',img:'assets/images/python.jpg'},
-      {key:'cpp',   name:'C++',       type:'Source .cpp', desc:'Robotics and embedded systems for performance-critical programming.',img:'assets/images/cpp.jpg'},
-      {key:'web',   name:'HTML / CSS',type:'Markup .html',desc:'Technical websites and digital portfolios.',img:'assets/images/web.jpg'},
+      {key:'python',name:'Python',    type:'Script .py',  desc:'Automation, data analysis, and control systems.',img:'code:python'},
+      {key:'cpp',   name:'C++',       type:'Source .cpp', desc:'Robotics and embedded systems for performance-critical programming.',img:'code:cpp'},
+      {key:'web',   name:'HTML / CSS',type:'Markup .html',desc:'Technical websites and digital portfolios.',img:'code:web'},
     ]},
   tools:       {label:'General Tools',    node:'OPS', color:'#8892b0',
     skills:[
-      {key:'office',name:'MS Office',          type:'Document .xlsx',   desc:'Excel, PowerPoint, and Word for engineering documentation.',img:'assets/images/office.jpg'},
-      {key:'adobe', name:'Adobe Creative Suite',type:'Project .psd',   desc:'Photoshop and Illustrator for design and visualization.',img:'assets/images/adobe.jpg'},
-      {key:'whmis', name:'WHMIS Certification', type:'Certificate .cert',desc:'Safe workplace practices and hazardous materials handling.',img:'assets/images/whmis.jpg'},
+      {key:'office',name:'MS Office',          type:'Document .xlsx',   desc:'Excel, PowerPoint, and Word for engineering documentation.',img:'assets/images/skills/office.jpg', logo:{url:'https://cdn.jsdelivr.net/npm/simple-icons@9/icons/microsoft365.svg',color:true}},
+      {key:'adobe', name:'Adobe Creative Suite',type:'Project .psd',   desc:'Photoshop and Illustrator for design and visualization.',img:''},
+      {key:'drone', name:'Drone Pilot',         type:'Flight .log',     desc:'Certified drone pilot with hands-on UAV operations experience.',img:''},
     ]},
 };
 
@@ -1048,39 +1056,39 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   const CATS = [
     {id:'design',     label:'Design & CAD',      icon:'✏️', color:'#57cbff',
      skills:[
-      {name:'Autodesk Fusion 360',logo:{text:'F360',color:'#ff6b00'},type:'.f3d',   desc:'3D modeling, assemblies, and rendering for mechanical components.',img:'assets/images/fusion360.png'},
-      {name:'SolidWorks',         logo:{text:'SW',  color:'#e2231a'},type:'.sldprt',desc:'Part design, motion studies, and detailed engineering drawings.',   img:'assets/images/solidworks.png'},
-      {name:'Autodesk Inventor',  logo:{text:'INV', color:'#e07200'},type:'.ipt',   desc:'Complex assemblies and simulation-driven mechanical design.',       img:'assets/images/inventor.png'},
+      {name:'Autodesk Fusion 360',logo:{url:'assets/images/software/sw-fusion360.png'},type:'.f3d',   desc:'3D modeling, assemblies, and rendering for mechanical components.',img:'assets/images/skills/fusion360.png'},
+      {name:'SolidWorks',         logo:{url:'assets/images/software/sw-solidworks.png'},type:'.sldprt',desc:'Part design, motion studies, and detailed engineering drawings.',   img:'assets/images/skills/solidworks.png'},
+      {name:'Autodesk Inventor',  logo:{url:'assets/images/software/sw-inventor.png'},type:'.ipt',   desc:'Complex assemblies and simulation-driven mechanical design.',       img:'assets/images/skills/inventor.png'},
      ]},
     {id:'analysis',   label:'Analysis & Sim',    icon:'📊', color:'#64ffda',
      skills:[
-      {name:'ANSYS Fluent',logo:{text:'ANS',color:'#ffb71b'},type:'.cas',desc:'CFD simulations for fluid flow and heat transfer analysis.',            img:'assets/images/ansys.png'},
-      {name:'Abaqus',      logo:{text:'ABQ',color:'#e2231a'},type:'.inp',desc:'Finite Element Analysis for stress, strain, and material performance.',  img:'assets/images/abaqus.png'},
-      {name:'MATLAB',      logo:{url:'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/mathworks.svg'},type:'.m',  desc:'Data analysis, numerical modeling, and engineering automation.',         img:'assets/images/matlab.png'},
+      {name:'ANSYS Fluent',logo:{url:'assets/images/software/sw-ansys.png'},type:'.cas',desc:'CFD simulations for fluid flow and heat transfer analysis.',            img:'assets/images/skills/ansys.png'},
+      {name:'Abaqus',      logo:{url:'assets/images/software/sw-abaqus.png'},type:'.inp',desc:'Finite Element Analysis for stress, strain, and material performance.',  img:'assets/images/skills/abaqus.png'},
+      {name:'MATLAB',      logo:{url:'assets/images/software/sw-matlab.png'},type:'.m',  desc:'Data analysis, numerical modeling, and engineering automation.',         img:'assets/images/skills/matlab.png'},
      ]},
     {id:'prototyping',label:'Prototyping',        icon:'🔧', color:'#ffbd2e',
      skills:[
-      {name:'3D Printing',     logo:{text:'3DP',color:'#ffbd2e'},type:'.stl',desc:'FDM rapid prototyping and design validation.',              img:'assets/images/3dprinting.jpg'},
-      {name:'CNC Machining',   logo:{text:'CNC',color:'#8892b0'},type:'.nc', desc:'G-code generation and setup for precision manufacturing.',   img:'assets/images/cnc.jpg'},
-      {name:'CAM Programming', logo:{text:'CAM',color:'#ffbd2e'},type:'.tap',desc:'Toolpaths and machining strategies for efficient fabrication.',img:'assets/images/cam.png'},
+      {name:'3D Printing',     logo:{text:'3DP',color:'#ffbd2e'},type:'.stl',desc:'FDM rapid prototyping and design validation.',              img:'assets/images/skills/3dprinting.jpg'},
+      {name:'CNC Machining',   logo:{text:'CNC',color:'#8892b0'},type:'.nc', desc:'G-code generation and setup for precision manufacturing.',   img:'assets/images/skills/cnc.jpg'},
+      {name:'CAM Programming', logo:{text:'CAM',color:'#ffbd2e'},type:'.tap',desc:'Toolpaths and machining strategies for efficient fabrication.',img:'assets/images/skills/cam.png'},
      ]},
     {id:'electronics',label:'Electronics',        icon:'⚡', color:'#ff9f57',
      skills:[
-      {name:'Arduino',            logo:{url:'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/arduino.svg',color:true},type:'.ino',desc:'Sensor-based robotics with hardware-software integration.',    img:'assets/images/arduino.jpg'},
-      {name:'Sensors & Actuators',logo:{text:'SEN',color:'#ff9f57'},type:'.h',  desc:'Real-time feedback through sensor-actuator networks.',        img:'assets/images/sensors.jpg'},
-      {name:'Soldering',          logo:{text:'SOL',color:'#ff9f57'},type:'.brd',desc:'Assembling and repairing electronic circuits and prototypes.',img:'assets/images/soldering.jpg'},
+      {name:'Arduino',            logo:{url:'assets/images/software/sw-arduino.png'},type:'.ino',desc:'Sensor-based robotics with hardware-software integration.',    img:'assets/images/skills/arduino.jpg'},
+      {name:'Sensors & Actuators',logo:{text:'SEN',color:'#ff9f57'},type:'.h',  desc:'Real-time feedback through sensor-actuator networks.',        img:'assets/images/skills/arduino.jpg'},
+      {name:'Soldering',          logo:{text:'SOL',color:'#ff9f57'},type:'.brd',desc:'Assembling and repairing electronic circuits and prototypes.',img:'assets/images/skills/arduino.jpg'},
      ]},
     {id:'programming',label:'Programming',        icon:'💻', color:'#c084fc',
      skills:[
-      {name:'Python',    logo:{url:'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/python.svg',color:true},type:'.py',  desc:'Automation, data analysis, and control systems.',              img:'assets/images/python.jpg'},
-      {name:'C++',       logo:{url:'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/cplusplus.svg'},type:'.cpp', desc:'Robotics and embedded systems for performance-critical work.',  img:'assets/images/cpp.jpg'},
-      {name:'HTML / CSS',logo:{url:'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/html5.svg',color:true},type:'.html',desc:'Technical websites and digital portfolio development.',         img:'assets/images/web.jpg'},
+      {name:'Python',    logo:{url:'assets/images/software/sw-python.png'},type:'.py',  desc:'Automation, data analysis, and control systems.',              img:'code:python'},
+      {name:'C++',       logo:{url:'assets/images/software/sw-cpp.png'},type:'.cpp', desc:'Robotics and embedded systems for performance-critical work.',  img:'code:cpp'},
+      {name:'HTML / CSS',logo:{url:'assets/images/software/sw-html.png'},type:'.html',desc:'Technical websites and digital portfolio development.',         img:'code:web'},
      ]},
     {id:'tools',      label:'General Tools',      icon:'🛠️', color:'#8892b0',
      skills:[
-      {name:'MS Office',           logo:{url:'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoftoffice.svg',color:true},type:'.xlsx',desc:'Excel, PowerPoint, Word for engineering documentation.',  img:'assets/images/office.jpg'},
-      {name:'Adobe Creative Suite',logo:{url:'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/adobe.svg',color:true},type:'.psd', desc:'Photoshop and Illustrator for design and visualization.', img:'assets/images/adobe.jpg'},
-      {name:'WHMIS Certification', logo:{text:'WHM',color:'#64ffda'},type:'.cert',desc:'Safe workplace practices and hazardous materials handling.',img:'assets/images/whmis.jpg'},
+      {name:'MS Office',           logo:{url:'assets/images/software/sw-msoffice.png'},type:'.xlsx',desc:'Excel, PowerPoint, Word for engineering documentation and reporting.',  img:'assets/images/skills/office.jpg'},
+      {name:'Adobe Creative Suite',logo:{url:'assets/images/software/sw-adobe.png'},type:'.psd', desc:'Photoshop and Illustrator for design and visualization.', img:''},
+      {name:'Drone Pilot',         logo:{text:'UAV',color:'#8892b0'},type:'.log',desc:'Certified drone pilot with hands-on UAV operations experience.',img:''},
      ]},
   ];
 
@@ -1331,9 +1339,23 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
     const grid = document.getElementById('jiSkillsGrid');
     grid.innerHTML = '';
 
+    const CODE_SNIPPETS = {
+      python: `<span class="cs-k">import</span> numpy <span class="cs-k">as</span> np\n<span class="cs-c"># Data analysis pipeline</span>\n<span class="cs-k">def</span> <span class="cs-f">analyze</span>(data):\n    mean = np.<span class="cs-f">mean</span>(data)\n    <span class="cs-k">return</span> mean`,
+      cpp:    `<span class="cs-c">// Robotic arm controller</span>\n<span class="cs-k">void</span> <span class="cs-f">moveJoint</span>(<span class="cs-k">int</span> angle) {\n    servo.<span class="cs-f">write</span>(angle);\n    delay(<span class="cs-n">15</span>);\n}`,
+      web:    `<span class="cs-k">&lt;section</span> <span class="cs-f">class</span>=<span class="cs-s">"hero"</span><span class="cs-k">&gt;</span>\n  <span class="cs-k">&lt;h1&gt;</span>Alif Ayman Mahin<span class="cs-k">&lt;/h1&gt;</span>\n  <span class="cs-c">/* teal accent palette */</span>\n  <span class="cs-f">color</span>: <span class="cs-s">#64ffda</span>;\n<span class="cs-k">&lt;/section&gt;</span>`,
+    };
+    function renderCodeSnippet(lang, name){
+      const code = CODE_SNIPPETS[lang] || '';
+      return `<div class="ji-code-wrap">
+        <div class="ji-code-bar"><span class="ji-code-dot r"></span><span class="ji-code-dot y"></span><span class="ji-code-dot g"></span><span class="ji-code-lang">${lang.toUpperCase()}</span></div>
+        <pre class="ji-code-pre"><code>${code}</code></pre>
+        <div class="ji-skill-img-label" style="position:relative;padding:.3rem .6rem;">${name.toUpperCase()} ${lang}</div>
+      </div>`;
+    }
+
     function renderIcon(sk){
       if(sk.logo.url){
-        const cls = sk.logo.color ? 'ji-skill-icon color-icon' : 'ji-skill-icon';
+        const cls = sk.logo.color ? 'ji-skill-icon color-icon' : sk.logo.invert ? 'ji-skill-icon invert-icon' : 'ji-skill-icon';
         return '<div class="'+cls+'"><img src="'+sk.logo.url+'" alt="'+sk.name+'" data-fb="'+(sk.logo.text||sk.name.slice(0,3).toUpperCase())+'" data-fbcolor="'+(sk.logo.color||'')+'" class="ji-logo-img"></div>';
       } else {
         const st = 'color:'+sk.logo.color+';border-color:'+sk.logo.color+'33;background:'+sk.logo.color+'18;';
@@ -1352,12 +1374,12 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
           <span class="ji-skill-arrow">▶</span>
         </div>
         <div class="ji-skill-body">
-          <div class="ji-skill-img-wrap">
+          ${sk.img.startsWith('code:') ? renderCodeSnippet(sk.img.slice(5), sk.name) : sk.img ? `<div class="ji-skill-img-wrap">
             <span class="corner-tr"></span><span class="corner-bl"></span>
             <img class="ji-skill-img" src="${sk.img}" alt="${sk.name}" loading="lazy">
             <div class="ji-skill-scanline"></div>
             <div class="ji-skill-img-label">${sk.name.toUpperCase()} ${sk.type}</div>
-          </div>
+          </div>` : ''}
           <div class="ji-skill-desc">${sk.desc}</div>
           <div class="ji-skill-footer">${sk.type} · Component loaded</div>
         </div>`;
