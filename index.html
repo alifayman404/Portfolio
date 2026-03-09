@@ -34,7 +34,7 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;transition:background .6s,color .6s;}
+body{background:var(--bg);color:var(--fg);font-family:'Chakra Petch',sans-serif;line-height:1.6;overflow-x:hidden;transition:background .6s,color .6s;}
 a{color:var(--accent);text-decoration:none;transition:color .3s;}
 a:hover{color:#7fffd4;}
 ::selection{background:var(--accent);color:var(--bg);}
@@ -1068,15 +1068,15 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
      ]},
     {id:'prototyping',label:'Prototyping',        icon:'🔧', color:'#ffbd2e',
      skills:[
-      {name:'3D Printing',     logo:{text:'3DP',color:'#ffbd2e'},type:'.stl',desc:'FDM rapid prototyping and design validation.',              img:'assets/images/skills/3dprinting.jpg'},
-      {name:'CNC Machining',   logo:{text:'CNC',color:'#8892b0'},type:'.nc', desc:'G-code generation and setup for precision manufacturing.',   img:'assets/images/skills/cnc.jpg'},
-      {name:'CAM Programming', logo:{text:'CAM',color:'#ffbd2e'},type:'.tap',desc:'Toolpaths and machining strategies for efficient fabrication.',img:'assets/images/skills/cam.png'},
+      {name:'3D Printing',     logo:{url:'assets/images/software/sw-3dprinting.png'},type:'.stl',desc:'FDM rapid prototyping and design validation.',              img:'assets/images/skills/3dprinting.jpg'},
+      {name:'CNC Machining',   logo:{url:'assets/images/software/sw-cnc.png'},type:'.nc', desc:'G-code generation and setup for precision manufacturing.',   img:'assets/images/skills/cnc.jpg'},
+      {name:'CAM Programming', logo:{url:'assets/images/software/sw-cam.png'},type:'.tap',desc:'Toolpaths and machining strategies for efficient fabrication.',img:'assets/images/skills/cam.png'},
      ]},
     {id:'electronics',label:'Electronics',        icon:'⚡', color:'#ff9f57',
      skills:[
       {name:'Arduino',            logo:{url:'assets/images/software/sw-arduino.png'},type:'.ino',desc:'Sensor-based robotics with hardware-software integration.',    img:'assets/images/skills/arduino.jpg'},
-      {name:'Sensors & Actuators',logo:{text:'SEN',color:'#ff9f57'},type:'.h',  desc:'Real-time feedback through sensor-actuator networks.',        img:'assets/images/skills/arduino.jpg'},
-      {name:'Soldering',          logo:{text:'SOL',color:'#ff9f57'},type:'.brd',desc:'Assembling and repairing electronic circuits and prototypes.',img:'assets/images/skills/arduino.jpg'},
+      {name:'Sensors & Actuators',logo:{url:'assets/images/software/sw-sensors.png'},type:'.h',  desc:'Real-time feedback through sensor-actuator networks.',        img:'assets/images/skills/sensors.jpg'},
+      {name:'Soldering',          logo:{url:'assets/images/software/sw-soldering.png'},type:'.brd',desc:'Assembling and repairing electronic circuits and prototypes.',img:''},
      ]},
     {id:'programming',label:'Programming',        icon:'💻', color:'#c084fc',
      skills:[
@@ -1088,7 +1088,7 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
      skills:[
       {name:'MS Office',           logo:{url:'assets/images/software/sw-msoffice.png'},type:'.xlsx',desc:'Excel, PowerPoint, Word for engineering documentation and reporting.',  img:'assets/images/skills/office.jpg'},
       {name:'Adobe Creative Suite',logo:{url:'assets/images/software/sw-adobe.png'},type:'.psd', desc:'Photoshop and Illustrator for design and visualization.', img:''},
-      {name:'Drone Pilot',         logo:{text:'UAV',color:'#8892b0'},type:'.log',desc:'Certified drone pilot with hands-on UAV operations experience.',img:''},
+      {name:'Drone Pilot',         logo:{url:'assets/images/software/sw-drone.png'},type:'.log',desc:'Certified drone pilot with hands-on UAV operations experience.',img:''},
      ]},
   ];
 
@@ -1113,6 +1113,13 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   let hoveredCat  = -1;
   let animFrame;
 
+  /* ── hover expansion (spring per-slice) ── */
+  const sliceExpand = new Array(CATS.length).fill(0);   // 0→1 expanded amount
+  const sliceTarget = new Array(CATS.length).fill(0);
+
+  /* ── rim glow pulse ── */
+  let pulseT = 0;   // grows over time, used for sin breathe
+
   const N         = CATS.length;
   const SLICE     = (Math.PI * 2) / N;
   const R_OUTER   = 170;   // outer arc radius
@@ -1120,139 +1127,250 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   const R_CORE    = 38;    // center core
   const R_HIT     = 140;   // click detection radius (middle of arc band)
 
+  /* ── cached gradient (created once, reused every frame) ── */
+  const coreGrad = ctx.createRadialGradient(CX,CY,0,CX,CY,R_CORE);
+  coreGrad.addColorStop(0,'rgba(100,255,218,0.18)');
+  coreGrad.addColorStop(1,'rgba(10,25,47,0.9)');
+
   /* ── draw ── */
   function draw(){
     ctx.clearRect(0, 0, W, H);
 
-    /* faint rings */
-    [R_INNER - 10, R_OUTER + 18].forEach(r => {
-      ctx.beginPath(); ctx.arc(CX, CY, r, 0, Math.PI*2);
-      ctx.strokeStyle = 'rgba(100,255,218,0.06)'; ctx.lineWidth = 1; ctx.stroke();
-    });
+    /* ── 1. BREATHING RIM GLOW (single arc, one shadowBlur call) ── */
+    const glowCat  = activeCat >= 0 ? activeCat : hoveredCat;
+    const glowCol  = glowCat >= 0 ? CATS[glowCat].color : '#64ffda';
+    const breathe  = 0.5 + 0.5 * Math.sin(pulseT);
+    const rimAlpha = (glowCat >= 0 ? 0.55 : 0.18) * breathe;
+    ctx.save();
+    ctx.globalAlpha  = rimAlpha;
+    ctx.strokeStyle  = glowCol;
+    ctx.lineWidth    = 3;
+    ctx.shadowColor  = glowCol;
+    ctx.shadowBlur   = (glowCat >= 0 ? 18 : 10) * breathe;
+    ctx.beginPath();
+    ctx.arc(CX, CY, R_OUTER + 4, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();  // restores shadowBlur=0, globalAlpha=1 in one shot
 
-    /* tick marks on outer ring */
+    /* ── 2. FAINT STATIC RINGS (batched as one path per style) ── */
+    ctx.strokeStyle = 'rgba(100,255,218,0.06)';
+    ctx.lineWidth   = 1;
+    ctx.beginPath(); ctx.arc(CX, CY, R_INNER - 10, 0, Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(CX, CY, R_OUTER + 18, 0, Math.PI*2); ctx.stroke();
+
+    /* ── 3. TICK MARKS (batched: minor ticks one path, major ticks one path) ── */
+    ctx.lineWidth   = 0.7;
+    ctx.strokeStyle = 'rgba(100,255,218,0.08)';
+    ctx.beginPath();
     for(let t = 0; t < 60; t++){
-      const a = (t/60)*Math.PI*2 + rotation;
-      const r1 = R_OUTER + 10, r2 = R_OUTER + (t%5===0 ? 20 : 14);
-      ctx.beginPath();
-      ctx.moveTo(CX + Math.cos(a)*r1, CY + Math.sin(a)*r1);
-      ctx.lineTo(CX + Math.cos(a)*r2, CY + Math.sin(a)*r2);
-      ctx.strokeStyle = t%5===0 ? 'rgba(100,255,218,0.25)' : 'rgba(100,255,218,0.08)';
-      ctx.lineWidth = t%5===0 ? 1.2 : 0.7; ctx.stroke();
+      if(t % 5 === 0) continue;
+      const a = (t / 60) * Math.PI * 2 + rotation;
+      const c = Math.cos(a), s = Math.sin(a);
+      ctx.moveTo(CX + c*(R_OUTER+10), CY + s*(R_OUTER+10));
+      ctx.lineTo(CX + c*(R_OUTER+14), CY + s*(R_OUTER+14));
     }
-
-    /* dashed inner ring */
-    ctx.beginPath(); ctx.arc(CX, CY, R_INNER, 0, Math.PI*2);
-    ctx.strokeStyle = 'rgba(100,255,218,0.12)'; ctx.lineWidth = 1;
-    ctx.setLineDash([4, 6]); ctx.stroke(); ctx.setLineDash([]);
-
-    /* segments */
-    CATS.forEach((cat, i) => {
-      const angleStart = rotation + i * SLICE - SLICE/2;
-      const angleEnd   = angleStart + SLICE;
-      const aMid       = angleStart + SLICE/2;
-      const isActive   = activeCat === i;
-      const isHovered  = hoveredCat === i;
-      const col        = cat.color;
-
-      /* arc fill */
-      ctx.beginPath();
-      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER, CY + Math.sin(angleStart)*R_INNER);
-      ctx.arc(CX, CY, R_OUTER, angleStart, angleEnd);
-      ctx.arc(CX, CY, R_INNER, angleEnd, angleStart, true);
-      ctx.closePath();
-
-      if(isActive){
-        ctx.fillStyle = hexAlpha(col, 0.18);
-        ctx.strokeStyle = col; ctx.lineWidth = 1.5;
-      } else if(isHovered){
-        ctx.fillStyle = hexAlpha(col, 0.09);
-        ctx.strokeStyle = hexAlpha(col, 0.5); ctx.lineWidth = 1;
-      } else {
-        ctx.fillStyle = 'rgba(10,25,47,0.5)';
-        ctx.strokeStyle = 'rgba(136,146,176,0.15)'; ctx.lineWidth = 0.8;
-      }
-      ctx.fill(); ctx.stroke();
-
-      /* radial divider lines */
-      ctx.beginPath();
-      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER, CY + Math.sin(angleStart)*R_INNER);
-      ctx.lineTo(CX + Math.cos(angleStart)*R_OUTER, CY + Math.sin(angleStart)*R_OUTER);
-      ctx.strokeStyle = 'rgba(100,255,218,0.08)'; ctx.lineWidth = 0.8; ctx.stroke();
-
-      /* icon */
-      const iconR = (R_INNER + R_OUTER)/2;
-      const ix = CX + Math.cos(aMid)*iconR;
-      const iy = CY + Math.sin(aMid)*iconR;
-      ctx.font = isActive ? '18px serif' : '15px serif';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.globalAlpha = isActive ? 1 : isHovered ? 0.85 : 0.5;
-      ctx.fillText(cat.icon, ix, iy - 8);
-      ctx.globalAlpha = 1;
-
-      /* label */
-      ctx.save();
-      ctx.translate(ix, iy + 10);
-      ctx.font = isActive ? 'bold 8px Fira Code, monospace' : '7px Fira Code, monospace';
-      ctx.fillStyle = isActive ? col : (isHovered ? '#e6f1ff' : '#8892b0');
-      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.globalAlpha = isActive ? 1 : isHovered ? 0.9 : 0.55;
-      ctx.fillText(cat.label.toUpperCase(), 0, 0);
-      ctx.globalAlpha = 1;
-      ctx.restore();
-
-      /* glow line on active outer rim */
-      if(isActive){
-        ctx.beginPath();
-        ctx.arc(CX, CY, R_OUTER + 2, angleStart, angleEnd);
-        ctx.strokeStyle = col; ctx.lineWidth = 2.5;
-        ctx.shadowColor = col; ctx.shadowBlur = 8;
-        ctx.stroke(); ctx.shadowBlur = 0;
-      }
-    });
-
-    /* core circle */
-    const coreGrad = ctx.createRadialGradient(CX,CY,0,CX,CY,R_CORE);
-    coreGrad.addColorStop(0,'rgba(100,255,218,0.18)');
-    coreGrad.addColorStop(1,'rgba(10,25,47,0.9)');
-    ctx.beginPath(); ctx.arc(CX, CY, R_CORE, 0, Math.PI*2);
-    ctx.fillStyle = coreGrad; ctx.fill();
-    ctx.strokeStyle = 'rgba(100,255,218,0.35)'; ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.lineWidth   = 1.2;
+    ctx.strokeStyle = 'rgba(100,255,218,0.25)';
+    ctx.beginPath();
+    for(let t = 0; t < 60; t += 5){
+      const a = (t / 60) * Math.PI * 2 + rotation;
+      const c = Math.cos(a), s = Math.sin(a);
+      ctx.moveTo(CX + c*(R_OUTER+10), CY + s*(R_OUTER+10));
+      ctx.lineTo(CX + c*(R_OUTER+20), CY + s*(R_OUTER+20));
+    }
     ctx.stroke();
 
-    /* spinning core ring */
-    const sr = rotation * 2;
-    ctx.beginPath(); ctx.arc(CX, CY, R_CORE - 8, 0, Math.PI*2);
-    ctx.strokeStyle = 'rgba(100,255,218,0.12)'; ctx.lineWidth = 1;
-    ctx.setLineDash([5, 20]); ctx.lineDashOffset = -sr * 30; ctx.stroke(); ctx.setLineDash([]);
+    /* ── 4. DASHED INNER RING ── */
+    ctx.strokeStyle = 'rgba(100,255,218,0.12)';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([4, 6]);
+    ctx.beginPath(); ctx.arc(CX, CY, R_INNER, 0, Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
 
-    /* core text */
-    ctx.font = 'bold 9px Fira Code, monospace';
-    ctx.fillStyle = activeCat >= 0 ? CATS[activeCat].color : 'rgba(100,255,218,0.5)';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    /* ── 5. SEGMENTS — fills, dividers, sonar arcs all batched by type ── */
+
+    /* 5a. Fill all segments first (no shadow needed) */
+    CATS.forEach((cat, i) => {
+      const exp        = sliceExpand[i];
+      const R_OUT_I    = R_OUTER + exp * 14;
+      const angleStart = rotation + i * SLICE - SLICE/2;
+      const angleEnd   = angleStart + SLICE;
+      const isActive   = activeCat === i;
+      const isHovered  = hoveredCat === i;
+      ctx.beginPath();
+      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER, CY + Math.sin(angleStart)*R_INNER);
+      ctx.arc(CX, CY, R_OUT_I, angleStart, angleEnd);
+      ctx.arc(CX, CY, R_INNER, angleEnd, angleStart, true);
+      ctx.closePath();
+      ctx.fillStyle = isActive   ? hexAlpha(cat.color, 0.18 + exp * 0.08)
+                    : isHovered  ? hexAlpha(cat.color, 0.09 + exp * 0.06)
+                    : 'rgba(10,25,47,0.5)';
+      ctx.fill();
+    });
+
+    /* 5b. Stroke all segment borders (batched by active/hover/idle) */
+    // idle borders — one batched path
+    ctx.strokeStyle = 'rgba(136,146,176,0.15)'; ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    CATS.forEach((cat, i) => {
+      if(activeCat === i || hoveredCat === i) return;
+      const exp        = sliceExpand[i];
+      const R_OUT_I    = R_OUTER + exp * 14;
+      const angleStart = rotation + i * SLICE - SLICE/2;
+      const angleEnd   = angleStart + SLICE;
+      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER, CY + Math.sin(angleStart)*R_INNER);
+      ctx.arc(CX, CY, R_OUT_I, angleStart, angleEnd);
+      ctx.arc(CX, CY, R_INNER, angleEnd, angleStart, true);
+      ctx.closePath();
+    });
+    ctx.stroke();
+    // active/hover borders — per slice (small N so fine)
+    CATS.forEach((cat, i) => {
+      if(activeCat !== i && hoveredCat !== i) return;
+      const exp        = sliceExpand[i];
+      const R_OUT_I    = R_OUTER + exp * 14;
+      const angleStart = rotation + i * SLICE - SLICE/2;
+      const angleEnd   = angleStart + SLICE;
+      const isActive   = activeCat === i;
+      ctx.strokeStyle  = isActive ? cat.color : hexAlpha(cat.color, 0.5 + exp * 0.3);
+      ctx.lineWidth    = isActive ? 1.5 : 1;
+      ctx.beginPath();
+      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER, CY + Math.sin(angleStart)*R_INNER);
+      ctx.arc(CX, CY, R_OUT_I, angleStart, angleEnd);
+      ctx.arc(CX, CY, R_INNER, angleEnd, angleStart, true);
+      ctx.closePath();
+      ctx.stroke();
+    });
+
+    /* 5c. Radial divider lines — all one batched path */
+    ctx.strokeStyle = 'rgba(100,255,218,0.08)'; ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    CATS.forEach((cat, i) => {
+      const exp        = sliceExpand[i];
+      const R_OUT_I    = R_OUTER + exp * 14;
+      const angleStart = rotation + i * SLICE - SLICE/2;
+      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER,  CY + Math.sin(angleStart)*R_INNER);
+      ctx.lineTo(CX + Math.cos(angleStart)*R_OUT_I,  CY + Math.sin(angleStart)*R_OUT_I);
+    });
+    ctx.stroke();
+
+    /* 5d. Sonar ping arcs + active outer rim — shadow only where needed, grouped */
+    CATS.forEach((cat, i) => {
+      const exp        = sliceExpand[i];
+      if(exp < 0.02) return;
+      const R_OUT_I    = R_OUTER + exp * 14;
+      const angleStart = rotation + i * SLICE - SLICE/2;
+      const angleEnd   = angleStart + SLICE;
+      const isActive   = activeCat === i;
+      ctx.save();
+      ctx.strokeStyle  = cat.color;
+      ctx.shadowColor  = cat.color;
+      if(isActive){
+        ctx.lineWidth  = 2.5;
+        ctx.shadowBlur = 8;
+        ctx.globalAlpha = 1;
+        ctx.beginPath();
+        ctx.arc(CX, CY, R_OUT_I + 2, angleStart, angleEnd);
+        ctx.stroke();
+      } else {
+        ctx.lineWidth   = 1.5 + exp * 1.5;
+        ctx.shadowBlur  = 8 + exp * 10;
+        ctx.globalAlpha = exp * 0.6;
+        ctx.beginPath();
+        ctx.arc(CX, CY, R_OUT_I + 1, angleStart + 0.04, angleEnd - 0.04);
+        ctx.stroke();
+      }
+      ctx.restore();
+    });
+
+    /* ── 6. ICONS & LABELS (no shadow needed) ── */
+    ctx.textAlign    = 'center';
+    ctx.textBaseline = 'middle';
+    CATS.forEach((cat, i) => {
+      const exp        = sliceExpand[i];
+      const R_OUT_I    = R_OUTER + exp * 14;
+      const iconR      = (R_INNER + R_OUT_I) / 2;
+      const aMid       = rotation + i * SLICE;
+      const ix         = CX + Math.cos(aMid) * iconR;
+      const iy         = CY + Math.sin(aMid) * iconR;
+      const isActive   = activeCat === i;
+      const isHovered  = hoveredCat === i;
+
+      ctx.font         = (isActive || exp > 0.3) ? '18px serif' : '15px serif';
+      ctx.globalAlpha  = isActive ? 1 : (isHovered ? 0.85 + exp * 0.15 : 0.5 + exp * 0.3);
+      ctx.fillText(cat.icon, ix, iy - 8);
+
+      ctx.font         = isActive ? 'bold 8px Fira Code,monospace' : '7px Fira Code,monospace';
+      ctx.fillStyle    = isActive ? cat.color : (isHovered ? '#e6f1ff' : '#8892b0');
+      ctx.globalAlpha  = isActive ? 1 : (isHovered ? 0.9 : 0.55);
+      ctx.textBaseline = 'top';
+      ctx.fillText(cat.label.toUpperCase(), ix, iy + 2);
+      ctx.textBaseline = 'middle';
+      ctx.globalAlpha  = 1;
+    });
+
+    /* ── 7. CORE CIRCLE (cached gradient, no shadow) ── */
+    ctx.beginPath(); ctx.arc(CX, CY, R_CORE, 0, Math.PI*2);
+    ctx.fillStyle   = coreGrad; ctx.fill();
+    ctx.strokeStyle = 'rgba(100,255,218,0.35)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+    /* spinning dashed core ring */
+    ctx.strokeStyle    = 'rgba(100,255,218,0.12)'; ctx.lineWidth = 1;
+    ctx.setLineDash([5, 20]);
+    ctx.lineDashOffset = -(rotation * 2) * 30;
+    ctx.beginPath(); ctx.arc(CX, CY, R_CORE - 8, 0, Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+
+    /* core label */
+    ctx.textAlign    = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font         = 'bold 9px Fira Code,monospace';
+    ctx.fillStyle    = activeCat >= 0 ? CATS[activeCat].color : 'rgba(100,255,218,0.5)';
     ctx.fillText(activeCat >= 0 ? CATS[activeCat].id.toUpperCase() : 'SELECT', CX, CY - 4);
-    ctx.font = '7px Fira Code, monospace';
-    ctx.fillStyle = 'rgba(136,146,176,0.4)';
+    ctx.font         = '7px Fira Code,monospace';
+    ctx.fillStyle    = 'rgba(136,146,176,0.4)';
     ctx.fillText(activeCat >= 0 ? CATS[activeCat].skills.length + ' skills' : 'SUBSYSTEM', CX, CY + 7);
 
-    /* pointer triangle at top */
+    /* ── 8. POINTER TRIANGLE (one shadow call, isolated with save/restore) ── */
+    ctx.save();
+    ctx.fillStyle   = 'rgba(100,255,218,0.7)';
+    ctx.shadowColor = 'rgba(100,255,218,0.8)';
+    ctx.shadowBlur  = 6;
     ctx.beginPath();
-    ctx.moveTo(CX, CY - R_OUTER - 24);
+    ctx.moveTo(CX,     CY - R_OUTER - 24);
     ctx.lineTo(CX - 7, CY - R_OUTER - 10);
     ctx.lineTo(CX + 7, CY - R_OUTER - 10);
     ctx.closePath();
-    ctx.fillStyle = 'rgba(100,255,218,0.7)';
-    ctx.shadowColor = 'rgba(100,255,218,0.8)'; ctx.shadowBlur = 6;
-    ctx.fill(); ctx.shadowBlur = 0;
+    ctx.fill();
+    ctx.restore();
   }
 
-  /* ── smooth rotation loop ── */
-  function animate(){
-    rotation += (targetRot - rotation) * 0.12;
+  /* ── smooth rotation + spring loop (delta-time based) ── */
+  let lastTs = 0;
+  function animate(ts){
+    const dt = Math.min((ts - lastTs) / 16.667, 3); // cap at 3 frames to avoid jump on tab-switch
+    lastTs   = ts;
+
+    /* lerp rotation */
+    const rotDelta = (targetRot - rotation) * 0.12 * dt;
+    if(Math.abs(rotDelta) > 0.00001) rotation += rotDelta;
+
+    /* spring expand per slice */
+    for(let i = 0; i < N; i++){
+      const tgt  = (hoveredCat === i || activeCat === i) ? 1 : 0;
+      const diff = tgt - sliceExpand[i];
+      if(Math.abs(diff) > 0.001) sliceExpand[i] += diff * 0.14 * dt;
+      else sliceExpand[i] = tgt;
+    }
+
+    /* pulse — delta-time so speed is display-rate independent */
+    pulseT += 0.03 * dt;
+
     draw();
     animFrame = requestAnimationFrame(animate);
   }
-  animate();
+  animFrame = requestAnimationFrame(animate);
 
   /* ── hit test: which segment is at angle a ── */
   function segAtAngle(a){
