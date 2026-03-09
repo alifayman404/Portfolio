@@ -383,6 +383,25 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 .bp-tab.active{color:var(--accent);background:var(--bg3);border-color:var(--border);border-bottom:1px solid var(--bg3);}
 .bp-tab:not(.active):hover{color:var(--fg);background:var(--bg3);}
 
+.bp-letterhead{
+  display:flex;align-items:center;gap:1.25rem;
+  padding:1rem 1.5rem;
+  margin:-2rem -2rem 1.75rem -2rem;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(90deg,rgba(10,25,47,.9),rgba(10,25,47,.4));
+  position:relative;z-index:1;min-height:72px;
+}
+.bp-letterhead-logo{
+  width:54px;height:54px;flex-shrink:0;object-fit:contain;
+  mix-blend-mode:screen;opacity:.9;
+}
+.bp-letterhead-logo.invert{
+  mix-blend-mode:normal;filter:invert(1);opacity:.85;
+}
+.bp-letterhead-text{display:flex;flex-direction:column;gap:.2rem;}
+.bp-letterhead-org{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--fg);letter-spacing:-.01em;}
+.bp-letterhead-sub{font-family:'Fira Code',monospace;font-size:.65rem;color:var(--accent);opacity:.7;letter-spacing:.1em;text-transform:uppercase;}
+.bp-letterhead-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);margin-left:.5rem;}
 .bp-drawing{
   position:relative;background:var(--bg3);
   border:1px solid var(--border);border-radius:0 8px 8px 8px;
@@ -422,7 +441,7 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
 
 /* main content area */
 .bp-content{padding-right:280px;padding-bottom:90px;}
-.bp-drw-company{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--fg);letter-spacing:-.02em;margin-bottom:.25rem;}
+.bp-drw-company{display:none;}
 .bp-drw-role{font-family:'Fira Code',monospace;font-size:.8rem;color:var(--accent);margin-bottom:1.6rem;display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;}
 .bp-drw-role::after{content:'';flex:1;height:1px;background:var(--border);opacity:.5;max-width:80px;}
 .bp-badge{font-family:'Fira Code',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--accent2);background:rgba(87,203,255,.1);border:1px solid rgba(87,203,255,.25);padding:.2rem .55rem;border-radius:3px;white-space:nowrap;}
@@ -642,6 +661,14 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
     <div class="bp-drawing">
       <span class="bp-corner-tr"></span>
       <span class="bp-corner-bl"></span>
+      <div class="bp-letterhead">
+        <img class="bp-letterhead-logo invert" src="assets/images/logo-sdh.png" alt="SDH">
+        <div class="bp-letterhead-text">
+          <span class="bp-letterhead-org">Student Design Hub</span>
+          <span class="bp-letterhead-sub">Memorial University</span>
+        </div>
+        <div class="bp-letterhead-line"></div>
+      </div>
       <div class="bp-dim bp-dim-v">DURATION: 4 MO</div>
       <div class="bp-content">
         <p class="bp-drw-company">Student Design Hub</p>
@@ -668,6 +695,14 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
     <div class="bp-drawing">
       <span class="bp-corner-tr"></span>
       <span class="bp-corner-bl"></span>
+      <div class="bp-letterhead">
+        <img class="bp-letterhead-logo" src="assets/images/logo-commons.png" alt="The Commons">
+        <div class="bp-letterhead-text">
+          <span class="bp-letterhead-org">The Commons</span>
+          <span class="bp-letterhead-sub">Memorial University</span>
+        </div>
+        <div class="bp-letterhead-line"></div>
+      </div>
       <div class="bp-dim bp-dim-v">DURATION: 4 MO</div>
       <div class="bp-content">
         <p class="bp-drw-company">The Commons</p>
@@ -692,6 +727,14 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
     <div class="bp-drawing" style="opacity:.7;">
       <span class="bp-corner-tr"></span>
       <span class="bp-corner-bl"></span>
+      <div class="bp-letterhead">
+        <img class="bp-letterhead-logo invert" src="assets/images/logo-kraken.png" alt="Kraken Robotics">
+        <div class="bp-letterhead-text">
+          <span class="bp-letterhead-org">Kraken Robotics</span>
+          <span class="bp-letterhead-sub">Incoming Co-op</span>
+        </div>
+        <div class="bp-letterhead-line"></div>
+      </div>
       <div class="bp-dim bp-dim-v">DURATION: 4 MO</div>
       <div class="bp-content" style="display:flex;flex-direction:column;justify-content:center;min-height:180px;">
         <p class="bp-drw-company" style="opacity:.5;">Kraken Robotics</p>
@@ -714,6 +757,14 @@ h1{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);font-weigh
     <div class="bp-drawing">
       <span class="bp-corner-tr"></span>
       <span class="bp-corner-bl"></span>
+      <div class="bp-letterhead">
+        <img class="bp-letterhead-logo" src="assets/images/logo-firstrobotics.png" alt="First Robotics NL">
+        <div class="bp-letterhead-text">
+          <span class="bp-letterhead-org">First Robotics NL</span>
+          <span class="bp-letterhead-sub">Volunteer</span>
+        </div>
+        <div class="bp-letterhead-line"></div>
+      </div>
       <div class="bp-dim bp-dim-v">VOLUNTEER</div>
       <div class="bp-content">
         <p class="bp-drw-company">First Robotics NL</p>
