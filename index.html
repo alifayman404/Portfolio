@@ -8,7 +8,7 @@
 <meta property="og:title" content="Alif Ayman Mahin, Mechanical Engineer">
 <meta property="og:description" content="Mechanical Engineering student at Memorial University. Robotics, UAVs, CAD design, and hands-on prototyping.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://aamahin.me">
+
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Alif Ayman Mahin, Mechanical Engineer">
 <meta name="twitter:description" content="Mechanical Engineering student at Memorial University. Robotics, UAVs, CAD design, and hands-on prototyping.">
@@ -374,10 +374,24 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
   .bento-card.featured,.bento-card.slot-tr,.bento-card.slot-br{grid-column:1;grid-row:auto;height:260px;}
   .bento-card.featured{height:300px;}
   .bento-wide{height:200px;}
-  /* Skills wheel stacks */
+  /* Skills wheel stacks — hide canvas, show tap buttons */
   .jarvis-skill-inner{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
   .jarvis-wheel-side{border-right:none;border-bottom:1px solid var(--border2);padding:1.2rem;display:flex;justify-content:center;}
-  #jarvisCanvas{width:290px!important;height:290px!important;}
+  #jarvisCanvas{display:none!important;}
+  .jarvis-wheel-hint{display:none;}
+  .ji-mobile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;width:100%;}
+  .ji-mob-btn{
+    display:flex;flex-direction:column;align-items:center;gap:.3rem;
+    padding:.7rem .4rem;background:var(--bg3);
+    border:1px solid var(--border2);border-radius:10px;
+    cursor:pointer;transition:border-color .2s,background .2s,transform .12s;
+    -webkit-tap-highlight-color:transparent;font-family:inherit;
+  }
+  .ji-mob-btn:active{transform:scale(.94);}
+  .ji-mob-btn.active{border-color:var(--ji-mob-color);background:rgba(0,0,0,0.15);}
+  .ji-mob-btn.active .ji-mob-label{color:var(--ji-mob-color);}
+  .ji-mob-icon{font-size:1.3rem;line-height:1;}
+  .ji-mob-label{font-family:'Fira Code',monospace;font-size:.55rem;letter-spacing:.05em;color:var(--muted);text-align:center;line-height:1.3;}
   .jarvis-info-side{padding:1.2rem;}
   /* Contact links stack */
   .contact-links{flex-direction:column;align-items:center;gap:1rem;}
@@ -494,6 +508,7 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 .jarvis-overlay-text{text-align:center;white-space:pre-wrap;padding:2rem;line-height:1.8;}
 
 .footer-line{text-align:center;padding:2rem;font-family:'Fira Code',monospace;font-size:.7rem;color:var(--muted);opacity:.35;border-top:1px solid var(--border2);}
+.ji-mobile-grid{display:none;}
 </style>
 </head>
 <body>
@@ -615,6 +630,7 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
       <div class="jarvis-wheel-side">
         <canvas id="jarvisCanvas"></canvas>
         <div class="jarvis-wheel-hint">drag to spin · click to select</div>
+        <div class="ji-mobile-grid" id="jiMobileGrid"></div>
       </div>
 
       <!-- RIGHT: info panel -->
@@ -1532,7 +1548,28 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   }
 
   /* ── expose for project tag navigation ── */
-  window._openSkillCat = openCat;
+  window._openSkillCat = function(i){ activeCat = i; openCat(i); syncMobBtns(i); };
+
+  /* ── mobile tap grid ── */
+  function syncMobBtns(i){
+    document.querySelectorAll('.ji-mob-btn').forEach((b,bi) => b.classList.toggle('active', bi === i));
+  }
+  (function buildMobileGrid(){
+    const mg = document.getElementById('jiMobileGrid');
+    if(!mg) return;
+    CATS.forEach((cat, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'ji-mob-btn';
+      btn.style.setProperty('--ji-mob-color', cat.color);
+      btn.innerHTML = `<span class="ji-mob-icon">${cat.icon}</span><span class="ji-mob-label">${cat.label}</span>`;
+      btn.addEventListener('click', () => {
+        activeCat = i;
+        openCat(i);
+        syncMobBtns(i);
+      });
+      mg.appendChild(btn);
+    });
+  })();
 })();
 
 
