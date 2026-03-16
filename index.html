@@ -1818,9 +1818,12 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
      Full-width category pills + prominent skill image cards.
      Renders instead of .jarvis-skill-inner at ≤600px.
   ══════════════════════════════════════════════════════ */
-  function syncMobPills(i){
+  function syncMobPills(i, skipPageScroll){
     document.querySelectorAll('.jm-pill').forEach((p,pi)=>p.classList.toggle('active',pi===i));
+    if(skipPageScroll) return;
     const active=document.querySelectorAll('.jm-pill')[i];
+    /* inline:'center' only scrolls the strip horizontally — but we guard against
+       block:'nearest' pulling the whole page vertically on init */
     if(active) active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
   }
 
@@ -1830,7 +1833,7 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
     web:    `<span class="cs-k">&lt;section</span> <span class="cs-f">class</span>=<span class="cs-s">"hero"</span><span class="cs-k">&gt;</span>\n  <span class="cs-k">&lt;h1&gt;</span>Alif Ayman Mahin<span class="cs-k">&lt;/h1&gt;</span>\n  <span class="cs-c">/* teal accent palette */</span>\n  <span class="cs-f">color</span>: <span class="cs-s">#64ffda</span>;\n<span class="cs-k">&lt;/section&gt;</span>`,
   };
 
-  function renderMobileSkills(catIdx){
+  function renderMobileSkills(catIdx, skipPageScroll){
     const cat=CATS[catIdx];
     if(!cat) return;
 
@@ -1920,7 +1923,7 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
       deck.appendChild(card);
     });
 
-    syncMobPills(catIdx);
+    syncMobPills(catIdx, skipPageScroll);
   }
 
   /* build pill strip */
@@ -1941,8 +1944,8 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
       });
       strip.appendChild(pill);
     });
-    /* auto-open first category */
-    setTimeout(()=>renderMobileSkills(0),130);
+    /* auto-open first category — skipPageScroll=true so the page doesn't jump to #skills on load */
+    setTimeout(()=>renderMobileSkills(0, true),130);
   })();
 
 })();
