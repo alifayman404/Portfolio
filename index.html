@@ -580,6 +580,22 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
   }
   .jm-card-footer::before{content:'⬡';font-size:.5rem;}
 
+  /* ════════════════ CODE BLOCK (programming skills) ════════════════ */
+  .jm-code-block{
+    border-bottom:1px solid var(--border2);
+    background:var(--bg);
+  }
+  /* reuse the shared .ji-code-bar / .ji-code-pre / .cs-* classes —
+     just bump the pre font size slightly for readability */
+  .jm-code-block .ji-code-pre{
+    font-size:.82rem;
+    padding:.9rem 1rem;
+    line-height:1.75;
+    /* allow horizontal scroll without clipping */
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
   /* ════════════════ STATUS BAR ════════════════ */
   .jm-statusbar{
     display:flex;align-items:center;gap:.75rem;
@@ -1808,6 +1824,12 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
     if(active) active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
   }
 
+  const JM_CODE_SNIPPETS = {
+    python: `<span class="cs-k">import</span> numpy <span class="cs-k">as</span> np\n<span class="cs-c"># Data analysis pipeline</span>\n<span class="cs-k">def</span> <span class="cs-f">analyze</span>(data):\n    mean = np.<span class="cs-f">mean</span>(data)\n    <span class="cs-k">return</span> mean`,
+    cpp:    `<span class="cs-c">// Robotic arm controller</span>\n<span class="cs-k">void</span> <span class="cs-f">moveJoint</span>(<span class="cs-k">int</span> angle) {\n    servo.<span class="cs-f">write</span>(angle);\n    delay(<span class="cs-n">15</span>);\n}`,
+    web:    `<span class="cs-k">&lt;section</span> <span class="cs-f">class</span>=<span class="cs-s">"hero"</span><span class="cs-k">&gt;</span>\n  <span class="cs-k">&lt;h1&gt;</span>Alif Ayman Mahin<span class="cs-k">&lt;/h1&gt;</span>\n  <span class="cs-c">/* teal accent palette */</span>\n  <span class="cs-f">color</span>: <span class="cs-s">#64ffda</span>;\n<span class="cs-k">&lt;/section&gt;</span>`,
+  };
+
   function renderMobileSkills(catIdx){
     const cat=CATS[catIdx];
     if(!cat) return;
@@ -1834,31 +1856,48 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
     cat.skills.forEach((sk,si)=>{
       const hasImg = sk.img && !sk.img.startsWith('code:');
       const isCode = sk.img && sk.img.startsWith('code:');
-      const codeLang = isCode ? sk.img.split(':')[1].toUpperCase() : '';
+      const codeLang = isCode ? sk.img.split(':')[1] : '';
 
       const card=document.createElement('div');
       card.className='jm-card';
       card.style.animationDelay=(si*70)+'ms';
 
-      let imgHtml='';
-      if(hasImg){
-        imgHtml=`<img class="jm-card-img" src="${sk.img}" alt="${sk.name}" loading="lazy">`;
-      } else if(isCode){
-        imgHtml=`<div class="jm-code-preview">&lt;${codeLang}/&gt;</div>`;
+      /* ── image/code area ── */
+      let topAreaHtml='';
+      if(isCode){
+        /* render the full syntax-highlighted code block, same as desktop */
+        const snippet = JM_CODE_SNIPPETS[codeLang] || '';
+        topAreaHtml=`
+          <div class="jm-code-block">
+            <div class="ji-code-bar">
+              <span class="ji-code-dot r"></span>
+              <span class="ji-code-dot y"></span>
+              <span class="ji-code-dot g"></span>
+              <span class="ji-code-lang">${codeLang.toUpperCase()}</span>
+            </div>
+            <pre class="ji-code-pre"><code>${snippet}</code></pre>
+          </div>`;
       } else {
-        imgHtml=`<div class="jm-code-preview" style="opacity:.13;font-size:.85rem;">${sk.name.toUpperCase()}</div>`;
+        let imgHtml='';
+        if(hasImg){
+          imgHtml=`<img class="jm-card-img" src="${sk.img}" alt="${sk.name}" loading="lazy">`;
+        } else {
+          imgHtml=`<div class="jm-code-preview" style="opacity:.13;font-size:.85rem;">${sk.name.toUpperCase()}</div>`;
+        }
+        topAreaHtml=`
+          <div class="jm-card-img-wrap">
+            <span class="jm-img-corner-tr"></span>
+            <span class="jm-img-corner-bl"></span>
+            ${imgHtml}
+            <div class="jm-card-img-gradient"></div>
+            <div class="jm-card-scanline"></div>
+            <div class="jm-card-img-tag">${sk.name.toUpperCase()} ${sk.type}</div>
+          </div>`;
       }
 
       const fb=(sk.name.slice(0,2)).toUpperCase();
       card.innerHTML=`
-        <div class="jm-card-img-wrap">
-          <span class="jm-img-corner-tr"></span>
-          <span class="jm-img-corner-bl"></span>
-          ${imgHtml}
-          <div class="jm-card-img-gradient"></div>
-          <div class="jm-card-scanline"></div>
-          <div class="jm-card-img-tag">${sk.name.toUpperCase()} ${sk.type}</div>
-        </div>
+        ${topAreaHtml}
         <div class="jm-card-body">
           <div class="jm-card-top">
             <div class="jm-card-logo">
