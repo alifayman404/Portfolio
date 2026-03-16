@@ -400,6 +400,201 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 }
 
 
+/* ═══════════════════════════════════════════════════
+   OPTION E — DEDICATED MOBILE SKILLS VIEW
+   Replaces .jarvis-skill-inner on screens ≤ 600px.
+   Desktop never sees any of this.
+═══════════════════════════════════════════════════ */
+.jarvis-mobile-view{display:none;}   /* hidden on all viewports by default */
+
+@media(max-width:600px){
+
+  /* ── kill the desktop two-col layout ── */
+  .jarvis-skill-inner{display:none!important;}
+
+  /* ── outer shell ── */
+  .jarvis-mobile-view{
+    display:flex;flex-direction:column;
+    background:var(--bg2);
+    border:1px solid var(--border2);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+
+  /* ════════════════ CATEGORY STRIP ════════════════ */
+  .jm-strip{
+    display:flex;overflow-x:auto;
+    background:var(--bg3);
+    border-bottom:1px solid var(--border2);
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .jm-strip::-webkit-scrollbar{display:none;}
+
+  .jm-pill{
+    display:flex;flex-direction:column;align-items:center;gap:.28rem;
+    padding:.8rem 1rem;
+    border:none;border-bottom:2.5px solid transparent;
+    background:none;cursor:pointer;white-space:nowrap;flex-shrink:0;
+    transition:border-color .22s,background .22s;
+    -webkit-tap-highlight-color:transparent;font-family:inherit;
+  }
+  .jm-pill:active{background:rgba(0,0,0,.14);}
+  .jm-pill.active{
+    border-bottom-color:var(--jm-color);
+    background:rgba(0,0,0,.13);
+  }
+  .jm-pill-icon{font-size:1.25rem;line-height:1;}
+  .jm-pill-label{
+    font-family:'Fira Code',monospace;font-size:.52rem;
+    letter-spacing:.05em;color:var(--muted);
+    text-transform:uppercase;transition:color .22s;
+  }
+  .jm-pill.active .jm-pill-label{color:var(--jm-color);}
+
+  /* ════════════════ CATEGORY HEADER ════════════════ */
+  .jm-cat-hdr{
+    display:flex;align-items:center;gap:.9rem;
+    padding:1rem 1.2rem .85rem;
+    border-bottom:1px solid var(--border2);
+    background:var(--bg2);flex-shrink:0;
+  }
+  .jm-cat-hdr-icon{
+    width:42px;height:42px;border-radius:10px;
+    background:var(--accent-dim);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.35rem;flex-shrink:0;
+    transition:border-color .3s,background .3s;
+  }
+  .jm-cat-hdr-name{
+    font-family:'Chakra Petch',sans-serif;
+    font-size:1.1rem;font-weight:800;
+    color:var(--fg);letter-spacing:-.01em;line-height:1.15;
+  }
+  .jm-cat-hdr-count{
+    font-family:'Fira Code',monospace;
+    font-size:.6rem;color:var(--muted);opacity:.6;margin-top:.2rem;
+  }
+
+  /* ════════════════ SKILL CARDS AREA ════════════════ */
+  .jm-cards{
+    display:flex;flex-direction:column;
+    overflow-y:auto;
+  }
+  .jm-cards::-webkit-scrollbar{width:3px;}
+  .jm-cards::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+  /* ── individual card ── */
+  .jm-card{
+    border-bottom:1px solid var(--border2);
+    background:var(--bg2);overflow:hidden;
+    opacity:0;animation:jmCardIn .3s cubic-bezier(.25,.8,.25,1) both;
+    transition:background .18s;
+  }
+  .jm-card:last-child{border-bottom:none;}
+  .jm-card:active{background:var(--bg3);}
+
+  @keyframes jmCardIn{
+    from{opacity:0;transform:translateY(12px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  /* ── image viewport ── */
+  .jm-card-img-wrap{
+    position:relative;width:100%;height:190px;
+    overflow:hidden;background:var(--bg3);
+  }
+  /* CAD corner brackets */
+  .jm-card-img-wrap::before,.jm-card-img-wrap::after{
+    content:'';position:absolute;width:14px;height:14px;z-index:3;
+    border-color:var(--accent);border-style:solid;opacity:.5;
+  }
+  .jm-card-img-wrap::before{top:8px;left:8px;border-width:1.5px 0 0 1.5px;}
+  .jm-card-img-wrap::after{bottom:8px;right:8px;border-width:0 1.5px 1.5px 0;}
+  .jm-img-corner-tr,.jm-img-corner-bl{
+    position:absolute;width:14px;height:14px;z-index:3;
+    border-color:var(--accent);border-style:solid;opacity:.5;
+  }
+  .jm-img-corner-tr{top:8px;right:8px;border-width:1.5px 1.5px 0 0;}
+  .jm-img-corner-bl{bottom:8px;left:8px;border-width:0 0 1.5px 1.5px;}
+
+  .jm-card-img{width:100%;height:100%;object-fit:cover;display:block;}
+  .jm-card-scanline{
+    position:absolute;inset:0;pointer-events:none;z-index:2;
+    background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px);
+  }
+  .jm-card-img-tag{
+    position:absolute;bottom:.5rem;left:.6rem;z-index:4;
+    font-family:'Fira Code',monospace;font-size:.55rem;
+    color:var(--accent2);opacity:.55;letter-spacing:.06em;
+  }
+  .jm-card-img-gradient{
+    position:absolute;inset:0;z-index:1;
+    background:linear-gradient(to top,rgba(10,25,47,.75) 0%,transparent 45%);
+  }
+
+  /* placeholder for code: images and missing images */
+  .jm-code-preview{
+    width:100%;height:100%;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fira Code',monospace;font-size:1.1rem;
+    color:var(--accent);opacity:.25;letter-spacing:.12em;
+  }
+
+  /* ── card body ── */
+  .jm-card-body{
+    padding:.9rem 1.1rem .85rem;
+    display:flex;flex-direction:column;gap:.5rem;
+  }
+  .jm-card-top{display:flex;align-items:center;gap:.7rem;}
+  .jm-card-logo{
+    width:32px;height:32px;border-radius:7px;
+    background:var(--accent-dim);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;padding:5px;flex-shrink:0;
+  }
+  .jm-card-logo img{width:100%;height:100%;object-fit:contain;}
+  .jm-card-logo.monogram{
+    font-family:'Fira Code',monospace;font-size:.55rem;
+    font-weight:700;color:var(--accent);padding:2px;
+    text-align:center;line-height:1.1;
+  }
+  .jm-card-name{
+    font-family:'Chakra Petch',sans-serif;font-size:.95rem;
+    font-weight:700;color:var(--fg);flex:1;letter-spacing:.01em;
+  }
+  .jm-card-type{
+    font-family:'Fira Code',monospace;font-size:.6rem;
+    color:var(--accent);background:var(--accent-dim);
+    border:1px solid var(--border);padding:.15rem .45rem;
+    border-radius:4px;letter-spacing:.04em;white-space:nowrap;flex-shrink:0;
+  }
+  .jm-card-desc{
+    font-size:.84rem;color:var(--muted);line-height:1.65;
+  }
+  .jm-card-footer{
+    display:flex;align-items:center;gap:.4rem;
+    font-family:'Fira Code',monospace;font-size:.58rem;
+    color:var(--accent);opacity:.5;letter-spacing:.04em;margin-top:.1rem;
+  }
+  .jm-card-footer::before{content:'⬡';font-size:.5rem;}
+
+  /* ════════════════ STATUS BAR ════════════════ */
+  .jm-statusbar{
+    display:flex;align-items:center;gap:.75rem;
+    padding:.4rem .9rem;
+    background:var(--bg3);border-top:1px solid var(--border2);
+    font-family:'Fira Code',monospace;font-size:.62rem;
+    color:var(--muted);letter-spacing:.04em;flex-shrink:0;
+  }
+  .jm-status-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 5px var(--glow);flex-shrink:0;
+  }
+}
+
+
 /* EXPERIENCE — BLUEPRINT */
 .bp-tabs{display:flex;flex-wrap:wrap;gap:0;margin-bottom:0;position:relative;z-index:1;}
 .bp-tab{font-family:'Fira Code',monospace;font-size:.72rem;letter-spacing:.08em;padding:.55rem 1.25rem;border:1px solid var(--border2);border-bottom:none;color:var(--muted);cursor:pointer;background:var(--bg2);transition:all .25s;position:relative;top:1px;}
@@ -666,6 +861,37 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
       </div>
 
     </div>
+
+    <!-- ═══ OPTION E: DEDICATED MOBILE VIEW ═══
+         Rendered instead of .jarvis-skill-inner on ≤600px.
+         JS populates .jm-strip (pills) and .jm-cards (skill cards).
+    ════════════════════════════════════════════ -->
+    <div class="jarvis-mobile-view" id="jarvisMobileView">
+
+      <!-- horizontal category pill strip -->
+      <div class="jm-strip" id="jmStrip"></div>
+
+      <!-- selected category header -->
+      <div class="jm-cat-hdr" id="jmCatHdr">
+        <div class="jm-cat-hdr-icon" id="jmCatIcon"></div>
+        <div>
+          <div class="jm-cat-hdr-name" id="jmCatName"> </div>
+          <div class="jm-cat-hdr-count" id="jmCatCount"> </div>
+        </div>
+      </div>
+
+      <!-- skill detail cards -->
+      <div class="jm-cards" id="jmCards"></div>
+
+      <!-- statusbar -->
+      <div class="jm-statusbar">
+        <div class="jm-status-dot"></div>
+        <span id="jmStatus">18 components · 6 subsystems · Ready</span>
+        <span style="margin-left:auto;opacity:.4;">Mechanical Engineering</span>
+      </div>
+
+    </div><!-- /jarvis-mobile-view -->
+
   </div>
 </section>
 
@@ -1548,9 +1774,9 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   }
 
   /* ── expose for project tag navigation ── */
-  window._openSkillCat = function(i){ activeCat = i; openCat(i); syncMobBtns(i); };
+  window._openSkillCat = function(i){ activeCat = i; openCat(i); syncMobBtns(i); renderMobileSkills(i); };
 
-  /* ── mobile tap grid ── */
+  /* ── mobile tap grid (legacy, used at 720px–600px) ── */
   function syncMobBtns(i){
     document.querySelectorAll('.ji-mob-btn').forEach((b,bi) => b.classList.toggle('active', bi === i));
   }
@@ -1570,6 +1796,116 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
       mg.appendChild(btn);
     });
   })();
+
+  /* ══════════════════════════════════════════════════════
+     OPTION E — DEDICATED MOBILE VIEW
+     Full-width category pills + prominent skill image cards.
+     Renders instead of .jarvis-skill-inner at ≤600px.
+  ══════════════════════════════════════════════════════ */
+  function syncMobPills(i){
+    document.querySelectorAll('.jm-pill').forEach((p,pi)=>p.classList.toggle('active',pi===i));
+    const active=document.querySelectorAll('.jm-pill')[i];
+    if(active) active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  }
+
+  function renderMobileSkills(catIdx){
+    const cat=CATS[catIdx];
+    if(!cat) return;
+
+    /* header */
+    const hdrIcon =document.getElementById('jmCatIcon');
+    if(hdrIcon){
+      hdrIcon.textContent=cat.icon;
+      hdrIcon.style.borderColor=cat.color;
+      hdrIcon.style.background=cat.color+'18';
+    }
+    const hdrName =document.getElementById('jmCatName');
+    const hdrCount=document.getElementById('jmCatCount');
+    const status  =document.getElementById('jmStatus');
+    if(hdrName)  hdrName.textContent=cat.label;
+    if(hdrCount) hdrCount.textContent=cat.skills.length+' components';
+    if(status)   status.textContent=cat.label+' · '+cat.skills.length+' components · Active';
+
+    /* cards */
+    const deck=document.getElementById('jmCards');
+    if(!deck) return;
+    deck.innerHTML='';
+
+    cat.skills.forEach((sk,si)=>{
+      const hasImg = sk.img && !sk.img.startsWith('code:');
+      const isCode = sk.img && sk.img.startsWith('code:');
+      const codeLang = isCode ? sk.img.split(':')[1].toUpperCase() : '';
+
+      const card=document.createElement('div');
+      card.className='jm-card';
+      card.style.animationDelay=(si*70)+'ms';
+
+      let imgHtml='';
+      if(hasImg){
+        imgHtml=`<img class="jm-card-img" src="${sk.img}" alt="${sk.name}" loading="lazy">`;
+      } else if(isCode){
+        imgHtml=`<div class="jm-code-preview">&lt;${codeLang}/&gt;</div>`;
+      } else {
+        imgHtml=`<div class="jm-code-preview" style="opacity:.13;font-size:.85rem;">${sk.name.toUpperCase()}</div>`;
+      }
+
+      const fb=(sk.name.slice(0,2)).toUpperCase();
+      card.innerHTML=`
+        <div class="jm-card-img-wrap">
+          <span class="jm-img-corner-tr"></span>
+          <span class="jm-img-corner-bl"></span>
+          ${imgHtml}
+          <div class="jm-card-img-gradient"></div>
+          <div class="jm-card-scanline"></div>
+          <div class="jm-card-img-tag">${sk.name.toUpperCase()} ${sk.type}</div>
+        </div>
+        <div class="jm-card-body">
+          <div class="jm-card-top">
+            <div class="jm-card-logo">
+              <img src="${sk.logo.url}" alt="${sk.name}" data-fb="${fb}">
+            </div>
+            <div class="jm-card-name">${sk.name}</div>
+            <div class="jm-card-type">${sk.type}</div>
+          </div>
+          <div class="jm-card-desc">${sk.desc}</div>
+          <div class="jm-card-footer">${sk.type} · Component loaded</div>
+        </div>`;
+
+      /* logo fallback */
+      card.querySelector('.jm-card-logo img').addEventListener('error',function(){
+        const w=this.parentNode; if(!w) return;
+        w.textContent=this.getAttribute('data-fb')||'?';
+        w.classList.add('monogram');
+      });
+
+      deck.appendChild(card);
+    });
+
+    syncMobPills(catIdx);
+  }
+
+  /* build pill strip */
+  (function buildMobileView(){
+    const strip=document.getElementById('jmStrip');
+    if(!strip) return;
+    CATS.forEach((cat,i)=>{
+      const pill=document.createElement('button');
+      pill.className='jm-pill';
+      pill.type='button';
+      pill.style.setProperty('--jm-color',cat.color);
+      pill.innerHTML=`<span class="jm-pill-icon">${cat.icon}</span><span class="jm-pill-label">${cat.label}</span>`;
+      pill.addEventListener('click',()=>{
+        activeCat=i;
+        openCat(i);      /* keeps desktop info-panel in sync */
+        syncMobBtns(i);  /* keeps legacy mobile grid in sync */
+        renderMobileSkills(i);
+      });
+      strip.appendChild(pill);
+    });
+    /* auto-open first category */
+    setTimeout(()=>renderMobileSkills(0),130);
+  })();
+
 })();
 
 
