@@ -241,7 +241,7 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 /* LEFT — canvas wheel */
 .jarvis-wheel-side{
   position:relative;
-  background:var(--bg);
+  background:#000;
   border-right:1px solid var(--border2);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:1rem 0;
@@ -255,7 +255,22 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
   background-size:32px 32px;
   pointer-events:none;
 }
-#jarvisCanvas{display:block;touch-action:none;cursor:grab;}
+/* Arc reactor PNG — sits directly behind the canvas */
+#arcReactorImg{
+  position:absolute;
+  width:440px;height:440px;
+  object-fit:contain;
+  pointer-events:none;
+  opacity:0.82;
+  /* breathing glow pulse */
+  animation:arcReactorPulse 3s ease-in-out infinite;
+  image-rendering:auto;
+}
+@keyframes arcReactorPulse{
+  0%,100%{filter:drop-shadow(0 0 14px rgba(100,220,255,.50)) drop-shadow(0 0 28px rgba(100,220,255,.22)) brightness(1);}
+  50%{filter:drop-shadow(0 0 22px rgba(100,220,255,.80)) drop-shadow(0 0 48px rgba(100,220,255,.38)) brightness(1.12);}
+}
+#jarvisCanvas{display:block;touch-action:none;cursor:grab;position:relative;z-index:1;}
 #jarvisCanvas:active{cursor:grabbing;}
 .jarvis-wheel-hint{
   font-family:'Fira Code',monospace;font-size:.62rem;
@@ -418,6 +433,7 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
   .jarvis-skill-inner{grid-template-columns:1fr;grid-template-rows:380px 1fr;}
   .jarvis-wheel-side{border-right:none;border-bottom:1px solid var(--border2);}
   #jarvisCanvas{width:340px!important;height:340px!important;}
+  #arcReactorImg{width:340px!important;height:340px!important;}
 }
 @media(max-width:600px){
   /* Hero CTAs stack vertically */
@@ -830,112 +846,82 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 
 .footer-line{text-align:center;padding:2rem;font-family:'Fira Code',monospace;font-size:.7rem;color:var(--muted);opacity:.35;border-top:1px solid var(--border2);}
 
-/* ═══════════════════════════════════════════════════
-   JARVIS HUD OVERLAY
-   Fixed panels that fade in when .lab-mode is active.
-   pointer-events:none on the container so scrolling
-   and clicking the page still works normally.
-═══════════════════════════════════════════════════ */
-.jarvis-hud{
-  position:fixed;inset:0;pointer-events:none;z-index:500;
-  opacity:0;transition:opacity 1.2s .6s;
+/* ══════════════════════════════════════════════════
+   JARVIS LAB MODE — MISSION LOG (about section)
+══════════════════════════════════════════════════ */
+.jarvis-mission-log{
+  display:none;flex-direction:column;gap:0;
+  font-family:'Fira Code',monospace;
+  border:1px solid rgba(100,255,218,.18);
+  border-radius:10px;overflow:hidden;
+  background:rgba(2,12,27,.85);
+  max-width:640px;
+}
+.jml-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.5rem 1rem;
+  background:rgba(100,255,218,.05);
+  border-bottom:1px solid rgba(100,255,218,.15);
+  font-size:.58rem;letter-spacing:.14em;
+}
+.jml-header-tag{color:var(--accent);opacity:.9;}
+.jml-header-id{color:var(--muted);opacity:.5;}
+.jml-row{
+  display:flex;align-items:baseline;gap:.75rem;
+  padding:.55rem 1rem;
+  border-bottom:1px solid rgba(100,255,218,.06);
+  transition:background .2s;
+}
+.jml-row:last-child{border-bottom:none;}
+.jml-row:hover{background:rgba(100,255,218,.04);}
+.jml-ts{
+  font-size:.58rem;color:var(--muted);opacity:.45;
+  white-space:nowrap;flex-shrink:0;letter-spacing:.06em;
+}
+.jml-tag{
+  font-size:.55rem;letter-spacing:.1em;
+  border:1px solid;padding:.1rem .4rem;border-radius:3px;
+  white-space:nowrap;flex-shrink:0;opacity:.85;
+  min-width:56px;text-align:center;
+}
+.jml-text{
+  font-size:.78rem;color:var(--fg);line-height:1.5;opacity:.82;
+}
+
+/* ══════════════════════════════════════════════════
+   JARVIS LAB MODE — NETWORK LINKS (contact section)
+══════════════════════════════════════════════════ */
+.lab-mode .contact-links{
+  flex-direction:column;align-items:flex-start;
+  gap:0;max-width:460px;margin:0 auto;
+  border:1px solid rgba(100,255,218,.18);
+  border-radius:10px;overflow:hidden;
+  background:rgba(2,12,27,.85);
   font-family:'Fira Code',monospace;
 }
-.lab-mode .jarvis-hud{opacity:1;}
-
-/* global scanline texture in lab mode */
-.jhud-scanline{
-  position:fixed;inset:0;pointer-events:none;z-index:498;
-  background:repeating-linear-gradient(
-    0deg,transparent,transparent 2px,
-    rgba(0,255,238,.013) 2px,rgba(0,255,238,.013) 4px
-  );
-  opacity:0;transition:opacity 1.2s;
+.lab-mode .contact-link{
+  width:100%;border:none;border-bottom:1px solid rgba(100,255,218,.08);
+  border-radius:0;
+  background:transparent;
+  padding:.7rem 1.1rem;
+  display:flex;align-items:center;gap:.85rem;
+  font-family:'Fira Code',monospace;font-size:.78rem;
+  color:var(--muted);letter-spacing:.06em;
+  transition:background .18s,color .18s,padding-left .18s;
 }
-.lab-mode .jhud-scanline{opacity:1;}
-
-/* panel base */
-.jhud-panel{
-  position:absolute;pointer-events:auto;
-  background:rgba(0,4,4,.82);
-  border:1px solid rgba(0,255,238,.25);
-  border-radius:8px;
-  padding:.85rem 1rem;
-  backdrop-filter:blur(10px);
-  font-size:.64rem;letter-spacing:.06em;
-  box-shadow:0 0 20px rgba(0,255,238,.04),inset 0 0 20px rgba(0,255,238,.02);
+.lab-mode .contact-link:last-child{border-bottom:none;}
+.lab-mode .contact-link::before{
+  content:'›› ';color:var(--accent);opacity:.55;font-size:.7rem;
+  flex-shrink:0;transition:opacity .18s;
 }
-
-/* corner bracket marks */
-.jhud-c{position:absolute;width:10px;height:10px;border-color:var(--accent);border-style:solid;opacity:.65;}
-.jhud-c.tl{top:4px;left:4px;border-width:1.5px 0 0 1.5px;}
-.jhud-c.tr{top:4px;right:4px;border-width:1.5px 1.5px 0 0;}
-.jhud-c.bl{bottom:4px;left:4px;border-width:0 0 1.5px 1.5px;}
-.jhud-c.br{bottom:4px;right:4px;border-width:0 1.5px 1.5px 0;}
-
-/* panel heading */
-.jhud-title{
-  font-size:.58rem;color:var(--accent);letter-spacing:.16em;
-  text-transform:uppercase;margin-bottom:.65rem;
-  display:flex;align-items:center;gap:.5rem;
-  border-bottom:1px solid rgba(0,255,238,.12);padding-bottom:.4rem;
+.lab-mode .contact-link:hover{
+  background:rgba(100,255,218,.05);
+  color:var(--accent);padding-left:1.5rem;
 }
-.jhud-title::before{content:'◈';font-size:.5rem;opacity:.7;}
-
-/* ── CLOCK (top-left) ── */
-.jhud-clock{
-  top:1.5rem;left:1.5rem;width:164px;
-  display:flex;flex-direction:column;align-items:center;gap:.45rem;
-}
-.jhud-clock-svg{width:108px;height:108px;flex-shrink:0;}
-.jhud-time{
-  font-size:1.18rem;font-weight:700;color:var(--accent);
-  letter-spacing:.1em;text-align:center;
-  text-shadow:0 0 14px rgba(0,255,238,.6);
-}
-.jhud-date{
-  font-size:.58rem;color:var(--muted);text-align:center;
-  letter-spacing:.12em;text-transform:uppercase;line-height:1.7;
-  white-space:pre-line;
-}
-.jhud-uptime{
-  font-size:.56rem;color:var(--accent);opacity:.45;
-  display:flex;align-items:center;gap:.35rem;margin-top:.1rem;
-}
-.jhud-uptime::before{content:'◈';animation:labPulse 2s ease-in-out infinite;}
-
-/* ── PROFILE (top-right) ── */
-.jhud-profile{
-  top:1.5rem;right:4.5rem; /* clear the JARVIS toggle button */
-  width:215px;
-}
-.jhud-row{display:flex;gap:.5rem;margin-bottom:.3rem;font-size:.63rem;}
-.jhud-key{color:var(--accent);opacity:.5;min-width:54px;flex-shrink:0;}
-.jhud-val{color:var(--fg);}
-.jhud-val.live{
-  color:var(--accent);
-  animation:jhudPulse 2.4s ease-in-out infinite;
-}
-@keyframes jhudPulse{0%,100%{opacity:1}50%{opacity:.35}}
-
-/* ── SKILL GAUGES (bottom-left) ── */
-.jhud-gauges{
-  bottom:5.5rem;left:1.5rem;width:226px;
-}
-.jhud-gauges-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:.55rem;margin-top:.6rem;
-}
-.jhud-gauge{display:flex;flex-direction:column;align-items:center;gap:.2rem;}
-.jhud-gauge-svg{width:52px;height:52px;}
-.jhud-gauge-label{
-  font-size:.48rem;letter-spacing:.06em;color:var(--muted);
-  text-align:center;text-transform:uppercase;line-height:1.3;
-}
-
-/* ── hide all panels on small screens ── */
-@media(max-width:900px){
-  .jhud-clock,.jhud-profile,.jhud-gauges{display:none;}
+.lab-mode .contact-link:hover::before{opacity:1;}
+.lab-mode .contact-logo{
+  filter:invert(1) sepia(1) saturate(3) hue-rotate(130deg);
+  opacity:.65;
 }
 </style>
 </head>
@@ -944,66 +930,6 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 <div class="bg-orb bg-orb-1"></div>
 <div class="bg-orb bg-orb-2"></div>
 
-<!-- ═══════════════ JARVIS HUD OVERLAY ═══════════════
-     Fades in on .lab-mode. All panels are position:absolute
-     inside a pointer-events:none container so page interaction
-     is never blocked.
-════════════════════════════════════════════════════ -->
-<div class="jarvis-hud" id="jarvisHUD">
-  <div class="jhud-scanline"></div>
-
-  <!-- ── CLOCK (top-left) ── -->
-  <div class="jhud-panel jhud-clock">
-    <span class="jhud-c tl"></span><span class="jhud-c tr"></span>
-    <span class="jhud-c bl"></span><span class="jhud-c br"></span>
-    <svg class="jhud-clock-svg" id="jhudClockSvg" viewBox="0 0 108 108">
-      <!-- track rings -->
-      <circle cx="54" cy="54" r="46" fill="none" stroke="rgba(0,255,238,.07)" stroke-width="4"/>
-      <circle cx="54" cy="54" r="35" fill="none" stroke="rgba(0,255,238,.05)" stroke-width="3"/>
-      <!-- live arcs -->
-      <circle id="jhudSecArc" cx="54" cy="54" r="46" fill="none"
-        stroke="#00ffee" stroke-width="2.5" stroke-linecap="round"
-        stroke-dasharray="0 289" transform="rotate(-90 54 54)"
-        style="filter:drop-shadow(0 0 4px #00ffee);transition:stroke-dasharray .4s linear;"/>
-      <circle id="jhudMinArc" cx="54" cy="54" r="35" fill="none"
-        stroke="#57cbff" stroke-width="2" stroke-linecap="round"
-        stroke-dasharray="0 220" transform="rotate(-90 54 54)"
-        style="filter:drop-shadow(0 0 3px #57cbff);transition:stroke-dasharray 1s ease;"/>
-      <!-- inner fill -->
-      <circle cx="54" cy="54" r="24" fill="rgba(0,0,0,.55)" stroke="rgba(0,255,238,.15)" stroke-width="1"/>
-      <!-- tick marks (12 major) -->
-      <g id="jhudTicks" stroke="rgba(0,255,238,.3)" stroke-width="1.2"></g>
-      <!-- center -->
-      <circle cx="54" cy="54" r="3.5" fill="#00ffee" style="filter:drop-shadow(0 0 5px #00ffee);"/>
-    </svg>
-    <div class="jhud-time" id="jhudTime">00:00:00</div>
-    <div class="jhud-date" id="jhudDate">---</div>
-    <div class="jhud-uptime">SYSTEM ACTIVE</div>
-  </div>
-
-  <!-- ── ENGINEER PROFILE (top-right) ── -->
-  <div class="jhud-panel jhud-profile">
-    <span class="jhud-c tl"></span><span class="jhud-c tr"></span>
-    <span class="jhud-c bl"></span><span class="jhud-c br"></span>
-    <div class="jhud-title">Engineer Profile</div>
-    <div class="jhud-row"><span class="jhud-key">ID ›</span><span class="jhud-val">ALIF_MAHIN</span></div>
-    <div class="jhud-row"><span class="jhud-key">ROLE ›</span><span class="jhud-val">MECH ENG</span></div>
-    <div class="jhud-row"><span class="jhud-key">INST ›</span><span class="jhud-val">MUN · NL · CA</span></div>
-    <div class="jhud-row"><span class="jhud-key">YEAR ›</span><span class="jhud-val">03 / 04</span></div>
-    <div class="jhud-row"><span class="jhud-key">PROJ ›</span><span class="jhud-val">03 DEPLOYED</span></div>
-    <div class="jhud-row"><span class="jhud-key">CO-OP ›</span><span class="jhud-val">03 COMPLETED</span></div>
-    <div class="jhud-row"><span class="jhud-key">STAT ›</span><span class="jhud-val live">● ONLINE</span></div>
-  </div>
-
-  <!-- ── SKILL LOAD GAUGES (bottom-left) ── -->
-  <div class="jhud-panel jhud-gauges">
-    <span class="jhud-c tl"></span><span class="jhud-c tr"></span>
-    <span class="jhud-c bl"></span><span class="jhud-c br"></span>
-    <div class="jhud-title">Skill Load</div>
-    <div class="jhud-gauges-grid" id="jhudGaugesGrid"></div>
-  </div>
-
-</div><!-- /jarvis-hud -->
 <div id="jarvisOverlay" class="jarvis-overlay"><pre id="jarvisOverlayText" class="jarvis-overlay-text"></pre></div>
 <div class="spotlight"></div>
 <canvas id="gridCanvas"></canvas>
@@ -1117,6 +1043,7 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 
       <!-- LEFT: spinning arc wheel -->
       <div class="jarvis-wheel-side">
+        <img id="arcReactorImg" src="assets/images/pngwing_com.png" alt="">
         <canvas id="jarvisCanvas"></canvas>
         <div class="jarvis-wheel-hint">drag to spin · click to select</div>
         <div class="ji-mobile-grid" id="jiMobileGrid"></div>
@@ -1662,12 +1589,6 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   ctx.scale(DPR, DPR);
   const W = CSS_W, H = CSS_H, CX = W/2, CY = H/2;
 
-  /* ── Arc Reactor PNG ── */
-  const arcImg = new Image();
-  arcImg.src = 'assets/images/pngwing_com.png';
-  let arcImgLoaded = false;
-  arcImg.onload = () => { arcImgLoaded = true; };
-
   /* ── wheel state ── */
   let rotation    = 0;
   let targetRot   = 0;
@@ -1706,27 +1627,13 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
     const glowCol = glowCat>=0?CATS[glowCat].color:'#64ffda';
     const breathe = 0.5+0.5*Math.sin(pulseT);
 
-    /* ── 1. PNG base image ── */
-    if(arcImgLoaded){
+    /* ── 1. Category tint on active slice — screen blend over the real PNG behind canvas ── */
+    if(glowCat >= 0){
       ctx.save();
-      ctx.globalAlpha = 0.70 + 0.08*breathe;
-      ctx.drawImage(arcImg, 0, 0, W, H);
-      ctx.restore();
-
-      /* Whole-reactor tint toward active category colour */
-      if(glowCat >= 0){
-        ctx.save();
-        ctx.globalCompositeOperation = 'screen';
-        ctx.globalAlpha = 0.10 + 0.07*breathe;
-        ctx.fillStyle = CATS[glowCat].color;
-        ctx.beginPath(); ctx.arc(CX,CY,W*0.52,0,Math.PI*2); ctx.fill();
-        ctx.restore();
-      }
-    } else {
-      /* Fallback ring while image loads */
-      ctx.save();
-      ctx.strokeStyle=hexAlpha(glowCol,0.3); ctx.lineWidth=3;
-      ctx.beginPath(); ctx.arc(CX,CY,R_OVLY_OUTER,0,Math.PI*2); ctx.stroke();
+      ctx.globalCompositeOperation = 'screen';
+      ctx.globalAlpha = 0.12 + 0.08*breathe;
+      ctx.fillStyle = CATS[glowCat].color;
+      ctx.beginPath(); ctx.arc(CX,CY,W*0.52,0,Math.PI*2); ctx.fill();
       ctx.restore();
     }
 
@@ -2218,10 +2125,8 @@ function activateJarvis(){
       },800);
     },BOOT.length*600+1800);
     setTimeout(()=>ov.classList.remove('active'),2000);
-    /* ── HUD ── */
-    buildJhudTicks();
-    buildJhudGauges();
-    startJhudClock();
+    /* show mission log after boot sequence fades */
+    setTimeout(showMissionLog, BOOT.length*600+2700);
   },1500);
 }
 
@@ -2240,100 +2145,47 @@ function shutdownJarvis(){
     jarvisTerm.innerHTML='';
     aboutContent.style.display='';
     aboutContent.textContent=origBio;
+    const ml=document.getElementById('jarvisMissionLog');
+    if(ml) ml.remove();
     setTimeout(()=>ov.classList.remove('active'),1000);
-    /* ── HUD ── */
-    stopJhudClock();
   },1500);
 }
 
-/* ═══════════════════════════════════════════
-   JARVIS HUD — clock, tick marks, skill gauges
-═══════════════════════════════════════════ */
-
-/* ── tick mark ring ── */
-function buildJhudTicks(){
-  const g = document.getElementById('jhudTicks');
-  if(!g || g.childElementCount) return; // build once
-  for(let i=0;i<12;i++){
-    const a  = (i/12)*Math.PI*2 - Math.PI/2;
-    const r1 = 46, r2 = i%3===0 ? 40 : 43;
-    const x1 = 54+Math.cos(a)*r1, y1 = 54+Math.sin(a)*r1;
-    const x2 = 54+Math.cos(a)*r2, y2 = 54+Math.sin(a)*r2;
-    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1',x1);line.setAttribute('y1',y1);
-    line.setAttribute('x2',x2);line.setAttribute('y2',y2);
-    if(i%3===0) line.setAttribute('stroke-width','1.8');
-    g.appendChild(line);
-  }
-}
-
-/* ── live clock ── */
-let jhudClockTick = null;
-const JHUD_DAYS   = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
-const JHUD_MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-
-function tickJhud(){
-  const now = new Date();
-  const h = String(now.getHours()).padStart(2,'0');
-  const m = String(now.getMinutes()).padStart(2,'0');
-  const s = String(now.getSeconds()).padStart(2,'0');
-  const tEl = document.getElementById('jhudTime');
-  const dEl = document.getElementById('jhudDate');
-  if(tEl) tEl.textContent = h+':'+m+':'+s;
-  if(dEl) dEl.textContent = JHUD_DAYS[now.getDay()]+'\n'+JHUD_MONTHS[now.getMonth()]+' '+now.getDate();
-
-  /* seconds arc: circumference of r=46 ≈ 289.0 */
-  const secFrac = now.getSeconds()/60;
-  const minFrac = (now.getMinutes()*60+now.getSeconds())/3600;
-  const sArc = document.getElementById('jhudSecArc');
-  const mArc = document.getElementById('jhudMinArc');
-  if(sArc) sArc.setAttribute('stroke-dasharray',`${(secFrac*289).toFixed(1)} 289`);
-  if(mArc) mArc.setAttribute('stroke-dasharray',`${(minFrac*220).toFixed(1)} 220`);
-}
-function startJhudClock(){ tickJhud(); jhudClockTick=setInterval(tickJhud,1000); }
-function stopJhudClock(){ if(jhudClockTick){clearInterval(jhudClockTick);jhudClockTick=null;} }
-
-/* ── skill arc gauges ── */
-const JHUD_SKILLS=[
-  {label:'CAD',     pct:88,color:'#57cbff'},
-  {label:'ANALYSIS',pct:76,color:'#64ffda'},
-  {label:'PROTO',   pct:90,color:'#ffbd2e'},
-  {label:'ELEC',    pct:72,color:'#ff9f57'},
-  {label:'CODE',    pct:78,color:'#c084fc'},
-  {label:'TOOLS',   pct:82,color:'#8892b0'},
+/* ══════════════════════════════════════════════
+   MISSION LOG — replaces about bio in lab mode
+══════════════════════════════════════════════ */
+const MISSION_ENTRIES = [
+  {ts:'2026.05',tag:'MISSION', text:'AEAC Competition — Valiant Aerotech firefighting UAV deployment'},
+  {ts:'2026.08',tag:'MISSION', text:'CIRC Competition — Sidus Robotics Mars Rover field trials'},
+  {ts:'2028.05',tag:'TARGET',  text:'Graduation — B.Eng Mechanical Engineering, Memorial University'},
 ];
-function buildJhudGauges(){
-  const grid=document.getElementById('jhudGaugesGrid');
-  if(!grid) return;
-  grid.innerHTML='';
-  const R=17, C=+(2*Math.PI*R).toFixed(1); // ≈106.8
-  JHUD_SKILLS.forEach(sk=>{
-    const wrap=document.createElement('div');
-    wrap.className='jhud-gauge';
-    wrap.innerHTML=`
-      <svg class="jhud-gauge-svg" viewBox="0 0 50 50">
-        <circle cx="25" cy="25" r="${R}" fill="none"
-          stroke="rgba(255,255,255,.06)" stroke-width="3.5"/>
-        <circle cx="25" cy="25" r="${R}" fill="none"
-          stroke="${sk.color}" stroke-width="3" stroke-linecap="round"
-          stroke-dasharray="0 ${C}" transform="rotate(-90 25 25)"
-          class="jhud-gauge-arc"
-          data-fill="${+(sk.pct/100*C).toFixed(1)}" data-c="${C}"
-          style="filter:drop-shadow(0 0 3px ${sk.color});transition:stroke-dasharray 1.3s cubic-bezier(.25,.8,.25,1) var(--jd,0s);"/>
-        <text x="25" y="29" text-anchor="middle"
-          fill="${sk.color}" font-family="Fira Code,monospace"
-          font-size="8.5" font-weight="700">${sk.pct}</text>
-      </svg>
-      <div class="jhud-gauge-label">${sk.label}</div>`;
-    grid.appendChild(wrap);
+function showMissionLog(){
+  let ml=document.getElementById('jarvisMissionLog');
+  if(!ml){
+    ml=document.createElement('div');
+    ml.id='jarvisMissionLog';
+    ml.className='jarvis-mission-log';
+    /* insert BEFORE aboutContent so bio stays below */
+    aboutContent.parentNode.insertBefore(ml,aboutContent);
+  }
+  ml.innerHTML='<div class="jml-header"><span class="jml-header-tag">◈ MISSION LOG</span><span class="jml-header-id">SUBJECT: ALIF_MAHIN</span></div>';
+  ml.style.display='flex';
+  /* bio stays visible */
+  aboutContent.style.display='';
+  MISSION_ENTRIES.forEach((e,i)=>{
+    const row=document.createElement('div');
+    row.className='jml-row';
+    row.style.opacity='0';
+    row.style.transform='translateX(-10px)';
+    const col=e.tag==='TARGET'?'#c084fc':'#ffbd2e';
+    row.innerHTML=`<span class="jml-ts">${e.ts}</span><span class="jml-tag" style="color:${col};border-color:${col}30;">${e.tag}</span><span class="jml-text">${e.text}</span>`;
+    ml.appendChild(row);
+    setTimeout(()=>{
+      row.style.transition='opacity .35s ease, transform .35s ease';
+      row.style.opacity='1';
+      row.style.transform='translateX(0)';
+    }, i*90);
   });
-  /* stagger the fill animations */
-  setTimeout(()=>{
-    grid.querySelectorAll('.jhud-gauge-arc').forEach((arc,i)=>{
-      arc.style.setProperty('--jd',(i*120)+'ms');
-      arc.setAttribute('stroke-dasharray',`${arc.dataset.fill} ${arc.dataset.c}`);
-    });
-  },150);
 }
 </script>
 </body>
