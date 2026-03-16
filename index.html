@@ -139,6 +139,59 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
   .bento-wide{height:220px;}
 }
 
+/* ═══════════════════════════════════════════════════
+   JARVIS BENTO THEME — HUD overlay styling
+═══════════════════════════════════════════════════ */
+/* stronger teal border + deep glow on hover */
+.bento-card:hover{
+  border-color:rgba(100,255,218,.55)!important;
+  box-shadow:0 0 0 1px rgba(100,255,218,.18),0 20px 55px rgba(0,0,0,.65),0 0 35px rgba(100,255,218,.10)!important;
+}
+/* HUD bar at top of every card */
+.bento-hud-bar{
+  position:absolute;top:0;left:0;right:0;z-index:4;
+  display:flex;align-items:center;gap:.5rem;
+  padding:.45rem .8rem;
+  background:linear-gradient(to bottom,rgba(2,12,27,.88),transparent);
+  font-family:'Fira Code',monospace;font-size:.54rem;
+  letter-spacing:.12em;color:var(--accent);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.bento-card:hover .bento-hud-bar,.bento-card.featured .bento-hud-bar{opacity:.85;}
+.bento-hud-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;
+  animation:labPulse 1.6s ease-in-out infinite;
+}
+/* scanline overlay */
+.bento-scanline{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.045) 3px,rgba(0,0,0,.045) 4px);
+}
+/* corner brackets */
+.bento-br{
+  position:absolute;width:13px;height:13px;z-index:4;
+  border-color:var(--accent);border-style:solid;
+  opacity:.45;transition:opacity .3s;pointer-events:none;
+}
+.bento-card:hover .bento-br,.bento-card.featured .bento-br{opacity:.85;}
+.bento-br.tl{top:7px;left:7px;border-width:1.5px 0 0 1.5px;}
+.bento-br.tr{top:7px;right:7px;border-width:1.5px 1.5px 0 0;}
+.bento-br.bl{bottom:7px;left:7px;border-width:0 0 1.5px 1.5px;}
+.bento-br.br{bottom:7px;right:7px;border-width:0 1.5px 1.5px 0;}
+/* reticle on featured card */
+.bento-reticle{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:4;width:44px;height:44px;pointer-events:none;
+  opacity:0;transition:opacity .35s;
+}
+.bento-card.featured .bento-reticle,.bento-card:hover .bento-reticle{opacity:.35;}
+/* target cross lines (CSS only) */
+.bento-reticle::before,.bento-reticle::after{
+  content:'';position:absolute;background:var(--accent);
+}
+.bento-reticle::before{width:1px;height:100%;left:50%;top:0;}
+.bento-reticle::after{height:1px;width:100%;top:50%;left:0;}
+
 /* PROJECT MODAL */
 .proj-modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(2,12,27,.9);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;padding:1.5rem;}
 .proj-modal-overlay.open{opacity:1;visibility:visible;}
@@ -611,95 +664,151 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 }
 
 
-/* EXPERIENCE — BLUEPRINT */
+/* ═══════════════════════════════════════════════════
+   JARVIS EXPERIENCE — Mission Briefing File Theme
+═══════════════════════════════════════════════════ */
+
+/* ── Tabs: classified-file selectors ── */
 .bp-tabs{display:flex;flex-wrap:wrap;gap:0;margin-bottom:0;position:relative;z-index:1;}
-.bp-tab{font-family:'Fira Code',monospace;font-size:.72rem;letter-spacing:.08em;padding:.55rem 1.25rem;border:1px solid var(--border2);border-bottom:none;color:var(--muted);cursor:pointer;background:var(--bg2);transition:all .25s;position:relative;top:1px;}
+.bp-tab{
+  font-family:'Fira Code',monospace;font-size:.68rem;letter-spacing:.12em;
+  padding:.55rem 1.35rem;
+  border:1px solid rgba(100,255,218,.12);border-bottom:none;
+  color:var(--muted);cursor:pointer;
+  background:rgba(2,12,27,.7);
+  transition:all .25s;position:relative;top:1px;
+}
 .bp-tab:first-child{border-radius:6px 0 0 0;}
 .bp-tab:last-child{border-radius:0 6px 0 0;}
-.bp-tab.active{color:var(--accent);background:var(--bg3);border-color:var(--border);border-bottom:1px solid var(--bg3);}
-.bp-tab:not(.active):hover{color:var(--fg);background:var(--bg3);}
+.bp-tab.active{
+  color:var(--accent);background:rgba(2,12,27,.95);
+  border-color:rgba(100,255,218,.35);border-bottom:1px solid rgba(2,12,27,.95);
+  text-shadow:0 0 10px var(--glow);
+}
+.bp-tab:not(.active):hover{color:var(--fg);background:rgba(10,25,47,.7);}
 
-.bp-letterhead{
-  display:flex;align-items:center;gap:1.25rem;
-  padding:1rem 1.5rem;
-  margin:-2rem -2rem 1.75rem -2rem;
-  border-bottom:1px solid var(--border);
-  background:linear-gradient(90deg,rgba(10,25,47,.9),rgba(10,25,47,.4));
-  position:relative;z-index:1;min-height:72px;
-}
-.bp-letterhead-logo{
-  width:54px;height:54px;flex-shrink:0;object-fit:contain;
-  mix-blend-mode:screen;opacity:.9;
-}
-.bp-letterhead-logo.invert{
-  mix-blend-mode:normal;filter:invert(1);opacity:.85;
-}
-.bp-letterhead-text{display:flex;flex-direction:column;gap:.2rem;}
-.bp-letterhead-org{font-family:'Chakra Petch',sans-serif;font-size:1.1rem;font-weight:800;color:var(--fg);letter-spacing:-.01em;}
-.bp-letterhead-sub{font-family:'Fira Code',monospace;font-size:.65rem;color:var(--accent);opacity:.7;letter-spacing:.1em;text-transform:uppercase;}
-.bp-letterhead-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);margin-left:.5rem;}
+/* ── Mission panel ── */
 .bp-drawing{
-  position:relative;background:var(--bg3);
-  border:1px solid var(--border);border-radius:0 8px 8px 8px;
+  position:relative;
+  background:rgba(2,12,27,.97);
+  border:1px solid rgba(100,255,218,.25);
+  border-radius:0 8px 8px 8px;
   padding:2rem;overflow:hidden;min-height:320px;
   background-image:
-    linear-gradient(rgba(100,255,218,.028) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(100,255,218,.028) 1px,transparent 1px);
-  background-size:28px 28px;
+    linear-gradient(rgba(100,255,218,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(100,255,218,.03) 1px,transparent 1px);
+  background-size:24px 24px;
+  box-shadow:0 0 40px rgba(100,255,218,.04) inset;
 }
-/* corner marks */
+/* corner marks — brighter */
 .bp-drawing::before,.bp-drawing::after{
   content:'';position:absolute;width:16px;height:16px;
-  border-color:var(--accent);border-style:solid;opacity:.5;
+  border-color:var(--accent);border-style:solid;opacity:.55;
 }
-.bp-drawing::before{top:10px;left:10px;border-width:1.5px 0 0 1.5px;}
-.bp-drawing::after{bottom:10px;right:10px;border-width:0 1.5px 1.5px 0;}
-.bp-corner-tr,.bp-corner-bl{position:absolute;width:16px;height:16px;border-color:var(--accent);border-style:solid;opacity:.5;}
-.bp-corner-tr{top:10px;right:10px;border-width:1.5px 1.5px 0 0;}
-.bp-corner-bl{bottom:10px;left:10px;border-width:0 0 1.5px 1.5px;}
+.bp-drawing::before{top:10px;left:10px;border-width:2px 0 0 2px;}
+.bp-drawing::after{bottom:10px;right:10px;border-width:0 2px 2px 0;}
+.bp-corner-tr,.bp-corner-bl{position:absolute;width:16px;height:16px;border-color:var(--accent);border-style:solid;opacity:.55;}
+.bp-corner-tr{top:10px;right:10px;border-width:2px 2px 0 0;}
+.bp-corner-bl{bottom:10px;left:10px;border-width:0 0 2px 2px;}
 
-/* title block — bottom right */
+/* ── Letterhead → mission file header ── */
+.bp-letterhead{
+  display:flex;align-items:center;gap:1.25rem;
+  padding:.9rem 1.5rem;
+  margin:-2rem -2rem 1.75rem -2rem;
+  border-bottom:1px solid rgba(100,255,218,.2);
+  background:linear-gradient(90deg,rgba(100,255,218,.05),rgba(100,255,218,.01));
+  position:relative;z-index:1;min-height:70px;
+}
+.bp-letterhead::after{
+  content:'ACCESS GRANTED';
+  position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);
+  font-family:'Fira Code',monospace;font-size:.54rem;letter-spacing:.16em;
+  color:var(--accent);opacity:.35;
+}
+.bp-letterhead-logo{
+  width:48px;height:48px;flex-shrink:0;object-fit:contain;
+  filter:drop-shadow(0 0 6px rgba(100,255,218,.25));opacity:.9;
+}
+.bp-letterhead-logo.invert{
+  mix-blend-mode:normal;filter:invert(1) drop-shadow(0 0 6px rgba(100,255,218,.25));opacity:.85;
+}
+.bp-letterhead-text{display:flex;flex-direction:column;gap:.25rem;}
+.bp-letterhead-org{
+  font-family:'Chakra Petch',sans-serif;font-size:1.05rem;font-weight:800;
+  color:var(--fg);letter-spacing:.02em;
+}
+.bp-letterhead-sub{
+  font-family:'Fira Code',monospace;font-size:.6rem;
+  color:var(--accent);opacity:.6;letter-spacing:.14em;text-transform:uppercase;
+}
+.bp-letterhead-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(100,255,218,.25),transparent);margin-left:.5rem;}
+
+/* ── Role line ── */
+.bp-drw-role{
+  font-family:'Fira Code',monospace;font-size:.78rem;
+  color:var(--accent);margin-bottom:1.6rem;
+  display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;
+}
+.bp-drw-role::after{content:'';flex:1;height:1px;background:rgba(100,255,218,.2);opacity:.8;max-width:80px;}
+
+/* ── Bullet list as HUD readout ── */
+.bp-list{display:flex;flex-direction:column;gap:.65rem;list-style:none;padding:0;}
+.bp-list li{
+  font-family:'Fira Code',monospace;font-size:.82rem;
+  color:var(--muted);line-height:1.65;
+  padding-left:1.5rem;padding-top:.4rem;padding-bottom:.4rem;
+  position:relative;
+  border-left:1px solid rgba(100,255,218,.08);
+  margin-left:.3rem;
+}
+.bp-list li::before{
+  content:'›› ';position:absolute;left:.4rem;
+  color:var(--accent);font-size:.7rem;top:.45rem;opacity:.7;
+}
+.bp-list li:hover{
+  border-left-color:rgba(100,255,218,.3);
+  color:var(--fg);transition:all .2s;
+}
+
+/* ── Badge ── */
+.bp-badge{
+  font-family:'Fira Code',monospace;font-size:.58rem;letter-spacing:.1em;
+  color:var(--accent);background:rgba(100,255,218,.07);
+  border:1px solid rgba(100,255,218,.25);padding:.2rem .6rem;
+  border-radius:3px;white-space:nowrap;
+}
+
+/* ── Title block ── */
 .bp-titleblock{
   position:absolute;bottom:0;right:0;
-  border-top:1px solid var(--border);border-left:1px solid var(--border);
+  border-top:1px solid rgba(100,255,218,.2);
+  border-left:1px solid rgba(100,255,218,.2);
   font-family:'Fira Code',monospace;
   display:grid;grid-template-columns:1fr 1fr;
   min-width:260px;
+  background:rgba(2,12,27,.92);
 }
 .bp-tb-cell{
   padding:.3rem .65rem;font-size:.6rem;letter-spacing:.06em;
-  border-right:1px solid var(--border2);border-bottom:1px solid var(--border2);
+  border-right:1px solid rgba(100,255,218,.08);
+  border-bottom:1px solid rgba(100,255,218,.08);
   color:var(--muted);
 }
 .bp-tb-cell:nth-child(even){border-right:none;}
 .bp-tb-cell span{display:block;color:var(--accent);font-size:.68rem;margin-top:.1rem;}
-.bp-tb-label{opacity:.45;text-transform:uppercase;}
+.bp-tb-label{opacity:.4;text-transform:uppercase;letter-spacing:.1em;}
 
-/* main content area */
+/* ── content ── */
 .bp-content{padding-right:280px;padding-bottom:90px;}
 .bp-drw-company{display:none;}
-.bp-drw-role{font-family:'Fira Code',monospace;font-size:.8rem;color:var(--accent);margin-bottom:1.6rem;display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;}
-.bp-drw-role::after{content:'';flex:1;height:1px;background:var(--border);opacity:.5;max-width:80px;}
-.bp-badge{font-family:'Fira Code',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--accent2);background:rgba(87,203,255,.1);border:1px solid rgba(87,203,255,.25);padding:.2rem .55rem;border-radius:3px;white-space:nowrap;}
-
-/* dimension line decoration */
 .bp-dim{position:absolute;font-family:'Fira Code',monospace;font-size:.58rem;color:var(--accent2);opacity:.45;letter-spacing:.04em;display:flex;align-items:center;gap:.3rem;}
-.bp-dim-v{display:none;}
-.bp-dim-h{display:none;}
-
-/* bullet list */
-.bp-list{display:flex;flex-direction:column;gap:.7rem;list-style:none;padding:0;}
-.bp-list li{font-size:.88rem;color:var(--muted);line-height:1.65;padding-left:1.2rem;position:relative;}
-.bp-list li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.7rem;top:.15rem;}
-
-/* panel hidden */
-.bp-panel{display:none;}
-.bp-panel.active{display:block;}
+.bp-dim-v{display:none;} .bp-dim-h{display:none;}
+.bp-panel{display:none;} .bp-panel.active{display:block;}
 
 @media(max-width:700px){
   .bp-content{padding-right:1rem;padding-bottom:160px;}
   .bp-titleblock{min-width:0;width:100%;}
-  .bp-dim-v{display:none;}
 }
 
 /* CONTACT */
@@ -720,12 +829,181 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 .jarvis-overlay-text{text-align:center;white-space:pre-wrap;padding:2rem;line-height:1.8;}
 
 .footer-line{text-align:center;padding:2rem;font-family:'Fira Code',monospace;font-size:.7rem;color:var(--muted);opacity:.35;border-top:1px solid var(--border2);}
+
+/* ═══════════════════════════════════════════════════
+   JARVIS HUD OVERLAY
+   Fixed panels that fade in when .lab-mode is active.
+   pointer-events:none on the container so scrolling
+   and clicking the page still works normally.
+═══════════════════════════════════════════════════ */
+.jarvis-hud{
+  position:fixed;inset:0;pointer-events:none;z-index:500;
+  opacity:0;transition:opacity 1.2s .6s;
+  font-family:'Fira Code',monospace;
+}
+.lab-mode .jarvis-hud{opacity:1;}
+
+/* global scanline texture in lab mode */
+.jhud-scanline{
+  position:fixed;inset:0;pointer-events:none;z-index:498;
+  background:repeating-linear-gradient(
+    0deg,transparent,transparent 2px,
+    rgba(0,255,238,.013) 2px,rgba(0,255,238,.013) 4px
+  );
+  opacity:0;transition:opacity 1.2s;
+}
+.lab-mode .jhud-scanline{opacity:1;}
+
+/* panel base */
+.jhud-panel{
+  position:absolute;pointer-events:auto;
+  background:rgba(0,4,4,.82);
+  border:1px solid rgba(0,255,238,.25);
+  border-radius:8px;
+  padding:.85rem 1rem;
+  backdrop-filter:blur(10px);
+  font-size:.64rem;letter-spacing:.06em;
+  box-shadow:0 0 20px rgba(0,255,238,.04),inset 0 0 20px rgba(0,255,238,.02);
+}
+
+/* corner bracket marks */
+.jhud-c{position:absolute;width:10px;height:10px;border-color:var(--accent);border-style:solid;opacity:.65;}
+.jhud-c.tl{top:4px;left:4px;border-width:1.5px 0 0 1.5px;}
+.jhud-c.tr{top:4px;right:4px;border-width:1.5px 1.5px 0 0;}
+.jhud-c.bl{bottom:4px;left:4px;border-width:0 0 1.5px 1.5px;}
+.jhud-c.br{bottom:4px;right:4px;border-width:0 1.5px 1.5px 0;}
+
+/* panel heading */
+.jhud-title{
+  font-size:.58rem;color:var(--accent);letter-spacing:.16em;
+  text-transform:uppercase;margin-bottom:.65rem;
+  display:flex;align-items:center;gap:.5rem;
+  border-bottom:1px solid rgba(0,255,238,.12);padding-bottom:.4rem;
+}
+.jhud-title::before{content:'◈';font-size:.5rem;opacity:.7;}
+
+/* ── CLOCK (top-left) ── */
+.jhud-clock{
+  top:1.5rem;left:1.5rem;width:164px;
+  display:flex;flex-direction:column;align-items:center;gap:.45rem;
+}
+.jhud-clock-svg{width:108px;height:108px;flex-shrink:0;}
+.jhud-time{
+  font-size:1.18rem;font-weight:700;color:var(--accent);
+  letter-spacing:.1em;text-align:center;
+  text-shadow:0 0 14px rgba(0,255,238,.6);
+}
+.jhud-date{
+  font-size:.58rem;color:var(--muted);text-align:center;
+  letter-spacing:.12em;text-transform:uppercase;line-height:1.7;
+  white-space:pre-line;
+}
+.jhud-uptime{
+  font-size:.56rem;color:var(--accent);opacity:.45;
+  display:flex;align-items:center;gap:.35rem;margin-top:.1rem;
+}
+.jhud-uptime::before{content:'◈';animation:labPulse 2s ease-in-out infinite;}
+
+/* ── PROFILE (top-right) ── */
+.jhud-profile{
+  top:1.5rem;right:4.5rem; /* clear the JARVIS toggle button */
+  width:215px;
+}
+.jhud-row{display:flex;gap:.5rem;margin-bottom:.3rem;font-size:.63rem;}
+.jhud-key{color:var(--accent);opacity:.5;min-width:54px;flex-shrink:0;}
+.jhud-val{color:var(--fg);}
+.jhud-val.live{
+  color:var(--accent);
+  animation:jhudPulse 2.4s ease-in-out infinite;
+}
+@keyframes jhudPulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ── SKILL GAUGES (bottom-left) ── */
+.jhud-gauges{
+  bottom:5.5rem;left:1.5rem;width:226px;
+}
+.jhud-gauges-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:.55rem;margin-top:.6rem;
+}
+.jhud-gauge{display:flex;flex-direction:column;align-items:center;gap:.2rem;}
+.jhud-gauge-svg{width:52px;height:52px;}
+.jhud-gauge-label{
+  font-size:.48rem;letter-spacing:.06em;color:var(--muted);
+  text-align:center;text-transform:uppercase;line-height:1.3;
+}
+
+/* ── hide all panels on small screens ── */
+@media(max-width:900px){
+  .jhud-clock,.jhud-profile,.jhud-gauges{display:none;}
+}
 </style>
 </head>
 <body>
 
 <div class="bg-orb bg-orb-1"></div>
 <div class="bg-orb bg-orb-2"></div>
+
+<!-- ═══════════════ JARVIS HUD OVERLAY ═══════════════
+     Fades in on .lab-mode. All panels are position:absolute
+     inside a pointer-events:none container so page interaction
+     is never blocked.
+════════════════════════════════════════════════════ -->
+<div class="jarvis-hud" id="jarvisHUD">
+  <div class="jhud-scanline"></div>
+
+  <!-- ── CLOCK (top-left) ── -->
+  <div class="jhud-panel jhud-clock">
+    <span class="jhud-c tl"></span><span class="jhud-c tr"></span>
+    <span class="jhud-c bl"></span><span class="jhud-c br"></span>
+    <svg class="jhud-clock-svg" id="jhudClockSvg" viewBox="0 0 108 108">
+      <!-- track rings -->
+      <circle cx="54" cy="54" r="46" fill="none" stroke="rgba(0,255,238,.07)" stroke-width="4"/>
+      <circle cx="54" cy="54" r="35" fill="none" stroke="rgba(0,255,238,.05)" stroke-width="3"/>
+      <!-- live arcs -->
+      <circle id="jhudSecArc" cx="54" cy="54" r="46" fill="none"
+        stroke="#00ffee" stroke-width="2.5" stroke-linecap="round"
+        stroke-dasharray="0 289" transform="rotate(-90 54 54)"
+        style="filter:drop-shadow(0 0 4px #00ffee);transition:stroke-dasharray .4s linear;"/>
+      <circle id="jhudMinArc" cx="54" cy="54" r="35" fill="none"
+        stroke="#57cbff" stroke-width="2" stroke-linecap="round"
+        stroke-dasharray="0 220" transform="rotate(-90 54 54)"
+        style="filter:drop-shadow(0 0 3px #57cbff);transition:stroke-dasharray 1s ease;"/>
+      <!-- inner fill -->
+      <circle cx="54" cy="54" r="24" fill="rgba(0,0,0,.55)" stroke="rgba(0,255,238,.15)" stroke-width="1"/>
+      <!-- tick marks (12 major) -->
+      <g id="jhudTicks" stroke="rgba(0,255,238,.3)" stroke-width="1.2"></g>
+      <!-- center -->
+      <circle cx="54" cy="54" r="3.5" fill="#00ffee" style="filter:drop-shadow(0 0 5px #00ffee);"/>
+    </svg>
+    <div class="jhud-time" id="jhudTime">00:00:00</div>
+    <div class="jhud-date" id="jhudDate">---</div>
+    <div class="jhud-uptime">SYSTEM ACTIVE</div>
+  </div>
+
+  <!-- ── ENGINEER PROFILE (top-right) ── -->
+  <div class="jhud-panel jhud-profile">
+    <span class="jhud-c tl"></span><span class="jhud-c tr"></span>
+    <span class="jhud-c bl"></span><span class="jhud-c br"></span>
+    <div class="jhud-title">Engineer Profile</div>
+    <div class="jhud-row"><span class="jhud-key">ID ›</span><span class="jhud-val">ALIF_MAHIN</span></div>
+    <div class="jhud-row"><span class="jhud-key">ROLE ›</span><span class="jhud-val">MECH ENG</span></div>
+    <div class="jhud-row"><span class="jhud-key">INST ›</span><span class="jhud-val">MUN · NL · CA</span></div>
+    <div class="jhud-row"><span class="jhud-key">YEAR ›</span><span class="jhud-val">03 / 04</span></div>
+    <div class="jhud-row"><span class="jhud-key">PROJ ›</span><span class="jhud-val">03 DEPLOYED</span></div>
+    <div class="jhud-row"><span class="jhud-key">CO-OP ›</span><span class="jhud-val">03 COMPLETED</span></div>
+    <div class="jhud-row"><span class="jhud-key">STAT ›</span><span class="jhud-val live">● ONLINE</span></div>
+  </div>
+
+  <!-- ── SKILL LOAD GAUGES (bottom-left) ── -->
+  <div class="jhud-panel jhud-gauges">
+    <span class="jhud-c tl"></span><span class="jhud-c tr"></span>
+    <span class="jhud-c bl"></span><span class="jhud-c br"></span>
+    <div class="jhud-title">Skill Load</div>
+    <div class="jhud-gauges-grid" id="jhudGaugesGrid"></div>
+  </div>
+
+</div><!-- /jarvis-hud -->
 <div id="jarvisOverlay" class="jarvis-overlay"><pre id="jarvisOverlayText" class="jarvis-overlay-text"></pre></div>
 <div class="spotlight"></div>
 <canvas id="gridCanvas"></canvas>
@@ -1309,7 +1587,30 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 })();
 
-/* ───────────────── JARVIS WHEEL ───────────────── */
+/* ── inject JARVIS HUD elements into every bento card ── */
+(function(){
+  const HUD_LABELS = ['PROJECT :: 001','PROJECT :: 002','PROJECT :: 003'];
+  const STATUS     = ['SYS · ONLINE','SYS · ONLINE','ACCESS · PENDING'];
+  document.querySelectorAll('.bento-card').forEach((card,i)=>{
+    const idx = +card.dataset.project;
+    // corner brackets
+    ['tl','tr','bl','br'].forEach(cls=>{
+      const s=document.createElement('span');
+      s.className='bento-br '+cls; card.appendChild(s);
+    });
+    // scanline
+    const sl=document.createElement('div');
+    sl.className='bento-scanline'; card.appendChild(sl);
+    // reticle
+    const rt=document.createElement('div');
+    rt.className='bento-reticle'; card.appendChild(rt);
+    // HUD bar
+    const bar=document.createElement('div');
+    bar.className='bento-hud-bar';
+    bar.innerHTML=`<span class="bento-hud-dot"></span>${HUD_LABELS[idx]||'PROJECT :: 00'+(idx+1)}<span style="margin-left:auto;opacity:.55;">${STATUS[idx]||'SYS · ONLINE'}</span>`;
+    card.appendChild(bar);
+  });
+})();
 (function(){
   const CATS = [
     {id:'design',     label:'Design & CAD',      icon:'✏️', color:'#57cbff',
@@ -1361,8 +1662,14 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   ctx.scale(DPR, DPR);
   const W = CSS_W, H = CSS_H, CX = W/2, CY = H/2;
 
+  /* ── Arc Reactor PNG ── */
+  const arcImg = new Image();
+  arcImg.src = 'assets/images/pngwing_com.png';
+  let arcImgLoaded = false;
+  arcImg.onload = () => { arcImgLoaded = true; };
+
   /* ── wheel state ── */
-  let rotation    = 0;          // current angle offset
+  let rotation    = 0;
   let targetRot   = 0;
   let isDragging  = false;
   let dragStartX  = 0;
@@ -1372,235 +1679,155 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   let animFrame;
 
   /* ── hover expansion (spring per-slice) ── */
-  const sliceExpand = new Array(CATS.length).fill(0);   // 0→1 expanded amount
+  const sliceExpand = new Array(CATS.length).fill(0);
   const sliceTarget = new Array(CATS.length).fill(0);
 
   /* ── rim glow pulse ── */
-  let pulseT = 0;   // grows over time, used for sin breathe
+  let pulseT = 0;
 
-  const N         = CATS.length;
-  const SLICE     = (Math.PI * 2) / N;
-  const R_OUTER   = 170;   // outer arc radius
-  const R_INNER   = 90;    // inner ring radius
-  const R_CORE    = 38;    // center core
-  const R_HIT     = 140;   // click detection radius (middle of arc band)
+  const N             = CATS.length;
+  const SLICE         = (Math.PI * 2) / N;
+  /* Overlay radii — tuned to sit on the PNG blade ring */
+  const R_OVLY_OUTER  = 192;   // outer edge of blade overlay
+  const R_OVLY_INNER  = 118;   // inner edge of blade overlay
+  const R_OUTER       = 192;   // kept in sync for hit-test & pointer
+  const R_INNER       = 118;
+  const R_CORE        = 38;
+  const R_HIT         = 155;   // midpoint of blade zone
 
-  /* ── cached gradient (created once, reused every frame) ── */
-  const coreGrad = ctx.createRadialGradient(CX,CY,0,CX,CY,R_CORE);
-  coreGrad.addColorStop(0,'rgba(100,255,218,0.18)');
-  coreGrad.addColorStop(1,'rgba(10,25,47,0.9)');
-
-  /* ── draw ── */
+  /* ══════════════════════════════════════════════════
+     DRAW — Arc Reactor PNG as visual chassis,
+     screen-blend segment highlights on top.
+  ══════════════════════════════════════════════════ */
   function draw(){
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0,0,W,H);
 
-    /* ── 1. BREATHING RIM GLOW (single arc, one shadowBlur call) ── */
-    const glowCat  = activeCat >= 0 ? activeCat : hoveredCat;
-    const glowCol  = glowCat >= 0 ? CATS[glowCat].color : '#64ffda';
-    const breathe  = 0.5 + 0.5 * Math.sin(pulseT);
-    const rimAlpha = (glowCat >= 0 ? 0.55 : 0.18) * breathe;
-    ctx.save();
-    ctx.globalAlpha  = rimAlpha;
-    ctx.strokeStyle  = glowCol;
-    ctx.lineWidth    = 3;
-    ctx.shadowColor  = glowCol;
-    ctx.shadowBlur   = (glowCat >= 0 ? 18 : 10) * breathe;
-    ctx.beginPath();
-    ctx.arc(CX, CY, R_OUTER + 4, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.restore();  // restores shadowBlur=0, globalAlpha=1 in one shot
+    const glowCat = activeCat>=0?activeCat:hoveredCat;
+    const glowCol = glowCat>=0?CATS[glowCat].color:'#64ffda';
+    const breathe = 0.5+0.5*Math.sin(pulseT);
 
-    /* ── 2. FAINT STATIC RINGS (batched as one path per style) ── */
-    ctx.strokeStyle = 'rgba(100,255,218,0.06)';
-    ctx.lineWidth   = 1;
-    ctx.beginPath(); ctx.arc(CX, CY, R_INNER - 10, 0, Math.PI*2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(CX, CY, R_OUTER + 18, 0, Math.PI*2); ctx.stroke();
-
-    /* ── 3. TICK MARKS (batched: minor ticks one path, major ticks one path) ── */
-    ctx.lineWidth   = 0.7;
-    ctx.strokeStyle = 'rgba(100,255,218,0.08)';
-    ctx.beginPath();
-    for(let t = 0; t < 60; t++){
-      if(t % 5 === 0) continue;
-      const a = (t / 60) * Math.PI * 2 + rotation;
-      const c = Math.cos(a), s = Math.sin(a);
-      ctx.moveTo(CX + c*(R_OUTER+10), CY + s*(R_OUTER+10));
-      ctx.lineTo(CX + c*(R_OUTER+14), CY + s*(R_OUTER+14));
-    }
-    ctx.stroke();
-    ctx.lineWidth   = 1.2;
-    ctx.strokeStyle = 'rgba(100,255,218,0.25)';
-    ctx.beginPath();
-    for(let t = 0; t < 60; t += 5){
-      const a = (t / 60) * Math.PI * 2 + rotation;
-      const c = Math.cos(a), s = Math.sin(a);
-      ctx.moveTo(CX + c*(R_OUTER+10), CY + s*(R_OUTER+10));
-      ctx.lineTo(CX + c*(R_OUTER+20), CY + s*(R_OUTER+20));
-    }
-    ctx.stroke();
-
-    /* ── 4. DASHED INNER RING ── */
-    ctx.strokeStyle = 'rgba(100,255,218,0.12)';
-    ctx.lineWidth   = 1;
-    ctx.setLineDash([4, 6]);
-    ctx.beginPath(); ctx.arc(CX, CY, R_INNER, 0, Math.PI*2); ctx.stroke();
-    ctx.setLineDash([]);
-
-    /* ── 5. SEGMENTS — fills, dividers, sonar arcs all batched by type ── */
-
-    /* 5a. Fill all segments first (no shadow needed) */
-    CATS.forEach((cat, i) => {
-      const exp        = sliceExpand[i];
-      const R_OUT_I    = R_OUTER + exp * 14;
-      const angleStart = rotation + i * SLICE - SLICE/2;
-      const angleEnd   = angleStart + SLICE;
-      const isActive   = activeCat === i;
-      const isHovered  = hoveredCat === i;
-      ctx.beginPath();
-      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER, CY + Math.sin(angleStart)*R_INNER);
-      ctx.arc(CX, CY, R_OUT_I, angleStart, angleEnd);
-      ctx.arc(CX, CY, R_INNER, angleEnd, angleStart, true);
-      ctx.closePath();
-      ctx.fillStyle = isActive   ? hexAlpha(cat.color, 0.18 + exp * 0.08)
-                    : isHovered  ? hexAlpha(cat.color, 0.09 + exp * 0.06)
-                    : 'rgba(10,25,47,0.5)';
-      ctx.fill();
-    });
-
-    /* 5b. Stroke all segment borders (batched by active/hover/idle) */
-    // idle borders — one batched path
-    ctx.strokeStyle = 'rgba(136,146,176,0.15)'; ctx.lineWidth = 0.8;
-    ctx.beginPath();
-    CATS.forEach((cat, i) => {
-      if(activeCat === i || hoveredCat === i) return;
-      const exp        = sliceExpand[i];
-      const R_OUT_I    = R_OUTER + exp * 14;
-      const angleStart = rotation + i * SLICE - SLICE/2;
-      const angleEnd   = angleStart + SLICE;
-      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER, CY + Math.sin(angleStart)*R_INNER);
-      ctx.arc(CX, CY, R_OUT_I, angleStart, angleEnd);
-      ctx.arc(CX, CY, R_INNER, angleEnd, angleStart, true);
-      ctx.closePath();
-    });
-    ctx.stroke();
-    // active/hover borders — per slice (small N so fine)
-    CATS.forEach((cat, i) => {
-      if(activeCat !== i && hoveredCat !== i) return;
-      const exp        = sliceExpand[i];
-      const R_OUT_I    = R_OUTER + exp * 14;
-      const angleStart = rotation + i * SLICE - SLICE/2;
-      const angleEnd   = angleStart + SLICE;
-      const isActive   = activeCat === i;
-      ctx.strokeStyle  = isActive ? cat.color : hexAlpha(cat.color, 0.5 + exp * 0.3);
-      ctx.lineWidth    = isActive ? 1.5 : 1;
-      ctx.beginPath();
-      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER, CY + Math.sin(angleStart)*R_INNER);
-      ctx.arc(CX, CY, R_OUT_I, angleStart, angleEnd);
-      ctx.arc(CX, CY, R_INNER, angleEnd, angleStart, true);
-      ctx.closePath();
-      ctx.stroke();
-    });
-
-    /* 5c. Radial divider lines — all one batched path */
-    ctx.strokeStyle = 'rgba(100,255,218,0.08)'; ctx.lineWidth = 0.8;
-    ctx.beginPath();
-    CATS.forEach((cat, i) => {
-      const exp        = sliceExpand[i];
-      const R_OUT_I    = R_OUTER + exp * 14;
-      const angleStart = rotation + i * SLICE - SLICE/2;
-      ctx.moveTo(CX + Math.cos(angleStart)*R_INNER,  CY + Math.sin(angleStart)*R_INNER);
-      ctx.lineTo(CX + Math.cos(angleStart)*R_OUT_I,  CY + Math.sin(angleStart)*R_OUT_I);
-    });
-    ctx.stroke();
-
-    /* 5d. Sonar ping arcs + active outer rim — shadow only where needed, grouped */
-    CATS.forEach((cat, i) => {
-      const exp        = sliceExpand[i];
-      if(exp < 0.02) return;
-      const R_OUT_I    = R_OUTER + exp * 14;
-      const angleStart = rotation + i * SLICE - SLICE/2;
-      const angleEnd   = angleStart + SLICE;
-      const isActive   = activeCat === i;
+    /* ── 1. PNG base image ── */
+    if(arcImgLoaded){
       ctx.save();
-      ctx.strokeStyle  = cat.color;
-      ctx.shadowColor  = cat.color;
-      if(isActive){
-        ctx.lineWidth  = 2.5;
-        ctx.shadowBlur = 8;
-        ctx.globalAlpha = 1;
-        ctx.beginPath();
-        ctx.arc(CX, CY, R_OUT_I + 2, angleStart, angleEnd);
-        ctx.stroke();
-      } else {
-        ctx.lineWidth   = 1.5 + exp * 1.5;
-        ctx.shadowBlur  = 8 + exp * 10;
-        ctx.globalAlpha = exp * 0.6;
-        ctx.beginPath();
-        ctx.arc(CX, CY, R_OUT_I + 1, angleStart + 0.04, angleEnd - 0.04);
-        ctx.stroke();
+      ctx.globalAlpha = 0.70 + 0.08*breathe;
+      ctx.drawImage(arcImg, 0, 0, W, H);
+      ctx.restore();
+
+      /* Whole-reactor tint toward active category colour */
+      if(glowCat >= 0){
+        ctx.save();
+        ctx.globalCompositeOperation = 'screen';
+        ctx.globalAlpha = 0.10 + 0.07*breathe;
+        ctx.fillStyle = CATS[glowCat].color;
+        ctx.beginPath(); ctx.arc(CX,CY,W*0.52,0,Math.PI*2); ctx.fill();
+        ctx.restore();
       }
+    } else {
+      /* Fallback ring while image loads */
+      ctx.save();
+      ctx.strokeStyle=hexAlpha(glowCol,0.3); ctx.lineWidth=3;
+      ctx.beginPath(); ctx.arc(CX,CY,R_OVLY_OUTER,0,Math.PI*2); ctx.stroke();
+      ctx.restore();
+    }
+
+    /* ── 2. Segment coloured overlays (screen blend = tints PNG blades) ── */
+    CATS.forEach((cat,i)=>{
+      const exp = sliceExpand[i];
+      if(activeCat!==i && hoveredCat!==i && exp<0.01) return;
+      const R_OUT_I = R_OVLY_OUTER + exp*10;
+      const as = rotation+i*SLICE-SLICE/2;
+      const ae = as+SLICE;
+      const isA=activeCat===i, isH=hoveredCat===i;
+
+      /* coloured fill over the blade area */
+      ctx.save();
+      ctx.globalCompositeOperation = 'screen';
+      ctx.beginPath();
+      ctx.moveTo(CX+Math.cos(as)*R_OVLY_INNER, CY+Math.sin(as)*R_OVLY_INNER);
+      ctx.arc(CX,CY,R_OUT_I,as,ae);
+      ctx.arc(CX,CY,R_OVLY_INNER,ae,as,true);
+      ctx.closePath();
+      ctx.fillStyle = hexAlpha(cat.color, isA ? 0.55+0.18*breathe : 0.30*exp);
+      ctx.fill();
+      ctx.restore();
+
+      /* Outer arc glow on active slice */
+      if(isA){
+        ctx.save();
+        ctx.strokeStyle = cat.color;
+        ctx.shadowColor = cat.color; ctx.shadowBlur = 22*breathe;
+        ctx.lineWidth   = 3.5;
+        ctx.globalAlpha = 0.65+0.25*breathe;
+        ctx.beginPath(); ctx.arc(CX,CY,R_OUT_I+5,as+0.04,ae-0.04); ctx.stroke();
+        ctx.restore();
+      }
+
+      /* Divider lines between segments (visible over image) */
+      ctx.save();
+      ctx.strokeStyle = hexAlpha(cat.color, isA?0.25:0.10*exp);
+      ctx.lineWidth   = 1;
+      ctx.beginPath();
+      ctx.moveTo(CX+Math.cos(as)*R_OVLY_INNER, CY+Math.sin(as)*R_OVLY_INNER);
+      ctx.lineTo(CX+Math.cos(as)*R_OUT_I, CY+Math.sin(as)*R_OUT_I);
+      ctx.stroke();
       ctx.restore();
     });
 
-    /* ── 6. ICONS & LABELS (no shadow needed) ── */
-    ctx.textAlign    = 'center';
-    ctx.textBaseline = 'middle';
-    CATS.forEach((cat, i) => {
-      const exp        = sliceExpand[i];
-      const R_OUT_I    = R_OUTER + exp * 14;
-      const iconR      = (R_INNER + R_OUT_I) / 2;
-      const aMid       = rotation + i * SLICE;
-      const ix         = CX + Math.cos(aMid) * iconR;
-      const iy         = CY + Math.sin(aMid) * iconR;
-      const isActive   = activeCat === i;
-      const isHovered  = hoveredCat === i;
+    /* ── 3. Category icons + labels (rendered over blades) ── */
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    CATS.forEach((cat,i)=>{
+      const exp   = sliceExpand[i];
+      const iconR = (R_OVLY_INNER + R_OVLY_OUTER) / 2;
+      const aMid  = rotation + i*SLICE;
+      const ix    = CX + Math.cos(aMid)*iconR;
+      const iy    = CY + Math.sin(aMid)*iconR;
+      const isA   = activeCat===i, isH=hoveredCat===i;
 
-      ctx.font         = (isActive || exp > 0.3) ? '18px serif' : '15px serif';
-      ctx.globalAlpha  = isActive ? 1 : (isHovered ? 0.85 + exp * 0.15 : 0.5 + exp * 0.3);
-      ctx.fillText(cat.icon, ix, iy - 8);
+      /* icon */
+      ctx.font         = (isA||exp>0.3)?'17px serif':'14px serif';
+      ctx.globalAlpha  = isA?1:(isH?0.9:0.55+exp*0.25);
+      ctx.fillStyle    = 'white';
+      ctx.fillText(cat.icon, ix, iy-8);
 
-      ctx.font         = isActive ? 'bold 8px Fira Code,monospace' : '7px Fira Code,monospace';
-      ctx.fillStyle    = isActive ? cat.color : (isHovered ? '#e6f1ff' : '#8892b0');
-      ctx.globalAlpha  = isActive ? 1 : (isHovered ? 0.9 : 0.55);
+      /* label */
+      ctx.font         = isA?'bold 8px Fira Code,monospace':'7px Fira Code,monospace';
+      ctx.fillStyle    = isA?cat.color:(isH?'#e6f1ff':'rgba(136,146,176,0.75)');
+      ctx.globalAlpha  = isA?1:(isH?0.9:0.65);
       ctx.textBaseline = 'top';
-      ctx.fillText(cat.label.toUpperCase(), ix, iy + 2);
+      ctx.fillText(cat.label.toUpperCase(), ix, iy+2);
       ctx.textBaseline = 'middle';
       ctx.globalAlpha  = 1;
     });
 
-    /* ── 7. CORE CIRCLE (cached gradient, no shadow) ── */
-    ctx.beginPath(); ctx.arc(CX, CY, R_CORE, 0, Math.PI*2);
-    ctx.fillStyle   = coreGrad; ctx.fill();
-    ctx.strokeStyle = 'rgba(100,255,218,0.35)'; ctx.lineWidth = 1.5; ctx.stroke();
+    /* ── 4. Centre core text ── */
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.globalAlpha=0.92;
+    ctx.font='bold 9px Fira Code,monospace';
+    ctx.fillStyle = activeCat>=0?CATS[activeCat].color:hexAlpha(glowCol,0.60);
+    ctx.fillText(activeCat>=0?CATS[activeCat].id.toUpperCase():'SELECT', CX, CY-4);
+    ctx.font='7px Fira Code,monospace';
+    ctx.fillStyle='rgba(136,146,176,0.45)';
+    ctx.fillText(activeCat>=0?CATS[activeCat].skills.length+' skills':'SUBSYSTEM', CX, CY+7);
+    ctx.globalAlpha=1;
 
-    /* spinning dashed core ring */
-    ctx.strokeStyle    = 'rgba(100,255,218,0.12)'; ctx.lineWidth = 1;
-    ctx.setLineDash([5, 20]);
-    ctx.lineDashOffset = -(rotation * 2) * 30;
-    ctx.beginPath(); ctx.arc(CX, CY, R_CORE - 8, 0, Math.PI*2); ctx.stroke();
-    ctx.setLineDash([]);
-
-    /* core label */
-    ctx.textAlign    = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.font         = 'bold 9px Fira Code,monospace';
-    ctx.fillStyle    = activeCat >= 0 ? CATS[activeCat].color : 'rgba(100,255,218,0.5)';
-    ctx.fillText(activeCat >= 0 ? CATS[activeCat].id.toUpperCase() : 'SELECT', CX, CY - 4);
-    ctx.font         = '7px Fira Code,monospace';
-    ctx.fillStyle    = 'rgba(136,146,176,0.4)';
-    ctx.fillText(activeCat >= 0 ? CATS[activeCat].skills.length + ' skills' : 'SUBSYSTEM', CX, CY + 7);
-
-    /* ── 8. POINTER TRIANGLE (one shadow call, isolated with save/restore) ── */
+    /* ── 5. Outer breathing glow rim ── */
     ctx.save();
-    ctx.fillStyle   = 'rgba(100,255,218,0.7)';
-    ctx.shadowColor = 'rgba(100,255,218,0.8)';
-    ctx.shadowBlur  = 6;
+    ctx.strokeStyle = hexAlpha(glowCol, (glowCat>=0?0.45:0.18)*breathe);
+    ctx.lineWidth   = 5;
+    ctx.shadowColor = glowCol;
+    ctx.shadowBlur  = (glowCat>=0?28:12)*breathe;
+    ctx.beginPath(); ctx.arc(CX,CY,R_OVLY_OUTER+18,0,Math.PI*2); ctx.stroke();
+    ctx.restore();
+
+    /* ── 6. Pointer triangle ── */
+    ctx.save();
+    ctx.fillStyle   = hexAlpha(glowCol, 0.88);
+    ctx.shadowColor = glowCol; ctx.shadowBlur = 12*breathe;
     ctx.beginPath();
-    ctx.moveTo(CX,     CY - R_OUTER - 24);
-    ctx.lineTo(CX - 7, CY - R_OUTER - 10);
-    ctx.lineTo(CX + 7, CY - R_OUTER - 10);
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(CX,       CY - R_OVLY_OUTER - 22);
+    ctx.lineTo(CX - 7,   CY - R_OVLY_OUTER - 8);
+    ctx.lineTo(CX + 7,   CY - R_OVLY_OUTER - 8);
+    ctx.closePath(); ctx.fill();
     ctx.restore();
   }
 
@@ -1991,6 +2218,10 @@ function activateJarvis(){
       },800);
     },BOOT.length*600+1800);
     setTimeout(()=>ov.classList.remove('active'),2000);
+    /* ── HUD ── */
+    buildJhudTicks();
+    buildJhudGauges();
+    startJhudClock();
   },1500);
 }
 
@@ -2010,7 +2241,99 @@ function shutdownJarvis(){
     aboutContent.style.display='';
     aboutContent.textContent=origBio;
     setTimeout(()=>ov.classList.remove('active'),1000);
+    /* ── HUD ── */
+    stopJhudClock();
   },1500);
+}
+
+/* ═══════════════════════════════════════════
+   JARVIS HUD — clock, tick marks, skill gauges
+═══════════════════════════════════════════ */
+
+/* ── tick mark ring ── */
+function buildJhudTicks(){
+  const g = document.getElementById('jhudTicks');
+  if(!g || g.childElementCount) return; // build once
+  for(let i=0;i<12;i++){
+    const a  = (i/12)*Math.PI*2 - Math.PI/2;
+    const r1 = 46, r2 = i%3===0 ? 40 : 43;
+    const x1 = 54+Math.cos(a)*r1, y1 = 54+Math.sin(a)*r1;
+    const x2 = 54+Math.cos(a)*r2, y2 = 54+Math.sin(a)*r2;
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x1);line.setAttribute('y1',y1);
+    line.setAttribute('x2',x2);line.setAttribute('y2',y2);
+    if(i%3===0) line.setAttribute('stroke-width','1.8');
+    g.appendChild(line);
+  }
+}
+
+/* ── live clock ── */
+let jhudClockTick = null;
+const JHUD_DAYS   = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+const JHUD_MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+function tickJhud(){
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  const tEl = document.getElementById('jhudTime');
+  const dEl = document.getElementById('jhudDate');
+  if(tEl) tEl.textContent = h+':'+m+':'+s;
+  if(dEl) dEl.textContent = JHUD_DAYS[now.getDay()]+'\n'+JHUD_MONTHS[now.getMonth()]+' '+now.getDate();
+
+  /* seconds arc: circumference of r=46 ≈ 289.0 */
+  const secFrac = now.getSeconds()/60;
+  const minFrac = (now.getMinutes()*60+now.getSeconds())/3600;
+  const sArc = document.getElementById('jhudSecArc');
+  const mArc = document.getElementById('jhudMinArc');
+  if(sArc) sArc.setAttribute('stroke-dasharray',`${(secFrac*289).toFixed(1)} 289`);
+  if(mArc) mArc.setAttribute('stroke-dasharray',`${(minFrac*220).toFixed(1)} 220`);
+}
+function startJhudClock(){ tickJhud(); jhudClockTick=setInterval(tickJhud,1000); }
+function stopJhudClock(){ if(jhudClockTick){clearInterval(jhudClockTick);jhudClockTick=null;} }
+
+/* ── skill arc gauges ── */
+const JHUD_SKILLS=[
+  {label:'CAD',     pct:88,color:'#57cbff'},
+  {label:'ANALYSIS',pct:76,color:'#64ffda'},
+  {label:'PROTO',   pct:90,color:'#ffbd2e'},
+  {label:'ELEC',    pct:72,color:'#ff9f57'},
+  {label:'CODE',    pct:78,color:'#c084fc'},
+  {label:'TOOLS',   pct:82,color:'#8892b0'},
+];
+function buildJhudGauges(){
+  const grid=document.getElementById('jhudGaugesGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+  const R=17, C=+(2*Math.PI*R).toFixed(1); // ≈106.8
+  JHUD_SKILLS.forEach(sk=>{
+    const wrap=document.createElement('div');
+    wrap.className='jhud-gauge';
+    wrap.innerHTML=`
+      <svg class="jhud-gauge-svg" viewBox="0 0 50 50">
+        <circle cx="25" cy="25" r="${R}" fill="none"
+          stroke="rgba(255,255,255,.06)" stroke-width="3.5"/>
+        <circle cx="25" cy="25" r="${R}" fill="none"
+          stroke="${sk.color}" stroke-width="3" stroke-linecap="round"
+          stroke-dasharray="0 ${C}" transform="rotate(-90 25 25)"
+          class="jhud-gauge-arc"
+          data-fill="${+(sk.pct/100*C).toFixed(1)}" data-c="${C}"
+          style="filter:drop-shadow(0 0 3px ${sk.color});transition:stroke-dasharray 1.3s cubic-bezier(.25,.8,.25,1) var(--jd,0s);"/>
+        <text x="25" y="29" text-anchor="middle"
+          fill="${sk.color}" font-family="Fira Code,monospace"
+          font-size="8.5" font-weight="700">${sk.pct}</text>
+      </svg>
+      <div class="jhud-gauge-label">${sk.label}</div>`;
+    grid.appendChild(wrap);
+  });
+  /* stagger the fill animations */
+  setTimeout(()=>{
+    grid.querySelectorAll('.jhud-gauge-arc').forEach((arc,i)=>{
+      arc.style.setProperty('--jd',(i*120)+'ms');
+      arc.setAttribute('stroke-dasharray',`${arc.dataset.fill} ${arc.dataset.c}`);
+    });
+  },150);
 }
 </script>
 </body>
