@@ -228,12 +228,12 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 /* outer container: canvas on left, info panel on right */
 .jarvis-skill-inner{
   display:grid;
-  grid-template-columns:480px 1fr;
+  grid-template-columns:490px 1fr;
   gap:0;
   background:var(--bg2);
   border:1px solid var(--border2);
   border-radius:14px;
-  overflow:hidden;
+  overflow:visible;
   box-shadow:var(--shadow);
   min-height:480px;
 }
@@ -241,11 +241,10 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 /* LEFT — canvas wheel */
 .jarvis-wheel-side{
   position:relative;
-  background:#000;
+  background:var(--bg);
   border-right:1px solid var(--border2);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:1rem 0;
-  overflow:hidden;
+  padding:1.5rem 0;
 }
 .jarvis-wheel-side::before{
   content:'';position:absolute;inset:0;
@@ -255,21 +254,124 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
   background-size:32px 32px;
   pointer-events:none;
 }
-/* Arc reactor PNG — sits directly behind the canvas */
-#arcReactorImg{
+/* shared wrapper so arc centers on canvas exactly */
+.jarvis-wheel-canvas-wrap{
+  position:relative;
+  width:460px;height:460px;
+  flex-shrink:0;
+}
+.jarvis-wheel-canvas-wrap #jarvisCanvas{
+  position:relative;z-index:1;
+}
+/* ══════════════════════════════════════════
+   CSS ARC REACTOR — JARVIS mode only
+   Pure outlines + glow, no solid fills
+════════════════════════════════════════════ */
+.arc-reactor{
   position:absolute;
-  width:440px;height:440px;
-  object-fit:contain;
+  width:460px;height:460px;
+  top:0;left:0;
+  border-radius:50%;
   pointer-events:none;
-  opacity:0.82;
-  /* breathing glow pulse */
-  animation:arcReactorPulse 3s ease-in-out infinite;
-  image-rendering:auto;
+  opacity:0;transition:opacity .9s ease;
+  z-index:0;
 }
-@keyframes arcReactorPulse{
-  0%,100%{filter:drop-shadow(0 0 14px rgba(100,220,255,.50)) drop-shadow(0 0 28px rgba(100,220,255,.22)) brightness(1);}
-  50%{filter:drop-shadow(0 0 22px rgba(100,220,255,.80)) drop-shadow(0 0 48px rgba(100,220,255,.38)) brightness(1.12);}
+.lab-mode .arc-reactor{
+  opacity:1;
+  animation:arcBreath 3s ease-in-out infinite, arcSlowSpin 60s linear infinite;
 }
+@keyframes arcBreath{
+  0%,100%{filter:drop-shadow(0 0 8px rgba(80,210,255,.40));}
+  50%     {filter:drop-shadow(0 0 18px rgba(80,210,255,.70));}
+}
+@keyframes arcSlowSpin{
+  from{transform:rotate(0deg);}
+  to  {transform:rotate(360deg);}
+}
+
+/* ── Outer ring ── */
+.arc-r-ring-outer{
+  position:absolute;inset:5%;border-radius:50%;
+  border:1.5px solid rgba(100,220,255,.55);
+  box-shadow:0 0 8px 2px rgba(80,200,255,.25),inset 0 0 6px 1px rgba(80,200,255,.12);
+  opacity:0;transition:opacity .9s;
+}
+/* ── Blade band ring borders ── */
+.arc-r-ring-mid{
+  position:absolute;inset:28%;border-radius:50%;
+  border:1.5px solid rgba(100,220,255,.45);
+  box-shadow:0 0 6px 2px rgba(80,200,255,.20),inset 0 0 5px 1px rgba(80,200,255,.10);
+  opacity:0;transition:opacity .9s;
+}
+/* ── Inner ring ── */
+.arc-r-ring-inner{
+  position:absolute;inset:36%;border-radius:50%;
+  border:1px solid rgba(100,220,255,.35);
+  box-shadow:0 0 5px 1px rgba(80,200,255,.18),inset 0 0 4px 1px rgba(80,200,255,.08);
+  opacity:0;transition:opacity .9s;
+}
+/* ── Spinning dashed ring ── */
+.arc-r-dash{
+  position:absolute;inset:17%;border-radius:50%;
+  border:1.5px dashed rgba(100,220,255,.30);
+  animation:arcDashSpin 12s linear infinite;
+  opacity:0;transition:opacity .9s;
+}
+@keyframes arcDashSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+/* ── Core orb — spins faster counter to the whole arc ── */
+.arc-r-core{
+  position:absolute;inset:43%;border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(180,240,255,.70) 0%,
+    rgba(100,210,255,.30) 50%,
+    transparent 80%
+  );
+  box-shadow:0 0 12px 4px rgba(80,200,255,.35);
+  opacity:0;transition:opacity .9s;
+  animation:arcCoreSpin 8s linear infinite;
+}
+@keyframes arcCoreSpin{
+  from{transform:rotate(0deg);}
+  to  {transform:rotate(-360deg);}
+}
+/* ── 9 segment divider lines (CSS only via conic border trick) ── */
+.arc-r-blades{
+  position:absolute;inset:5%;border-radius:50%;
+  background:conic-gradient(
+    from -2deg,
+    rgba(100,220,255,.18) 0deg,  rgba(100,220,255,.18) 1.5deg,
+    transparent 1.5deg,          transparent 38.5deg,
+    rgba(100,220,255,.18) 38.5deg,rgba(100,220,255,.18) 40deg,
+    transparent 40deg,           transparent 78.5deg,
+    rgba(100,220,255,.18) 78.5deg,rgba(100,220,255,.18) 80deg,
+    transparent 80deg,           transparent 118.5deg,
+    rgba(100,220,255,.18) 118.5deg,rgba(100,220,255,.18) 120deg,
+    transparent 120deg,          transparent 158.5deg,
+    rgba(100,220,255,.18) 158.5deg,rgba(100,220,255,.18) 160deg,
+    transparent 160deg,          transparent 198.5deg,
+    rgba(100,220,255,.18) 198.5deg,rgba(100,220,255,.18) 200deg,
+    transparent 200deg,          transparent 238.5deg,
+    rgba(100,220,255,.18) 238.5deg,rgba(100,220,255,.18) 240deg,
+    transparent 240deg,          transparent 278.5deg,
+    rgba(100,220,255,.18) 278.5deg,rgba(100,220,255,.18) 280deg,
+    transparent 280deg,          transparent 318.5deg,
+    rgba(100,220,255,.18) 318.5deg,rgba(100,220,255,.18) 320deg,
+    transparent 320deg,          transparent 358.5deg,
+    rgba(100,220,255,.18) 358.5deg,rgba(100,220,255,.18) 360deg
+  );
+  -webkit-mask:radial-gradient(circle,transparent 0,transparent 27%,black 28%,black 93%,transparent 95%,transparent 100%);
+  mask:radial-gradient(circle,transparent 0,transparent 27%,black 28%,black 93%,transparent 95%,transparent 100%);
+  opacity:0;transition:opacity .9s;
+}
+.lab-mode .arc-r-ring-outer,.lab-mode .arc-r-ring-mid,.lab-mode .arc-r-ring-inner,
+.lab-mode .arc-r-dash,.lab-mode .arc-r-core,.lab-mode .arc-r-blades{ opacity:1; }
+/* aura — unused now, keep empty */
+.arc-r-aura{ display:none; }
+
+/* bg */
+.jarvis-wheel-side{background:var(--bg);}
+.lab-mode .jarvis-wheel-side{background:#020c1b;}
+
 #jarvisCanvas{display:block;touch-action:none;cursor:grab;position:relative;z-index:1;}
 #jarvisCanvas:active{cursor:grabbing;}
 .jarvis-wheel-hint{
@@ -430,10 +532,9 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 .ji-mobile-grid{display:none;}
 
 @media(max-width:720px){
-  .jarvis-skill-inner{grid-template-columns:1fr;grid-template-rows:380px 1fr;}
+  .jarvis-skill-inner{grid-template-columns:1fr;grid-template-rows:420px 1fr;}
   .jarvis-wheel-side{border-right:none;border-bottom:1px solid var(--border2);}
-  #jarvisCanvas{width:340px!important;height:340px!important;}
-  #arcReactorImg{width:340px!important;height:340px!important;}
+  #jarvisCanvas{width:360px!important;height:360px!important;}
 }
 @media(max-width:600px){
   /* Hero CTAs stack vertically */
@@ -771,20 +872,28 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 /* ── Bullet list as HUD readout ── */
 .bp-list{display:flex;flex-direction:column;gap:.65rem;list-style:none;padding:0;}
 .bp-list li{
-  font-family:'Fira Code',monospace;font-size:.82rem;
-  color:var(--muted);line-height:1.65;
-  padding-left:1.5rem;padding-top:.4rem;padding-bottom:.4rem;
+  font-size:.88rem;color:var(--muted);line-height:1.65;
+  padding-left:1.2rem;padding-top:.2rem;padding-bottom:.2rem;
   position:relative;
+}
+.bp-list li::before{
+  content:'▸';position:absolute;left:0;
+  color:var(--accent);font-size:.7rem;top:.22rem;opacity:.8;
+}
+.bp-list li:hover{color:var(--fg);transition:color .2s;}
+
+/* Lab mode: Fira Code monospace style with left bar */
+.lab-mode .bp-list li{
+  font-family:'Fira Code',monospace;font-size:.82rem;
+  padding-left:1.5rem;padding-top:.4rem;padding-bottom:.4rem;
   border-left:1px solid rgba(100,255,218,.08);
   margin-left:.3rem;
 }
-.bp-list li::before{
-  content:'›› ';position:absolute;left:.4rem;
-  color:var(--accent);font-size:.7rem;top:.45rem;opacity:.7;
+.lab-mode .bp-list li::before{
+  content:'›› ';left:.4rem;font-size:.7rem;top:.45rem;opacity:.7;
 }
-.bp-list li:hover{
+.lab-mode .bp-list li:hover{
   border-left-color:rgba(100,255,218,.3);
-  color:var(--fg);transition:all .2s;
 }
 
 /* ── Badge ── */
@@ -886,6 +995,10 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 }
 .jml-text{
   font-size:.78rem;color:var(--fg);line-height:1.5;opacity:.82;
+}
+/* gap between mission log and the bio paragraph below it */
+.jarvis-mission-log + .about-body{
+  margin-top:1.25rem;
 }
 
 /* ══════════════════════════════════════════════════
@@ -1043,8 +1156,18 @@ h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(3.2rem,7.5vw,5.8rem);fo
 
       <!-- LEFT: spinning arc wheel -->
       <div class="jarvis-wheel-side">
-        <img id="arcReactorImg" src="assets/images/pngwing_com.png" alt="">
-        <canvas id="jarvisCanvas"></canvas>
+        <div class="jarvis-wheel-canvas-wrap">
+          <div class="arc-reactor" id="arcReactor">
+            <div class="arc-r-aura"></div>
+            <div class="arc-r-blades"></div>
+            <div class="arc-r-dash"></div>
+            <div class="arc-r-ring-outer"></div>
+            <div class="arc-r-ring-mid"></div>
+            <div class="arc-r-ring-inner"></div>
+            <div class="arc-r-core"></div>
+          </div>
+          <canvas id="jarvisCanvas"></canvas>
+        </div>
         <div class="jarvis-wheel-hint">drag to spin · click to select</div>
         <div class="ji-mobile-grid" id="jiMobileGrid"></div>
       </div>
@@ -1581,7 +1704,7 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
   const canvas = document.getElementById('jarvisCanvas');
   const ctx    = canvas.getContext('2d');
   const DPR    = window.devicePixelRatio || 1;
-  const CSS_W  = 440, CSS_H = 440;
+  const CSS_W  = 460, CSS_H = 460;
   canvas.style.width  = CSS_W + 'px';
   canvas.style.height = CSS_H + 'px';
   canvas.width  = CSS_W * DPR;
@@ -1608,17 +1731,27 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
 
   const N             = CATS.length;
   const SLICE         = (Math.PI * 2) / N;
-  /* Overlay radii — tuned to sit on the PNG blade ring */
-  const R_OVLY_OUTER  = 192;   // outer edge of blade overlay
-  const R_OVLY_INNER  = 118;   // inner edge of blade overlay
-  const R_OUTER       = 192;   // kept in sync for hit-test & pointer
-  const R_INNER       = 118;
-  const R_CORE        = 38;
-  const R_HIT         = 155;   // midpoint of blade zone
+  /* Canvas 460px — wheel segments overlay the CSS blade ring
+     Pointer needs 16px clearance above outer rim               */
+  const R_OVLY_OUTER  = 208;
+  const R_OVLY_INNER  = 122;
+  const R_OUTER       = 208;
+  const R_INNER       = 122;
+  const R_CORE        = 40;
+  const R_HIT         = 165;
+
+  /* roundRect helper for canvas */
+  function roundRect(c,x,y,w,h,r){
+    c.beginPath();
+    c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.arcTo(x+w,y,x+w,y+r,r);
+    c.lineTo(x+w,y+h-r);c.arcTo(x+w,y+h,x+w-r,y+h,r);
+    c.lineTo(x+r,y+h);c.arcTo(x,y+h,x,y+h-r,r);
+    c.lineTo(x,y+r);c.arcTo(x,y,x+r,y,r);
+    c.closePath();
+  }
 
   /* ══════════════════════════════════════════════════
-     DRAW — Arc Reactor PNG as visual chassis,
-     screen-blend segment highlights on top.
+     DRAW — no shadowBlur anywhere; glow = layered strokes
   ══════════════════════════════════════════════════ */
   function draw(){
     ctx.clearRect(0,0,W,H);
@@ -1627,115 +1760,147 @@ document.querySelectorAll('.bp-tab').forEach(tab => {
     const glowCol = glowCat>=0?CATS[glowCat].color:'#64ffda';
     const breathe = 0.5+0.5*Math.sin(pulseT);
 
-    /* ── 1. Category tint on active slice — screen blend over the real PNG behind canvas ── */
-    if(glowCat >= 0){
+    /* ── 1. Whole-reactor category tint ── */
+    if(glowCat>=0){
       ctx.save();
-      ctx.globalCompositeOperation = 'screen';
-      ctx.globalAlpha = 0.12 + 0.08*breathe;
-      ctx.fillStyle = CATS[glowCat].color;
-      ctx.beginPath(); ctx.arc(CX,CY,W*0.52,0,Math.PI*2); ctx.fill();
+      ctx.globalCompositeOperation='screen';
+      ctx.globalAlpha=0.10+0.06*breathe;
+      ctx.fillStyle=CATS[glowCat].color;
+      ctx.beginPath();ctx.arc(CX,CY,R_OVLY_OUTER,0,Math.PI*2);ctx.fill();
       ctx.restore();
     }
 
-    /* ── 2. Segment coloured overlays (screen blend = tints PNG blades) ── */
-    CATS.forEach((cat,i)=>{
-      const exp = sliceExpand[i];
-      if(activeCat!==i && hoveredCat!==i && exp<0.01) return;
-      const R_OUT_I = R_OVLY_OUTER + exp*10;
-      const as = rotation+i*SLICE-SLICE/2;
-      const ae = as+SLICE;
-      const isA=activeCat===i, isH=hoveredCat===i;
-
-      /* coloured fill over the blade area */
+    /* ── 2. Outer rim — layered strokes (no shadowBlur) ── */
+    const rimAlpha=(glowCat>=0?0.40:0.12)*breathe;
+    const rimCol=glowCol;
+    // soft outer halo rings
+    [14,8,3].forEach((w,i)=>{
       ctx.save();
-      ctx.globalCompositeOperation = 'screen';
+      ctx.strokeStyle=hexAlpha(rimCol,[0.04,0.07,0.14][i]*rimAlpha/0.12);
+      ctx.lineWidth=w;
+      ctx.beginPath();ctx.arc(CX,CY,R_OVLY_OUTER+2,0,Math.PI*2);ctx.stroke();
+      ctx.restore();
+    });
+    // crisp bright ring on top
+    ctx.save();
+    ctx.strokeStyle=hexAlpha(rimCol,(glowCat>=0?0.55:0.20)*breathe);
+    ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(CX,CY,R_OVLY_OUTER+2,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
+
+    /* ── 3. Segment coloured overlays ── */
+    CATS.forEach((cat,i)=>{
+      const exp=sliceExpand[i];
+      if(activeCat!==i&&hoveredCat!==i&&exp<0.01)return;
+      const R_OUT_I=R_OVLY_OUTER+exp*8;
+      const as=rotation+i*SLICE-SLICE/2, ae=as+SLICE;
+      const isA=activeCat===i;
+
+      ctx.save();
+      ctx.globalCompositeOperation='screen';
       ctx.beginPath();
-      ctx.moveTo(CX+Math.cos(as)*R_OVLY_INNER, CY+Math.sin(as)*R_OVLY_INNER);
+      ctx.moveTo(CX+Math.cos(as)*R_OVLY_INNER,CY+Math.sin(as)*R_OVLY_INNER);
       ctx.arc(CX,CY,R_OUT_I,as,ae);
       ctx.arc(CX,CY,R_OVLY_INNER,ae,as,true);
       ctx.closePath();
-      ctx.fillStyle = hexAlpha(cat.color, isA ? 0.55+0.18*breathe : 0.30*exp);
+      ctx.fillStyle=hexAlpha(cat.color,isA?0.50+0.15*breathe:0.28*exp);
       ctx.fill();
       ctx.restore();
 
-      /* Outer arc glow on active slice */
+      /* active slice outer arc — layered strokes, no shadowBlur */
       if(isA){
-        ctx.save();
-        ctx.strokeStyle = cat.color;
-        ctx.shadowColor = cat.color; ctx.shadowBlur = 22*breathe;
-        ctx.lineWidth   = 3.5;
-        ctx.globalAlpha = 0.65+0.25*breathe;
-        ctx.beginPath(); ctx.arc(CX,CY,R_OUT_I+5,as+0.04,ae-0.04); ctx.stroke();
-        ctx.restore();
+        [6,3,1].forEach((w,i)=>{
+          ctx.save();
+          ctx.strokeStyle=hexAlpha(cat.color,[0.08,0.18,0.55][i]*(0.65+0.25*breathe));
+          ctx.lineWidth=w;
+          ctx.beginPath();ctx.arc(CX,CY,R_OUT_I+3,as+0.04,ae-0.04);ctx.stroke();
+          ctx.restore();
+        });
       }
 
-      /* Divider lines between segments (visible over image) */
+      /* divider lines */
       ctx.save();
-      ctx.strokeStyle = hexAlpha(cat.color, isA?0.25:0.10*exp);
-      ctx.lineWidth   = 1;
+      ctx.strokeStyle=hexAlpha(cat.color,isA?0.22:0.08*exp);
+      ctx.lineWidth=1;
       ctx.beginPath();
-      ctx.moveTo(CX+Math.cos(as)*R_OVLY_INNER, CY+Math.sin(as)*R_OVLY_INNER);
-      ctx.lineTo(CX+Math.cos(as)*R_OUT_I, CY+Math.sin(as)*R_OUT_I);
+      ctx.moveTo(CX+Math.cos(as)*R_OVLY_INNER,CY+Math.sin(as)*R_OVLY_INNER);
+      ctx.lineTo(CX+Math.cos(as)*R_OUT_I,CY+Math.sin(as)*R_OUT_I);
       ctx.stroke();
       ctx.restore();
     });
 
-    /* ── 3. Category icons + labels (rendered over blades) ── */
-    ctx.textAlign='center'; ctx.textBaseline='middle';
+    /* ── 4. Icons + labels ── */
     CATS.forEach((cat,i)=>{
-      const exp   = sliceExpand[i];
-      const iconR = (R_OVLY_INNER + R_OVLY_OUTER) / 2;
-      const aMid  = rotation + i*SLICE;
-      const ix    = CX + Math.cos(aMid)*iconR;
-      const iy    = CY + Math.sin(aMid)*iconR;
-      const isA   = activeCat===i, isH=hoveredCat===i;
+      const exp=sliceExpand[i];
+      const iconR=(R_OVLY_INNER+R_OVLY_OUTER)/2;
+      const aMid=rotation+i*SLICE;
+      const ix=CX+Math.cos(aMid)*iconR, iy=CY+Math.sin(aMid)*iconR;
+      const isA=activeCat===i, isH=hoveredCat===i;
+      const show=isA||isH||exp>0.05;
 
-      /* icon */
-      ctx.font         = (isA||exp>0.3)?'17px serif':'14px serif';
-      ctx.globalAlpha  = isA?1:(isH?0.9:0.55+exp*0.25);
-      ctx.fillStyle    = 'white';
-      ctx.fillText(cat.icon, ix, iy-8);
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.font=(isA||exp>0.3)?'18px serif':'15px serif';
+      ctx.globalAlpha=isA?1:(isH?0.95:0.45);
+      ctx.fillStyle='white';
+      ctx.fillText(cat.icon, ix, show ? iy-9 : iy);
 
-      /* label */
-      ctx.font         = isA?'bold 8px Fira Code,monospace':'7px Fira Code,monospace';
-      ctx.fillStyle    = isA?cat.color:(isH?'#e6f1ff':'rgba(136,146,176,0.75)');
-      ctx.globalAlpha  = isA?1:(isH?0.9:0.65);
-      ctx.textBaseline = 'top';
-      ctx.fillText(cat.label.toUpperCase(), ix, iy+2);
-      ctx.textBaseline = 'middle';
-      ctx.globalAlpha  = 1;
+      if(show){
+        ctx.font=isA?'bold 9px Fira Code,monospace':'8px Fira Code,monospace';
+        ctx.fillStyle=isA?cat.color:(isH?'#e6f1ff':'rgba(180,200,220,0.85)');
+        ctx.globalAlpha=isA?1:(isH?0.95:0.80*exp);
+        ctx.textBaseline='top';
+        ctx.fillText(cat.label.toUpperCase(), ix, iy+4);
+        ctx.textBaseline='middle';
+      }
+      ctx.globalAlpha=1;
     });
 
-    /* ── 4. Centre core text ── */
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.globalAlpha=0.92;
-    ctx.font='bold 9px Fira Code,monospace';
-    ctx.fillStyle = activeCat>=0?CATS[activeCat].color:hexAlpha(glowCol,0.60);
-    ctx.fillText(activeCat>=0?CATS[activeCat].id.toUpperCase():'SELECT', CX, CY-4);
-    ctx.font='7px Fira Code,monospace';
-    ctx.fillStyle='rgba(136,146,176,0.45)';
-    ctx.fillText(activeCat>=0?CATS[activeCat].skills.length+' skills':'SUBSYSTEM', CX, CY+7);
-    ctx.globalAlpha=1;
-
-    /* ── 5. Outer breathing glow rim ── */
+    /* ── 5. Core text — clean, truly centered, no backdrop ── */
     ctx.save();
-    ctx.strokeStyle = hexAlpha(glowCol, (glowCat>=0?0.45:0.18)*breathe);
-    ctx.lineWidth   = 5;
-    ctx.shadowColor = glowCol;
-    ctx.shadowBlur  = (glowCat>=0?28:12)*breathe;
-    ctx.beginPath(); ctx.arc(CX,CY,R_OVLY_OUTER+18,0,Math.PI*2); ctx.stroke();
+    ctx.textAlign='center';
+    if(activeCat>=0){
+      const lineH=16;
+      const label=CATS[activeCat].label.toUpperCase();
+      const sub=CATS[activeCat].skills.length+' SKILLS';
+
+      ctx.font='bold 13px Chakra Petch,sans-serif';
+      ctx.textBaseline='middle';
+      ctx.shadowColor='rgba(0,0,0,0.95)';
+      ctx.shadowBlur=6;
+      ctx.fillStyle=CATS[activeCat].color;
+      ctx.globalAlpha=1;
+      ctx.fillText(label, CX, CY-lineH/2);
+
+      ctx.font='10px Fira Code,monospace';
+      ctx.shadowColor='rgba(0,0,0,0.95)';
+      ctx.shadowBlur=5;
+      ctx.fillStyle='rgba(220,235,245,0.95)';
+      ctx.fillText(sub, CX, CY+lineH/2+2);
+    } else {
+      ctx.font='bold 14px Chakra Petch,sans-serif';
+      ctx.textBaseline='middle';
+      ctx.shadowColor='rgba(0,0,0,0.95)';
+      ctx.shadowBlur=6;
+      ctx.fillStyle='rgba(100,255,218,0.95)';
+      ctx.globalAlpha=1;
+      ctx.fillText('SKILLS', CX, CY);
+    }
+    ctx.shadowBlur=0;
+    ctx.shadowColor='transparent';
     ctx.restore();
 
-    /* ── 6. Pointer triangle ── */
-    ctx.save();
-    ctx.fillStyle   = hexAlpha(glowCol, 0.88);
-    ctx.shadowColor = glowCol; ctx.shadowBlur = 12*breathe;
-    ctx.beginPath();
-    ctx.moveTo(CX,       CY - R_OVLY_OUTER - 22);
-    ctx.lineTo(CX - 7,   CY - R_OVLY_OUTER - 8);
-    ctx.lineTo(CX + 7,   CY - R_OVLY_OUTER - 8);
-    ctx.closePath(); ctx.fill();
-    ctx.restore();
+    /* ── 6. Pointer triangle — layered fills, no shadowBlur ── */
+    const tx=CX, ty=CY-R_OVLY_OUTER-18;
+    [[12,0.08],[8,0.15],[0,0.80]].forEach(([pad,a])=>{
+      ctx.save();
+      ctx.fillStyle=hexAlpha(glowCol,a*breathe+(pad===0?0.3:0));
+      ctx.beginPath();
+      ctx.moveTo(tx,       ty-pad*0.5);
+      ctx.lineTo(tx-7-pad*.4, ty+12+pad*.4);
+      ctx.lineTo(tx+7+pad*.4, ty+12+pad*.4);
+      ctx.closePath();ctx.fill();
+      ctx.restore();
+    });
   }
 
   /* ── smooth rotation + spring loop (delta-time based) ── */
